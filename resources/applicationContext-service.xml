@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <!-- =================================================================== -->
+    <!-- AOP: Configuration and Aspects                                      -->
+    <!-- =================================================================== -->
+    <aop:config>
+        <aop:advisor id="userManagerTx" advice-ref="userManagerTxAdvice" pointcut="execution(* *..service.UserManager.*(..))" order="0"/>        
+        <aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.UserManager.saveUser(..))" order="1"/>
+        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.impl.*.*(..))" order="2"/>
+    </aop:config>
+    
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven/>
+    
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- Enable @Configured support -->
+    <context:spring-configured/>
+    
+    <context:annotation-config />
+    
+    <tx:advice id="txAdvice"  transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- Read-only commented out to make things easier for end-users -->
+            <!-- http://issues.appfuse.org/browse/APF-556 -->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*"/>
+
+        </tx:attributes>
+    </tx:advice>
+<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+  <property name="sessionFactory" ref="sessionFactory" />
+</bean>
+
+    <tx:advice id="userManagerTxAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="UserExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <bean id="userSecurityAdvice" class="com.focaplo.myfuse.service.UserSecurityAdvice"/>
+    
+    
+    <bean id="ServicePropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:mail.properties</value>
+                <value>classpath:amazon.properties</value>
+                <value>classpath:bime.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- =================================================================== -->
+    <!-- Mail: Sender and Velocity configuration                             -->
+    <!-- =================================================================== -->
+    <bean id="mailEngine" class="com.focaplo.myfuse.service.MailEngine">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <!-- <property name="from" value="${mail.default.from}"/> -->
+        <property name="sendToQueue" value="true"/>
+        <!-- <property name="queueSender" ref="emailQueueSender"/> -->
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <!--  <property name="host" value="${mail.host}"/>-->
+        <property name="defaultEncoding" value="UTF-8"/> 
+        <!-- Uncomment if you need to authenticate with your SMTP Server -->
+        <!--property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="javaMailProperties">
+            <value>
+                mail.smtp.auth=true
+            </value>
+        </property-->
+    </bean>
+
+    <!-- Configure Velocity for sending e-mail -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+                <prop key="velocimacro.library"></prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+        <!--  <property name="from" value="${mail.default.from}"/>-->
+    </bean>
+
+    <!-- =================================================================== -->
+    <!-- Security class from Spring Security - used to configure Password    -->
+    <!-- Encryption in UserManagerImpl. Can override in security.xml.        -->
+    <!-- =================================================================== -->
+    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder"/>
+
+    <!-- =================================================================== -->
+    <!-- Managers: For accessing DAOs                                        -->
+    <!-- =================================================================== -->
+    <bean id="manager" class="com.focaplo.myfuse.service.impl.UniversalManagerImpl">
+        <property name="dao" ref="universalDao"/>
+        <property name="inventoryDao" ref="inventoryDao"/>
+        <property name="projectDao" ref="projectDao"/>
+        <property name="grantDao" ref="grantDao"/>
+        <property name="orderDao" ref="orderDao"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="labDao" ref="labDao"/>
+    </bean>
+    
+    <bean id="lookupManager" class="com.focaplo.myfuse.service.impl.LookupManagerImpl">
+        <property name="lookupDao" ref="lookupDao"/>
+    </bean>
+
+    <bean id="userManager" class="com.focaplo.myfuse.service.impl.UserManagerImpl" parent="manager">
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean>
+
+    <bean id="roleManager" class="com.focaplo.myfuse.service.impl.RoleManagerImpl">
+        <property name="roleDao" ref="roleDao"/>
+    </bean>
+
+    <!-- Add new Managers here -->
+    <bean id="inventoryManager" class="com.focaplo.myfuse.service.impl.InventoryManagerImpl" parent="manager">
+    </bean>
+    <bean id="projectManager" class="com.focaplo.myfuse.service.impl.ProjectManagerImpl" parent="manager">
+    </bean>
+    <bean id="grantManager" class="com.focaplo.myfuse.service.impl.GrantManagerImpl" parent="manager">
+    </bean>
+    <bean id="orderManager" class="com.focaplo.myfuse.service.impl.OrderManagerImpl" parent="manager">
+    	<property name="inventoryManager" ref="inventoryManager"/>
+    </bean>
+    <bean id="labManager" class="com.focaplo.myfuse.service.impl.LabManagerImpl" parent="manager">
+    </bean>
+    <!--
+    <bean id="storageService" class="com.focaplo.myfuse.service.impl.AmazonStorageService">
+    	<property name="awsAccessKey" value="${awsAccessKey}"/>
+    	<property name="awsSecretKey" value="${awsSecretKey}"/>
+    	<property name="bucketNameUniqueSuffix" value="${bucketNameUniqueSuffix}"/>
+    </bean>
+      -->
+	<bean id="storageService" class="com.focaplo.myfuse.service.impl.LocalDriveStorageService">
+    
+    </bean>
+    <bean id="authorizationManager" class="com.focaplo.myfuse.service.impl.AuthorizationManager" parent="manager">
+   	</bean>
+    <bean id="encrypter" class="com.focaplo.myfuse.util.AESEncrypter">
+    </bean>
+   
+   <!--  send heart beat pulse
+    <bean id="heartBeat" class="com.focaplo.myfuse.service.impl.HeartBeat"/>
+    
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+     <property name="triggers">    
+     <ref bean="simpleTrigger"/>    
+     </property>    
+    </bean>
+
+    
+
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">    
+     <property name="jobDetail" ref="jobDetail"/>
+    
+     <property name="startDelay" value="10000"/>    
+     <property name="repeatInterval" value="1000000"/>
+    </bean>
+
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+     <property name="targetObject" ref="heartBeat"/>
+     <property name="targetMethod" value="sendHeartBeatMessage"/>
+     <property name="concurrent" value="false"/>
+    </bean>
+      -->
+    
+    <bean id="dynDataSourceRegister" class="com.focaplo.myfuse.webapp.spring.DynDataSourceRegister">
+    	<property name="scanRootDirectory"><value>/usr/local/bime-home</value></property>
+    </bean>
+</beans>

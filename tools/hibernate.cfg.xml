@@ -1,0 +1,46 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+    	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+      <property name="hibernate.connection.url">jdbc:mysql://localhost</property>
+      <property name="hibernate.connection.username">root</property>
+      <property name="hibernate.connection.password"></property>
+      <property name="hibernate.connection.pool_size">10</property>
+      <property name="show_sql">true</property>
+      <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <mapping class="com.focaplo.myfuse.model.User"/>
+        <mapping class="com.focaplo.myfuse.model.Role"/>
+        <mapping class="com.focaplo.myfuse.model.Lab"/>
+        <mapping class="com.focaplo.myfuse.model.Equipment"/>
+        <mapping class="com.focaplo.myfuse.model.ExperimentalMaterial"/>
+        <mapping class="com.focaplo.myfuse.model.ExperimentalAnimal"/>
+        <mapping class="com.focaplo.myfuse.model.ExperimentalMice"/>
+        <mapping class="com.focaplo.myfuse.model.ManagedItem"/>
+        <mapping class="com.focaplo.myfuse.model.StorageOthers"/>
+        <mapping class="com.focaplo.myfuse.model.Refrigerator"/>
+        <mapping class="com.focaplo.myfuse.model.Storage"/>
+        <mapping class="com.focaplo.myfuse.model.StorageSection"/>
+        <mapping class="com.focaplo.myfuse.model.ManagedProject"/>
+        <mapping class="com.focaplo.myfuse.model.ManagedGrant"/>
+        <mapping class="com.focaplo.myfuse.model.ManagedOrder"/>
+        <mapping class="com.focaplo.myfuse.model.OrderItem"/>
+        <mapping class="com.focaplo.myfuse.model.ItemCategory"/>
+        <mapping class="com.focaplo.myfuse.model.InventoryAudit"/>
+        <mapping class="com.focaplo.myfuse.model.ExperimentImage"/>
+        <mapping class="com.focaplo.myfuse.model.ExperimentNote"/>
+        <mapping class="com.focaplo.myfuse.model.ExperimentProtocol"/>
+        <mapping class="com.focaplo.myfuse.model.ExperimentProtocolAudit"/>
+        <mapping class="com.focaplo.myfuse.model.LabMeeting"/>
+        <mapping class="com.focaplo.myfuse.model.LabMeetingItem"/>
+         <mapping class="com.focaplo.myfuse.model.MeetingFile"/>
+        <mapping class="com.focaplo.myfuse.model.WorkLog"/>
+        <mapping class="com.focaplo.myfuse.model.WorkMonthlyPlan"/>
+        <mapping class="com.focaplo.myfuse.model.WorkPlan"/>
+        <mapping class="com.focaplo.myfuse.model.WorkPlanItem"/>
+        <mapping class="com.focaplo.myfuse.model.WorkWeeklyPlan"/>
+        <mapping class="com.focaplo.myfuse.model.ToDo"/>
+        <mapping class="com.focaplo.myfuse.model.ResourceUserAuthorization"/>
+    </session-factory>
+</hibernate-configuration>

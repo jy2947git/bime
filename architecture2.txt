@@ -1,0 +1,102 @@
+In the first architecture article, we talked about bime and especially how we re-factor bime to be able to serve multiple
+clients(labs) while still maintaining separated lab database.
+
+we will have one server to host the "Bime Controller" and N server to host "Bime" application. So, we need to think through how the 2 applications communicate with each other
+in a cluster environment.
+
+There are different communication types between distributed -
+1, synchronous vs asynchronous
+Synchronous communication is usually simple by demands high level of latency, for example, RPC, web service (SOAP or Restful).
+Asynchronous communication is good for throughput because the requester doesn't have to wait for response. "Queue" is usually involved in asynchronous communications.
+
+2, request only vs request-reply
+Whether the requester needs a response from the receiver? It might be good practice to have it.
+
+In our case, the Bime-Controller needs to 
+1)let the bime server instance know to prepare the datasource etc for the new client
+2)know when the (1) is done so it will send response to user (web or email)
+
+Other factors to consider: is the operation a short or a long one? What kind of user experience do you want to provide?
+
+The last question is critical because eventually the user experience is the most important thing for a web application (or any business).
+In the case of Bime, our answers are:
+1, use experience wise, we "really" want the user "immediately" gets the message that "server is ready, please use it now". So, we'd prefer
+to have a immediate response. Alternatively, it is acceptable to notify users later through email.
+2, it is a short operation if we have a existing Bime server and we only need to add new data source for client; it will be much longer (in minutes) if
+it involves creating a new server (when all existing bime server has full capacity).
+
+So, our design is:
+1, when the Bime Controller get request to set up for new client, it will first do an estimate - check its internal instance-status table to see whether there
+is existing server which can host the new client. If found, we will sought to immediate reply-response model; otherwise, utilize asynchronous mode, display thank you
+message and notify user through email when server is ready.
+2, In the immediate request-response mode, the Bime Controller knows which Bime server has the capacity, it will contact it directly to ask to prepare the new client, and
+wait until it is done; So, we will implement a Restful web service at Bime application. The Bime Controller (as the service client) will send a POST request to Bime, and Bime
+return response after new client is set up for use.
+3, In the asynchronous mode, the flow is more complicated:
+(1)create the new instance (which can take minutes and request only operation)
+(2)create new client on the new instance
+(3)send notification email.
+Also, in the scenario of N clients requested at same time to Bime Controller, we dont want to create N new server instances; we'd only want to create 1 new instance, and then create
+N clients on it......it is a concurrency issue. Similarly if we have N clients requests, and one Bime instance has capacity to host new clients. In the multi-threading environment,
+we may ask the Bime instance to set up for N new clients, which is beyond its limit.
+
+Now we are more of talking of a task management solution.
+
+
+
+So, we are sought of a request-reply type of talk between bime-controller server and bime-server(s)
+
+
+And we will use "Queue" to achieve this. Basically, we will have a "queue" server, to serve as the communication channel among all the server instances.
+For example, to set up a new client, we will have a "topic" named "PleaseSetUpNewClientTopic". The Bime-Controller can put a message to this topic, and all the Bime applications
+will subscribe to this topic.
+When a new client sign up with Bime service, Bime-Controller will put a new message to the topic with below data:
+instance-name: server04
+client-name: lab555
+client-admin-parameter: adm1noflab555
+Every Bime server will receive this message. First, it will check whether the "instance-name" matches its name, if not, discard; otherwise, it will execute the steps described above:
+create directory, create files, and execute shell script. After everything is done, it will send a reply message to queue "SetUpNewClientResponseQueue" to tell the Bime-Controller
+that everything is prepared for the client and Bime-Controller will then display success message to user.
+
+Now our new structure becomes
+http://lab1.bime.com                                     						                             lab1 database
+http://lab2.bime.com -------> server0 Haproxy/apache   ----->   server1: bime on tomcat, mysql server ---->  lab2 database
+http://lab3.bime.com                                  |         server2: bime on tomcat, mysql server		 lab3 database
+                                                      |-        server3: bime on tomcat, mysql server
+                                                (bus) |-        server4: bime on tomcat, mysql server
+                                                      |-        ...
+                                                      |-        server100: bime-controller on tomcat, mysql sever  --->  bime-controller database
+                                                      |-
+                                                  server101: Hornetq (queue server)
+(of course, haproxy, bime-controller, and hornetq can all be installed on the same physical server)
+
+Queue server has other usages too, for example
+1, to send control messages. When we have a new version of Bime to deploy, we can send a message to all the Bime servers and tell them to download the new code and install.
+2, to collect status
+
+Regarding the creating new client task, there are still areas not covered.
+First, we need to re-configure the Haproxy to tell it the mapping between "lab30.bime.com" to "sever9". That means, we need a small application on the same server with Haproxy.
+It will listen to a queue "ReconfigureForNewClient" and update the configuration file with messages sent from Bime-Controller.
+Second, In above example, we were assuming there is areadly a Bime server running and we were only adding data source. What if all the existing servers have full compacity (remeber
+we plan to have 20 clients per server)? In this case we will need a new server setup and running first. One simple solution is to always have couple of spare instances running;
+However, in the scenario of the SaaS server is very successful and clients are registering faster than you manually create servers, we need some automatic scaling solutions.
+Assume we are using the Amazon Web Service cloud, through which we can relatively create new instances on the fly.
+
+The flow of events will be
+1, start Hornetq server "192.168.2.2"
+2, start Bime-Controller server "192.168.2.3"
+3, start Haproxy server, which only has one routing rule "www.bime.com -> 192.168.2.3"
+On the queue server, there is queue "WorkerInstanceStatus", for Bime servers to report their status to Bime-Controller, thus Bime-Controller can have knowlege of "who is alive and serving
+which client", its own routing table.
+Right now there is nothing in the table, and nothing in the queue.
+First client register its lab
+4, Bime Controller checks its routing table, to find a suitable server instance which has space to add new client. In this case, exists.
+5, Bime Controller decides first a new server is needed; it will put a message into a special queue "CreateNewBimeInstance"
+5, also, Bime Controllerw will put the pending client to a pending client queue - there is no listener on this one though.
+5, then Bime Controller return the web. At front end, there is javascript to keep pooling url http://www.bime.com/status/lab444
+6, There is a system application listening to this queue, and will execute a script to create a new EC2 instance.
+In step 6, the AMI to create the EC2 instance already has all the necessary OS(Linux Ubuntu), packages(Java, tomcat, mysql etc) and Application(Bime) installed and configured.
+7, The new Bime instance will send the status message to the queue (it already knows the queue server ip) about its name and clients.
+8, Bime-Contrller listener gets the status message and update the routing table 
+9, If Bime-Controller notices any instance has 0 client - it will check whether there is any clients in the pending client queue.
+  

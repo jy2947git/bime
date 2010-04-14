@@ -1,0 +1,131 @@
+This file describes the system architecture of the Bime and Bime Controller Applications, potentially an architecture useful for SaaS type of system.
+
+What is Saas? It is Software As A Service. For example SaleForce.com. In the Bime case, it is a service to manage bi-medical labs.
+
+Bime itself is a typical J2EE web application with Spring MVC as web framework and MySql database.
+It has the common features like log in, log out, and various pages (mostly CRUD operations) to provide lab specific managements.
+(there will be another article to describe the Bime application architecture)
+
+For development purpose, start a Tomcat server, put in the Bime war, and set up MySql database. That is it.
+
+Now, the question is, how to make it a SaaS service? 
+In a typical SaaS environment, we will have clients(labs) to register on our web site (Bime Controller is for this purpose)
+and use the service. Can we use ONE tomcat sever and ONE mysql server to serve ALL the clients? Probably not. There are many issues with
+this sort of setting - as service provider, we need to achieve:
+1, scalability - means we can serve more clients just by adding more server instances (scale horizontally)
+2. performance - performance for individual clients will not detear with increasing clients
+3, availability - always available. one server down, will not affect all clients
+There is another concern is the Security, in our case, we really want to make sure every client will have their own MySql database (mysql database
+is different concept from mysql server, multiple mysql databases can stay in one mysql server)
+Also, we design the data model just as if it is only for ONE lab(client) - otherwise, we will end up with many tables having to have "lab-id" as foreign key.
+Treating data model as one client makes our development must easier and have better performance. The trade off, is Bime application is single-client oriented.
+One Bime one client. That is it.
+Last and very important too, we want to give users from different clients/labs a different url to use our service, for example,
+lab1.bime.com, lab2.bime.com, lab3.bime.com ...
+
+Even with above targets, it doesn't seem to be too difficult, does it? we can just do below
+
+http://lab1.bime.com                                     bime on tomcat1  -- lab1 database
+http://lab2.bime.com ------->   Haproxy/apache   ----->  bime on tomcat2  -- lab2 database
+http://lab3.bime.com                                     bime on tomcat3  -- lab3 database
+We just set one tomcat server for each client, and configure the Haproxy or Apache to route requests to appropriate Tomcat instance based on the URL.
+
+Now there is problem of cost - J2EE applications are notoriously resource consuming, especially with all the open source frameworks like Spring, Hibernate etc.
+The Bime application itself will need at least 512M memory to ensure production quality. To make it worse Java hosting is much more expensive than other platform like
+Php. Take slicehost.com as example, A 512M slice (20G hard drive, 300G bandwidth) is about 38$ per month. That is the cost of one tomcat instance;
+With above architecture, that means we need to charge 38x12=456$ per client/year, at least. It is difficult to sell.
+
+So, the challenge is, how to squeeze more clients into one Bime/tomcat?
+The solution is the RoutingDataSource - in our Bime application, we switch the data-source based on the URL (lab1, lab2...), this way, requests from
+different clients can all be served by same Bime application.
+In J2EE application, normally we define and use fixed data sources (url, user, password). But Spring has also a special "AbstractRoutingDataSource" - which can be used
+to decide dynamically a data source to use based on looking up any parameter. Its setting is like below
+    <bean id="DefaultDataSource"><property name="url" value="jdbc:mysql://localhost/demo"/>..</bean>
+	<bean id="lab1DataSource"><property name="url" value="jdbc:mysql://localhost/lab1"/>..</bean>
+	<bean id="lab2DataSource"><property name="url" value="jdbc:mysql://localhost/lab1"/>..</bean>
+	...
+	<bean id="UserRoutingDataSource" class="com.focaplo.myfuse.webapp.spring.UserRoutingDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="lab1" value-ref="lab1DataSource"/>
+				<entry key="lab2" value-ref="lab2DataSource"/>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource">
+			<ref bean="DefaultDataSource"/>
+		</property>
+	</bean>
+With help from UserRoutingDataSource, we(spring) can look up the key first, if it is "lab1" then use the "lab1DataSource" as underlying data source.
+(refer to com.focaplo.myfuse.webapp.spring.UserRoutingDataSource for detail)
+
+Now our new structure becomes
+http://lab1.bime.com                                     						lab1 database
+http://lab2.bime.com ------->   Haproxy/apache   ----->  bime on tomcat  --	    lab2 database
+http://lab3.bime.com                                     						lab3 database
+
+Now we can use ONE bime application to serve multiple clients - knowing that normally there are 10-20 end users per client, and they use the service only lightly, we can
+assume one tomcat-bime can serve about 20 clients (200 concurrent users). The cost per client is significantly reduced to 38/20=2$ per month, or 24$ per year.
+
+Below are what we do to achieve the routing data source.
+1, set up a request filter (which will execute per request before the servlet). It will do one thing - find out the client name from the URL "lab1.bime.com", and put it into
+a thread local variable. (refer to com.focaplo.myfuse.webapp.filter.ThreadBoundFilter, and com.focaplo.myfuse.webapp.spring.ThreadBoundContext)
+The thread local context is thread-safe. As long as our server stays with the one-thread-per-request model, we are safe here.
+2, later in the web application code, when we are doing any database operation, the Spring/Hibernate will use the UserRoutingDataSource to get database connections. The UserRoutingDataSource
+will then get the client name from the thread local context and return it as "key", and the appropriate "real" data source will be found.
+In general, it is sort of cheating, but works.
+
+Because we are talking about "data" here, we need to make sure it works as expected. We then do two things as safe-guard
+First, disable the Hibernate cache, esepcially the second-level cache.
+Second, because we have "id" primary key in every table (auto-increment), we make sure the "id" of same table will begin with different value for different clients.
+For example, for lab1, the "id" of table "Project" will begin from 1,000,000; for lab2, the "id" begin from 2,000,000
+This way, when lab1 user is requesting http://lab1.bime.com/project?id=1000001, and "for some unknown reason", the routing data source routes to lab2 data source, then,
+the user will get a 500 error because there is no record in lab2 table with id 1000001.
+
+There is still space to improve though. In above example application context file, we were hard-coding lab1, lab2 data sources and the routing table. That means, when
+a new client register with our service, we have to update this file and maybe re-start the application too. Can we make it more automatic too?
+
+Here is our solution - 
+First on our Linux server, we have below directory structure
+        Bime-Home/
+               Bime/
+               Lab1/
+                    to store anything specific to lab 1
+               Lab2/
+               Lab3/
+Basically for each client we have a dedicated directory for it under the "Bime-Home" root directory.
+When a client register successfully to our service, we (the Bime Controller application) will create new directory for the client and create a file "jdbc.properties" under
+the client directory. It has below content
+ 		jdbc.labName=test555
+		jdbc.driverClassName=com.mysql.jdbc.Driver
+		jdbc.url=jdbc:mysql://localhost/test555
+		jdbc.username=test555
+		jdbc.password=a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+This is the data source file for this particular client "test555".
+Then we create a "DynDataSourceRegister" in our application which will be called after application starts. It will scan the directories under "Bime-Home", and looking for
+the file "jdbc.properties". If it finds one, it will read and create a "data source bean" in Application Context with the parameters loaded from this file; It will then
+call the "UserRoutingDataSource" to add this new bean (along with its KEY) to the routing table. This way, we don't need ever to change the application context file and
+all the client data sources will be loaded automatically when application starts.
+To make this adding-data-source also happen in runtime, we create a new Spring MVC controller "AddDataSourceController", to call the "UserRoutingDataSource" to add data source
+on the fly, by giving the client directory name.
+So, assume one client "lab123" just registered on our web, and the "Bime Controller" web app will do below
+1, create a directory "lab123" under "Bime-Home"
+2, create jdbc.properties file
+3, send http request to http://www.bime.com/AddDataSource?dir=lab123. And the new data source is automatically loaded to runtime. It will also be loaded automatically next time
+when application restarts.
+
+We talked about the creating and loading data source for new client, how about the database itself?
+In above example, when the "Bime Controller" prepares stuff for the new client, it will also create some sql files under the client directory:
+1, dropDatabase.sql (drop the lab database and user)
+2, createDatabase.sql (create lab database and user)
+3, initialize_system.sql (populate initialize system data)
+4, initialize_lab.sql (populate initial lab use data)
+5, auto_increment.sql (reset the auto-increment integer)
+6, schema.sql (create tables)
+Basically these sql files are generated from templates and contains all the necessary sql statements to create a database and user named "lab123", and create all the tables,
+and populate initial static data. Also, it will set up the initial id through the "auto_increment.sql"
+A shell script "refreshMysql.sh" will combine these sql scripts and execute agaist the MySql server. The "Bime Controller" can run it and create a new MySql database
+for the client.
+
+Above file operations and scripts executions are fine if "Bime-Controller" and "Bime" are deployed on the same Linux box; however, in real production environment, chances are
+In a real scaled and clustered environment, we most possibly will have one server to host the "bime-controller" and N server to host "bime" application, so we need to set up
+some soft of communication channel between the controller(bime-controller) and the workder(bime) servers, which we will talk in the next article.

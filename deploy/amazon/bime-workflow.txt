@@ -1,0 +1,120 @@
+
+1, get Elastic IP 1.2.3.4, which will be used for the company site www.bime.com
+2, configure the bime app on focaplo.dnddojo.com to use the 1.2.3.4 as JMS host.
+3, configure DNS
+
+Now to create a AMI for Bime execution unit
+1, get a EC2 instance with ubuntu server AMI
+2, log on with ubuntu, download the amazon-bime-only-ec2-setup.sh from focaplo.dnsdojo.com to home directory
+3, execute the bime-set-up.sh which will do below
+1)install zip, curl
+1)install apache
+2)install key to access focaplo.dnsdojo.com with scp
+3)install open jdk
+4)install tomcat
+5)install ant
+6)configure apache to connect to tomcat (mod-jk, worker.properties), download server certificate, configure apache SSL, configure virtual host on 443
+7)create bime directory
+8)download bime.zip from focaplo.dnsdojo.com and unzip
+9)remove existing apps from tomcat, and configure bime app (local bime database, remote queue)
+10)install my-sql server and my-sql client
+11)start my-sql server
+12)start tomcat
+13)start apache
+
+Now we have a EC2 instance with Apache-tomcat-bime running with MySql (local)
+
+Create AMI "bime_execution_unit" from this instance, and save to Amazon.
+
+Now to create a AMI with bime and bime-controller, which will be the "corporate" site
+
+terminate the ec2 instance.
+1, get a new ec2 instance with ubuntu AMI
+2, log on with ubuntu, download the amazon-bime-and-controller-ec2-setup.sh from focaplo.dnsdojo.com to home directory
+3, run the script, which will install and configure everything including bime and bime-controller
+
+
+Create AMI "bime-and-controller-execution-unit" from this instance and save to Amazon
+
+terminate the instance.
+
+System initialize:
+1, create EC2 instance from "bime-and-controller-execution-unit" AMI
+2, assign Elastic IP to the new instance
+Now https://bime.bime.com and http://www.bime.com will work.
+
+
+Add a client
+1, client lab-A register with http://www.bime.com, and validate through url. click submit button.
+2, controller first register a EBS volume 10G volume, record its name
+2, controller will check whether there is any stand-by execution-unit available. If so, go to 3
+If not, create a new EC2 instance from AMI "bime-execution-unit", record the EC2 instance name.
+The new instance (and every instance) already has bime installed. Once the tomcat server starts, it will first figure out its NAME, start to listen to CreateNewLab topic, and send status message to STATUS queue periodically.
+Controller will maintain a table of current running bime units (name, labs)
+Controller check again to see whether there is any bime units which has space to add a new lab.
+
+3, controller attach the EBS volume to the bime instance, /shd/ebs22222
+4, controller send a topic to all bime units: create-lab-with-name-and-password-and-ebs22222, with client id to be the available unit name.
+5, Bime at the execution instance get the create-lab message. It will mount the /sdh/ebs22222 to /var/lib/sql/lab-name
+6, run the refresh-my-sql script to create the database, user, tables, and initiate the lab. Then, bime will register the new data source in its routing table.
+7, bime send status message to controller including the new lab
+8, controller get the status message and send success to front-end
+
+Backup of MySql data file
+1, controller will create EBS snap-shots every hour.
+2, if more than 2 snap-shots available, only keep 2
+3, record lab-name -> snap-shot name, timestamp
+
+Backup of S3 file
+1, run from focaplo.dnsdojo.com to download from S3 to local drive.
+2, record upload-file-id (my-sql-db-id) -> local file path.
+3, every day, the local program check the S3 or bime databases to find the un-backed-up files. If found then download.
+
+Monitor status
+1, monitor execution unit and EBS status. S3 is not monitored.
+2, bime collect status of EC2 and EBS every minute and send status message to controller queue
+3, information include - EC2:OK, Name:12344, Lab1: web, http://lab1.bime.com/heartbeat, mysql:select from lab1.lab return OK. Storage: EBS availability >20% of total size
+
+Detection
+1, if status message of particular execution unit has not been received for 5 minute, category as EC2 failure.
+2, if status message received, but any lab web not OK
+3, if status message received, but any lab my-sql not OK
+4, EBS volume size availability < 20%
+
+Recovery
+1, if EC2 failure
+first remove the labs of this instance from in-memory table (for load-balancer)
+terminate EBS volumes attached to this ec2
+terminate EC2
+register EBS volume, with snapshot of the old EBS volume
+create a new ec2 with AMI
+run steps 2,3,4,5 of "Add a client"
+update in-memory table with new instance
+
+2, if lab-web failure
+remove failed lab from in-memory table
+execution unit will send status message which will update in-memory table
+
+3, if lab-db failure
+removed failed lab from in-memory table
+terminate EBS volume of the lab
+register new EBS with snapshot
+run steps of "add a client" steps 3,4,5
+update in-memory table with new lab
+
+4, EBS volume availability < 20%
+same as 3 except new EBS volume will double
+
+
+Scalability
+1, ec2 instance CPU > 80%
+split the existing labs to 2 ec2 instances (create a new instance and move half labs there)
+first decide which labs are to be removed
+then remove the lab records from in-memory table
+register a new EC2 instance
+run steps 3, 4, 5 of "add a client"
+
+
+
+
+

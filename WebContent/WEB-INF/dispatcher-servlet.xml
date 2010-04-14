@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<context:annotation-config />
+
+
+    <bean id="exceptionResolver" class="com.focaplo.myfuse.webapp.spring.MyExceptionHandler">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.dao.DataAccessException">        
+                    dataAccessFailure
+                </prop>
+                <prop key="com.focaplo.myfuse.exception.UnauthorizedAccessException">        
+                    unauthorizedAccessFailure
+                </prop>
+            </props>
+        </property>
+        <property name="defaultErrorView" value="generalFailure" />
+        <property name="toAddress" value="${bime.support.to.address}" />
+        <property name="ccAddress" value="${bime.support.cc.address}" />
+    </bean>
+
+    <bean id="filenameController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController"/>
+
+    <bean id="fileUploadController" class="com.focaplo.myfuse.webapp.controller.FileUploadController">
+        <property name="validator" ref="beanValidator"/>
+        <property name="cancelView" value="redirect:mainMenu.html"/>
+        <property name="formView" value="uploadForm"/>
+        <property name="successView" value="uploadDisplay"/>
+    </bean>
+
+    <bean id="passwordHintController" class="com.focaplo.myfuse.webapp.controller.PasswordHintController">
+        <property name="userManager" ref="userManager"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+    </bean>
+
+    <bean id="reloadController" class="com.focaplo.myfuse.webapp.controller.ReloadController"/>
+
+    <bean id="signupController" class="com.focaplo.myfuse.webapp.controller.SignupController">
+        <property name="validator" ref="beanValidator"/>
+        <property name="formView" value="signup"/>
+        <property name="successView" value="redirect:mainMenu.html"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+        <property name="templateName" value="accountCreated.vm"/>
+    </bean>
+
+    <bean id="userController" class="com.focaplo.myfuse.webapp.controller.UserController">
+        <property name="userManager" ref="userManager"/>
+    </bean>
+
+    <bean id="userFormController" class="com.focaplo.myfuse.webapp.controller.UserFormController">
+        <property name="validator" ref="beanValidator"/>
+        <property name="formView" value="userForm"/>
+        <property name="successView" value="redirect:users.html"/>
+        <property name="cancelView" value="redirect:mainMenu.html"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+        <property name="templateName" value="accountCreated.vm"/>
+    </bean>
+
+    <!-- Add additional controller beans here -->
+    <bean id="equipmentListController" class="com.focaplo.myfuse.webapp.controller.EquipmentListController">
+		<property name="includedListView" value="inventory/include/include_equipmentListTable"/>
+		<property name="listView" value="inventory/equipmentList"/>
+	</bean>
+	<bean id="equipmentFormController" class="com.focaplo.myfuse.webapp.controller.EquipmentFormController">
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/inventory/equipmentForm"/>
+        <property name="successView" value="redirect:equipmentList.html"/>
+        <property name="cancelView" value="redirect:equipmentList.html"/>
+	</bean>
+	
+	<bean id="itemCategoryListController" class="com.focaplo.myfuse.webapp.controller.ItemCategoryListController">
+		<property name="includedListView" value="inventory/include/include_itemCategoryListTable"/>
+		<property name="listView" value="inventory/itemCategoryList"/>
+	</bean>
+	<bean id="itemCategoryFormController" class="com.focaplo.myfuse.webapp.controller.ItemCategoryFormController">
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/inventory/itemCategoryForm"/>
+        <property name="successView" value="redirect:itemCategoryList.html"/>
+        <property name="cancelView" value="redirect:itemCategoryList.html"/>
+	</bean>
+	
+	<bean id="orderListController" class="com.focaplo.myfuse.webapp.controller.OrderListController">
+		<property name="includedListView" value="inventory/include/include_orderListTable"/>
+		<property name="listView" value="inventory/orderList"/>
+	</bean>
+	<bean id="orderFormController" class="com.focaplo.myfuse.webapp.controller.OrderFormController">
+		<property name="orderManager" ref="orderManager"/>
+		<property name="userManager" ref="userManager"/>
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/inventory/orderForm"/>
+        <property name="successView" value="redirect:orderList.html"/>
+        <property name="cancelView" value="redirect:orderList.html"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+	</bean>
+	<bean id="inventoryItemListController" class="com.focaplo.myfuse.webapp.controller.InventoryItemListController">
+		<property name="includedListView" value="inventory/include/include_itemListTable"/>
+		<property name="listView" value="inventory/itemList"/>
+	</bean>
+	<bean id="inventoryItemFormController" class="com.focaplo.myfuse.webapp.controller.InventoryItemFormController">
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/inventory/itemForm"/>
+        <property name="successView" value="redirect:itemList.html"/>
+        <property name="cancelView" value="redirect:itemList.html"/>
+	</bean>
+	
+	<bean id="refrigeratorListController" class="com.focaplo.myfuse.webapp.controller.RefrigeratorListController">
+		<property name="includedListView" value="inventory/include/include_refrigeratorListTable"/>
+		<property name="listView" value="inventory/refrigeratorList"/>
+	</bean>
+	<bean id="refrigeratorFormController" class="com.focaplo.myfuse.webapp.controller.RefrigeratorFormController">
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/inventory/refrigeratorForm"/>
+        <property name="successView" value="redirect:refrigeratorList.html"/>
+        <property name="cancelView" value="redirect:refrigeratorList.html"/>
+	</bean>
+	
+	<bean id="storageOthersListController" class="com.focaplo.myfuse.webapp.controller.StorageOthersListController">
+		<property name="includedListView" value="inventory/include/include_storageOthersListTable"/>
+		<property name="listView" value="inventory/othersList"/>
+	</bean>
+	<bean id="storageOthersFormController" class="com.focaplo.myfuse.webapp.controller.StorageOthersFormController">
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/inventory/othersForm"/>
+        <property name="successView" value="redirect:othersList.html"/>
+        <property name="cancelView" value="redirect:othersList.html"/>
+	</bean>
+	
+	
+	<bean id="projectListController" class="com.focaplo.myfuse.webapp.controller.ProjectListController">
+		<property name="includedListView" value="project/include/include_projectListTable"/>
+		<property name="listView" value="project/projectList"/>
+	</bean>
+	<bean id="projectFormController" class="com.focaplo.myfuse.webapp.controller.ProjectFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="userManager" ref="userManager"/>
+		<property name="userConverter" ref="userConverter"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/projectForm"/>
+        <property name="successView" value="redirect:projectList.html"/>
+        <property name="cancelView" value="redirect:projectList.html"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+	</bean>
+	<bean id="projectAccessFormController" class="com.focaplo.myfuse.webapp.controller.ProjectAccessFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="userManager" ref="userManager"/>
+        <property name="formView" value="/project/projectAccessForm"/>
+        <property name="successView" value="redirect:projectAccessForm.html"/>
+        <property name="cancelView" value="redirect:projectForm.html"/>
+	</bean>
+	<bean id="protocolListController" class="com.focaplo.myfuse.webapp.controller.ProtocolListController">
+		<property name="includedListView" value="project/include/include_protocolListTable"/>
+		<property name="listView" value="project/protocolList"/>
+	</bean>
+	<bean id="protocolFormController" class="com.focaplo.myfuse.webapp.controller.ProtocolFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/protocolForm"/>
+        <property name="successView" value="redirect:protocolList.html"/>
+        <property name="cancelView" value="redirect:protocolList.html"/>
+	</bean>
+	
+
+	<bean id="experimentNoteListController" class="com.focaplo.myfuse.webapp.controller.ExperimentNoteListController">
+		<property name="includedListView" value="project/include/include_noteListTable"/>
+		<property name="listView" value="project/noteList"/>
+	</bean>
+	<bean id="experimentNoteFormController" class="com.focaplo.myfuse.webapp.controller.ExperimentNoteFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="userManager" ref="userManager"/>
+		<property name="projectConverter" ref="projectConverter"/>
+		<property name="protocolConverter" ref="protocolConverter"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/noteForm"/>
+        <property name="successView" value="redirect:noteList.html"/>
+        <property name="cancelView" value="redirect:noteList.html"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+	</bean>
+	<bean id="experimentImageUploadController" class="com.focaplo.myfuse.webapp.controller.ExperimentImageUploadController">
+		<property name="projectManager" ref="projectManager"/>
+        <property name="validator" ref="beanValidator"/>
+        <property name="cancelView" value="redirect:noteList.html"/>
+        <property name="formView" value="uploadForm"/>
+        <property name="successView" value="redirect:noteList.html"/>
+    </bean>
+    <bean id="experimentImageDownloadController" class="com.focaplo.myfuse.webapp.controller.ExperimentNoteImpageDownloadController">
+   	 <property name="projectManager" ref="projectManager"/>
+    </bean>
+    <bean id="experimentImageListController" class="com.focaplo.myfuse.webapp.controller.ExperimentImageListController">
+    
+    </bean>
+    <!--  
+    <bean id="workPlanListController" class="com.focaplo.myfuse.webapp.controller.WorkPlanListController">
+		<property name="projectManager" ref="projectManager"/>
+	</bean>
+	<bean id="workPlanFormController" class="com.focaplo.myfuse.webapp.controller.WorkPlanFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="projectConverter" ref="projectConverter"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/workplanForm"/>
+        <property name="successView" value="redirect:monthlyWorkplanList.html"/>
+        <property name="cancelView" value="redirect:monthlyWorkplanList.html"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+	</bean>
+	<bean id="workMonthlyPlanFormController" class="com.focaplo.myfuse.webapp.controller.WorkMonthlyPlanFormController" parent="workPlanFormController">
+		
+	</bean>
+	<bean id="workWeeklyPlanFormController" class="com.focaplo.myfuse.webapp.controller.WorkWeeklyPlanFormController" parent="workPlanFormController">
+		
+	</bean>
+	<bean id="workPlanItemFormController" class="com.focaplo.myfuse.webapp.controller.WorkPlanItemFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/include/include_workPlanItemForm"/>
+        <property name="successView" value="redirect:/project/include/include_workPlanItemForm.html"/>
+        <property name="cancelView" value="redirect:workplanForm.html"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+	</bean>
+	-->
+	<bean id="toDoListController" class="com.focaplo.myfuse.webapp.controller.ToDoListController">
+		<property name="includedListView" value="project/include/include_toDoListTable"/>
+		<property name="listView" value="project/toDoList"/>
+	</bean>
+	
+	<bean id="toDoFormController" class="com.focaplo.myfuse.webapp.controller.ToDoFormController">
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/toDoForm"/>
+        <property name="successView" value="redirect:/project/toDoList.html"/>
+        <property name="cancelView" value="redirect:/project/toDoList.html"/>
+	</bean>
+	
+	<bean id="workLogListController" class="com.focaplo.myfuse.webapp.controller.WorkLogListController">
+		<property name="includedListView" value="project/include/include_workLogListTable"/>
+		<property name="listView" value="project/include/include_workLogListTable"/>
+	</bean>
+	
+	<bean id="workLogFormController" class="com.focaplo.myfuse.webapp.controller.WorkLogFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/include/include_workLogForm"/>
+        <property name="successView" value="redirect:/project/include/include_workLogForm.html"/>
+        <property name="cancelView" value="redirect:/project/include/include_workLogForm.html"/>
+	</bean>
+	
+	
+	<bean id="workPlanItemListController" class="com.focaplo.myfuse.webapp.controller.WorkPlanItemListController">
+		<property name="projectManager" ref="projectManager"/>
+	</bean>
+	
+	<bean id="meetingListController" class="com.focaplo.myfuse.webapp.controller.MeetingListController">
+		<property name="includedListView" value="lab/include/include_meetingListTable"/>
+		<property name="listView" value="lab/meetingList"/>
+	</bean>
+	<bean id="meetingFormController" class="com.focaplo.myfuse.webapp.controller.MeetingFormController">
+		<property name="labManager" ref="labManager"/>
+		<property name="userManager" ref="userManager"/>
+		<property name="userConverter" ref="userConverter"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/lab/meetingForm"/>
+        <property name="successView" value="redirect:meetingList.html"/>
+        <property name="cancelView" value="redirect:meetingList.html"/>
+	</bean>
+	
+	<bean id="meetingItemListController" class="com.focaplo.myfuse.webapp.controller.MeetingItemListController">
+		<property name="includedListView" value="lab/include/include_meetingItemListTable"/>
+		<property name="listView" value="lab/meetingItemList"/>
+	</bean>
+	<bean id="meetingItemFormController" class="com.focaplo.myfuse.webapp.controller.MeetingItemFormController">
+		<property name="labManager" ref="labManager"/>
+		<property name="userManager" ref="userManager"/>
+		<property name="userConverter" ref="userConverter"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/lab/meetingItemForm"/>
+        <property name="successView" value="redirect:meetingItemList.html"/>
+        <property name="cancelView" value="redirect:meetingItemList.html"/>
+	</bean>
+	<bean id="meetingPrintController" class="com.focaplo.myfuse.webapp.controller.MeetingPrintController">
+		<property name="labManager" ref="labManager"/>
+	</bean>
+	<bean id="meetingFileListController" class="com.focaplo.myfuse.webapp.controller.MeetingFileListController">
+		<property name="labManager" ref="labManager"/>
+		<property name="listView" value="lab/meetingFileList"/>
+		<property name="includedListView" value="lab/include/include_meetingFileListTable"/>
+		
+	</bean>
+	<bean id="meetingFileUploadController" class="com.focaplo.myfuse.webapp.controller.MeetingFileUploadController">
+		<property name="labManager" ref="labManager"/>
+        <property name="validator" ref="beanValidator"/>
+        <property name="cancelView" value="redirect:meetingFileist.html"/>
+        <property name="formView" value="uploadForm"/>
+        <property name="successView" value="redirect:meetingFileList.html"/>
+    </bean>
+    
+    <bean id="meetingFileDownloadController" class="com.focaplo.myfuse.webapp.controller.MeetingFileDownloadController">
+		<property name="labManager" ref="labManager"/>
+    </bean>
+    
+	<bean id="grantListController" class="com.focaplo.myfuse.webapp.controller.GrantListController">
+		<property name="grantManager" ref="grantManager"/>
+	</bean>
+	<bean id="grantFormController" class="com.focaplo.myfuse.webapp.controller.GrantFormController">
+		<property name="grantManager" ref="grantManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/grant/grantForm"/>
+        <property name="successView" value="redirect:grantList.html"/>
+        <property name="cancelView" value="redirect:grantList.html"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="message" ref="mailMessage"/>
+	</bean>
+	<bean id="dashboardController" class="com.focaplo.myfuse.webapp.controller.DashboardController">
+		<property name="grantManager" ref="grantManager"/>
+		<property name="projectManager" ref="projectManager"/>
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="orderManager" ref="orderManager"/>
+		<property name="userManager" ref="userManager"/>
+	</bean>
+	<bean id="reportListController" class="com.focaplo.myfuse.webapp.controller.ReportListController">
+		<property name="userManager" ref="userManager"/>
+	</bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5242880"/> <!-- 5M limit -->
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="ApplicationResources"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+	<bean id="createLabController" class="com.focaplo.myfuse.webapp.controller.CreateLabController">
+		<property name="dynDataSourceRegister"><ref bean="dynDataSourceRegister"/></property>
+	</bean>
+	<bean id="removeLabController" class="com.focaplo.myfuse.webapp.controller.RemoveLabController">
+		
+	</bean>
+	
+	
+	<bean id="projectControllerInterceptor" class="com.focaplo.myfuse.webapp.controller.ProjectControllerInterceptor">
+	</bean>
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="projectControllerInterceptor"/>
+            </list>
+        </property>
+        
+        <property name="mappings">
+            <value>
+                /admin/activeUsers.html=filenameController
+                /admin/flushCache.html=filenameController
+                /admin/reload.html=reloadController
+                /admin/users.html=userController
+                /mainMenu.html=filenameController
+                /passwordHint.html=passwordHintController
+                /inventory/index.html=refrigeratorListController
+                /inventory/storage/index.html=refrigeratorListController
+                /inventory/refrigeratorList.html=refrigeratorListController
+                /inventory/include/include_refrigeratorListTable.html=refrigeratorListController
+                /inventory/refrigeratorForm.html=refrigeratorFormController
+                 
+                /inventory/othersList.html=storageOthersListController
+                /inventory/include/include_storageOthersListTable.html=storageOthersListController
+                /inventory/othersForm.html=storageOthersFormController
+                
+                /inventory/equipmentList.html=equipmentListController
+                /inventory/equipmentForm.html=equipmentFormController
+                /inventory/include/include_equipmentListTable.html=equipmentListController
+              
+
+                /inventory/itemList.html=inventoryItemListController
+                /inventory/include/include_itemListTable.html=inventoryItemListController
+                /inventory/itemForm.html=inventoryItemFormController
+                
+               
+                /inventory/orderList.html=orderListController
+                /inventory/include/include_orderListTable.html=orderListController
+                /inventory/orderForm.html=orderFormController
+                
+                /inventory/itemCategoryList.html=itemCategoryListController
+                /inventory/include/include_itemCategoryListTable.html=itemCategoryListController
+                /inventory/itemCategoryForm.html=itemCategoryFormController
+                
+                /grant/grantList.html=grantListController
+                /grant/grantListForm.html=grantListController
+                /grant/grantForm.html=grantFormController
+                
+                /project/projectList.html=projectListController
+                /project/include/include_projectListTable.html=projectListController
+                /project/projectForm.html=projectFormController
+                /project/projectAccessForm.html=projectAccessFormController
+                
+                /project/protocolList.html=protocolListController
+                /project/include/include_protocolListTable.html=protocolListController
+                /project/protocolForm.html=protocolFormController
+                
+                /project/noteList.html=experimentNoteListController
+                /project/include/include_noteListTable.html=experimentNoteListController
+                /project/noteForm.html=experimentNoteFormController
+                /project/include/include_experimentImageListTable.html=experimentImageListController
+                /project/noteImageUpload.html=experimentImageUploadController
+				/project/noteImageDownload.html=experimentImageDownloadController
+                /project/toDoForm.html=toDoFormController
+                /project/include/include_toDoListTable.html=toDoListController
+                /project/toDoList.html=toDoListController
+                
+                /project/include/include_workLogListTable.html=workLogListController
+                /project/include/include_workLogForm.html=workLogFormController
+                
+                /lab/meetingList.html=meetingListController
+                /lab/include/include_meetingListTable.html=meetingListController
+                /lab/meetingForm.html=meetingFormController
+                /lab/include/include_meetingPrint.html=meetingPrintController
+                /lab/meetingFileDownload.html=meetingFileDownloadController
+                /lab/meetingItemList.html=meetingItemListController
+                /lab/include/include_meetingItemListTable.html=meetingItemListController
+                /lab/meetingItemForm.html=meetingItemFormController
+                /lab/meetingFileList.html=meetingFileListController
+                /lab/meetingFileUpload.html=meetingFileUploadController
+                /lab/include/include_meetingFileListTable.html=meetingFileListController
+                
+                /report/reportList.html=reportListController
+                /dashboard/my.html=dashboardController
+                
+                /addLab.html=createLabController
+                /removeLab.html=removeLabController
+            </value>
+        </property>
+        <property name="order" value="0"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+        <property name="order" value="1"/>
+    </bean>
+
+    <!-- View Resolver for JSPs -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="requestContextAttribute" value="rc"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    
+    <bean id="projectConverter" class="com.focaplo.myfuse.webapp.support.ManagedProjectConverter">
+	       <property name="projectManager"><ref bean="projectManager"/></property>
+	</bean>
+	 
+	 <bean id="protocolConverter" class="com.focaplo.myfuse.webapp.support.ExperimentProtocolConverter">
+	       <property name="projectManager"><ref bean="projectManager"/></property>
+	 </bean>
+	    
+	 <bean id="userConverter" class="com.focaplo.myfuse.webapp.support.UserConverter">
+	       <property name="userManager" ref="userManager"/>
+	 </bean>    		       		
+   
+</beans>

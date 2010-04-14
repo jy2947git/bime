@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+     <global>
+      <constant>
+        <constant-name>phone</constant-name>
+        <constant-value>^\(?(\d{3})\)?[-| ]?(\d{3})[-| ]?(\d{4})$</constant-value>
+      </constant>
+      <constant>
+        <constant-name>zip</constant-name>
+        <constant-value>^\d{5}\d*$</constant-value>
+      </constant>
+      <constant>
+        <constant-name>currency</constant-name>
+        <constant-value>^\d{1,3}(,?\d{1,3})*\.?(\d{1,2})?$</constant-value>
+      </constant> 
+   </global>
+   <formset>
+        <form name="fileUpload">
+
+            <!-- Client-side Javascript won't catch this in IE, but server-side will -->
+            <field property="file" depends="required">
+                <arg0 key="uploadForm.file"/>
+            </field>
+        </form>
+    </formset>
+
+  <formset>
+  <!--
+    Define form validation config in validation-forms.xml
+  -->
+<!--  
+      <form name="address">
+              <field property="city"
+                     depends="required">
+
+                  <arg0 key="address.city"/>
+              </field>
+              <field property="country"
+                     depends="required">
+
+                  <arg0 key="address.country"/>
+              </field>
+              <field property="postalCode"
+                     depends="required,mask">
+                  <msg
+                    name="mask"
+                    key="errors.zip"/>
+
+                  <arg0 key="address.postalCode"/>
+                  <var>
+                    <var-name>mask</var-name>
+                    <var-value>${zip}</var-value>
+                  </var>
+              </field>
+              <field property="province"
+                     depends="required">
+
+                  <arg0 key="address.province"/>
+              </field>
+      </form>
+      -->
+      <form name="equipment">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="equipment.name"/>
+              </field>
+      </form>
+      <form name="itemCategory">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="itemCategory.name"/>
+              </field>
+      </form>
+      <form name="labMeeting">
+              <field property="subject"
+                     depends="required">
+
+                  <arg0 key="meeting.subject"/>
+              </field>
+              <field property="startDate"
+                     depends="required">
+
+                  <arg0 key="meeting.startDate"/>
+              </field>
+              <field property="endDate"
+                     depends="required">
+
+                  <arg0 key="meeting.endDate"/>
+              </field>
+              <field property="message"
+                     depends="required">
+
+                  <arg0 key="meeting.message"/>
+              </field>
+      </form>
+      <form name="labMeetingItem">
+              <field property="speaker"
+                     depends="required">
+
+                  <arg0 key="meeting.speaker"/>
+              </field>
+              <field property="topic"
+                     depends="required">
+
+                  <arg0 key="meeting.topic"/>
+              </field>
+      </form>
+      <form name="managedProject">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="project.name"/>
+              </field>
+              <field property="principal"
+                     depends="required">
+
+                  <arg0 key="project.principal"/>
+              </field>
+              <field property="status"
+                     depends="required">
+
+                  <arg0 key="project.status"/>
+              </field>
+      </form>
+      <form name="experimentProtocol">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="protocol.name"/>
+              </field>
+              <field property="experimentProcedure"
+                     depends="required">
+
+                  <arg0 key="protocol.experimentProcedure"/>
+              </field>
+      </form>
+      <form name="experimentNote">
+              <field property="notes"
+                     depends="required">
+
+                  <arg0 key="note.notes"/>
+              </field>
+      </form>
+      <form name="workPlan">
+      		<field property="planType"
+                     depends="required">
+
+                  <arg0 key="workplan.planType"/>
+             </field>
+             <field property="planIdentity"
+                     depends="required">
+
+                  <arg0 key="workplan.planIdentity"/>
+             </field>
+             <field property="status"
+                     depends="required">
+
+                  <arg0 key="workplan.status"/>
+             </field>
+
+      </form>
+      <form name="workMonthlyPlan">
+      		<field property="planType"
+                     depends="required">
+
+                  <arg0 key="workplan.planType"/>
+             </field>
+             <field property="planIdentity"
+                     depends="required">
+
+                  <arg0 key="workplan.planIdentity"/>
+             </field>
+             <field property="status"
+                     depends="required">
+
+                  <arg0 key="workplan.status"/>
+             </field>
+
+      </form>
+      <form name="workWeeklyPlan">
+      		<field property="planType"
+                     depends="required">
+
+                  <arg0 key="workplan.planType"/>
+             </field>
+             <field property="planIdentity"
+                     depends="required">
+
+                  <arg0 key="workplan.planIdentity"/>
+             </field>
+             <field property="status"
+                     depends="required">
+
+                  <arg0 key="workplan.status"/>
+             </field>
+
+      </form>
+      <form name="toDo">
+             <field property="message"
+                     depends="required">
+
+                  <arg0 key="toDo.message"/>
+             </field>
+             <field property="status"
+                     depends="required">
+
+                  <arg0 key="toDo.status"/>
+             </field>
+			<field property="subject"
+                     depends="required">
+
+                  <arg0 key="toDo.subject"/>
+             </field>
+      </form>
+      <form name="workLog">
+             <field property="message"
+                     depends="required">
+
+                  <arg0 key="workLog.message"/>
+             </field>
+      </form>
+      <form name="managedGrant">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="grant.name"/>
+              </field>
+      </form>
+      <form name="storageOthers">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="storage.name"/>
+              </field>
+      </form>
+      <form name="refrigerator">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="refrigerator.name"/>
+              </field>
+      </form>
+      <form name="managedOrder">
+              <field property="accountNumber"
+                     depends="required">
+
+                  <arg0 key="order.accountNumber"/>
+              </field>
+      </form>
+      <form name="orderItemDetail">
+      		<field property="itemCategoryId"
+                     depends="required">
+
+                  <arg0 key="order.itemCategoryId"/>
+              </field>
+              <field property="editItemAmount"
+                     depends="required,integer">
+
+                  <arg0 key="order.editItemAmount"/>
+              </field>
+              <field property="editItemUnitPrice"
+                     depends="required,double">
+
+                  <arg0 key="order.editItemUnitPrice"/>
+              </field>
+              <field property="editItemTotalCost"
+                     depends="required,double">
+
+                  <arg0 key="order.editItemTotalCost"/>
+              </field>
+      </form>
+      <form name="managedItemWrapper">
+              <field property="itemCategoryId"
+                     depends="required">
+
+                  <arg0 key="itemCategory.name"/>
+              </field>
+      </form>
+      <form name="user">
+              <field property="username"
+                     depends="required">
+
+                  <arg0 key="user.username"/>
+              </field>
+              <field property="password"
+                     depends="required,twofields">
+                  <msg
+                    name="twofields"
+                    key="errors.twofields"/>
+
+                  <arg0 key="user.password"/>
+                  <arg1
+                    key="user.confirmPassword"
+                  />
+                  <var>
+                    <var-name>secondProperty</var-name>
+                    <var-value>confirmPassword</var-value>
+                  </var>
+              </field>
+              <field property="confirmPassword"
+                     depends="required">
+
+                  <arg0 key="user.confirmPassword"/>
+              </field>
+              <field property="firstName"
+                     depends="required">
+
+                  <arg0 key="user.firstName"/>
+              </field>
+              <field property="lastName"
+                     depends="required">
+
+                  <arg0 key="user.lastName"/>
+              </field>
+              <!--  
+              <field property="address.city"
+                     depends="required">
+
+                  <arg0 key="user.address.city"/>
+              </field>
+              <field property="address.country"
+                     depends="required">
+
+                  <arg0 key="user.address.country"/>
+              </field>
+              <field property="address.postalCode"
+                     depends="required,mask">
+                  <msg
+                    name="mask"
+                    key="errors.zip"/>
+
+                  <arg0 key="user.address.postalCode"/>
+                  <var>
+                    <var-name>mask</var-name>
+                    <var-value>${zip}</var-value>
+                  </var>
+              </field>
+              <field property="address.province"
+                     depends="required">
+
+                  <arg0 key="user.address.province"/>
+              </field>
+              -->
+              <field property="email"
+                     depends="required,email">
+
+                  <arg0 key="user.email"/>
+              </field>
+              <field property="workPhoneNumber"
+                     depends="mask">
+                  <msg
+                    name="mask"
+                    key="errors.phone"/>
+
+                  <arg0 key="user.workPhoneNumber"/>
+                  <var>
+                    <var-name>mask</var-name>
+                    <var-value>${phone}</var-value>
+                  </var>
+              </field>
+              <field property="passwordHint"
+                     depends="required">
+
+                  <arg0 key="user.passwordHint"/>
+              </field>
+      </form>
+  </formset>
+</form-validation>

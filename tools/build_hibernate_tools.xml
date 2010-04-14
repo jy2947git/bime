@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hibernateTools" default="recreateDatabase" basedir="../">
+	<property file="${basedir}/tools/hibernate_tools.properties"/>
+	<path id="hibernate_tools_lib">
+		<fileset dir="${basedir}/tools">
+			<include name="**/*.jar"/>
+			<include name="**/*.xml"/>
+		</fileset>
+	</path>
+	<path id="app.lib">
+		<fileset dir="${basedir}/WebContent/WEB-INF/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	<path id="class.path">
+		<path refid="hibernate_tools_lib"/>
+		<path refid="app.lib"/>
+	</path>
+	
+	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask">
+		<classpath>
+			<pathelement path="${basedir}/build/classes"/>
+			<path refid="class.path"/>
+		</classpath>
+	</taskdef>
+	
+	<target name="clean">
+		<delete dir="${basedir}/build/classes"/>
+		<mkdir dir="${basedir}/build/classes"/>
+	</target>
+	<target name="compile" depends="clean">
+		<javac srcdir="${basedir}/src" includes="com/focaplo/myfuse/model/**" destdir="${basedir}/build/classes">
+			<classpath>
+				<path refid="class.path"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="generateDDL" depends="compile">
+		<hibernatetool destdir="${basedir}/deploy/mysql">
+			<classpath>
+				<pathelement path="${basedir}/build/classes"/>
+				<path refid="class.path"/>
+			</classpath>
+ 			<annotationconfiguration configurationfile="${basedir}/tools/hibernate.cfg.xml"/>
+ 			<hbm2ddl export="false" outputfilename="schema.sql"/>
+
+		</hibernatetool>
+	</target>
+	
+	<target name="recreateDatabase" depends="generateDDL">
+		<sql url="${jdbc.url}" userid="${jdbc.user}" password="${jdbc.password}" driver="${jdbc.driver}" classpath="${basedir}/tools/mysql-connector-java-5.1.10-bin.jar">
+			<transaction src="${basedir}/deploy/mysql/dropDatabase.sql"/>
+			<transaction src="${basedir}/deploy/mysql/createDatabase.sql"/>
+			<transaction src="${basedir}/deploy/mysql/schema.sql"/>
+			<transaction src="${basedir}/deploy/mysql/initialize_system.sql"/>
+			<transaction src="${basedir}/deploy/mysql/initialize_lab.sql"/>	
+			<transaction src="${basedir}/deploy/mysql/initialize_bime_lab.sql"/>	
+			<transaction src="${basedir}/deploy/mysql/initialize_testing_data.sql"/>
+		</sql>
+	</target>
+	
+</project>

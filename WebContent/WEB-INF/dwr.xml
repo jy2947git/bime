@@ -1,0 +1,27 @@
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN"
+    "http://getahead.ltd.uk/dwr/dwr20.dtd">
+<dwr>
+    <allow>
+        <create creator="spring" javascript="UserManager">
+            <param name="class" value="com.focaplo.myfuse.service.UserManager"/>
+            <param name="beanName" value="userManager"/>
+            <include method="getUsers"/>
+        </create>
+        <create creator="spring" javascript="InventoryManager">
+            <param name="class" value="com.focaplo.myfuse.service.InventoryManager"/>
+            <param name="beanName" value="inventoryManager"/>
+            <include method="updateStorageSection"/>
+            <include method="deleteStorageSection"/>
+            <include method="getSectionsOfStorage"/>
+            <include method="saveStorageSection"/>
+        </create>
+        <create creator="spring" javascript="OrderManager">
+            <param name="class" value="com.focaplo.myfuse.service.OrderManager"/>
+            <param name="beanName" value="orderManager"/>
+            
+        </create>
+        <convert converter="bean" match="com.focaplo.myfuse.model.*"/>
+        <convert converter="bean" match="com.focaplo.myfuse.model.User"/>
+    </allow>
+</dwr>

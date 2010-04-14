@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+    <Displayers>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+    </Displayers>
+    <Menus>
+        <Menu name="DashboardMenu" title="menu.dashboard" page="/dashboard/my.html?" roles="ROLE_SUPER_USER,ROLE_USER"/>
+        <Menu name="InventoryMenu" title="menu.inventory" description="Inventory" roles="ROLE_SUPER_USER,ROLE_USER" width="120" page="/inventory/index.html?">
+        	<Item name="config" title="menu.inventory.config" page="/inventory/itemCategoryList.html?">
+        	</Item>
+        	
+        		<Item name="refrigerator" title="menu.inventory.storage.refrigerator" page="/inventory/refrigeratorList.html?">
+ 	          	</Item>
+             	<Item name="others" title="menu.inventory.storage" page="/inventory/othersList.html?"/>
+        	
+        	<Item name="equipment" title="menu.inventory.equipment" page="/inventory/equipmentList.html?">
+        	</Item>
+        	<Item name="item" title="menu.inventory.item" page="/inventory/itemList.html?">
+        	</Item>
+            <Item name="order" title="menu.inventory.order" page="/inventory/orderList.html?">
+        	</Item>
+        	
+        </Menu>
+        <Menu name="LabMenu" title="menu.lab" page="/project/protocolList.html?" roles="ROLE_SUPER_USER,ROLE_USER">
+        	<Item name="protocols" title="menu.protocol" page="/project/protocolList.html?"></Item>
+        	<Item name="meeting" title="menu.meeting" page="/lab/meetingList.html?"></Item>
+        </Menu>
+        <Menu name="ProjectMenu" title="menu.projects" page="/project/projectList.html?" roles="ROLE_SUPER_USER,ROLE_USER">
+        	
+        	
+        </Menu>
+        <Menu name="GrantMenu" title="menu.grant" page="/grant/grantList.html?" roles="ROLE_SUPER_USER"/>
+        <Menu name="ReportMenu" title="menu.report" page="/report/reportList.html?" roles="ROLE_SUPER_USER"/>
+        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/userform.html?" roles="OLE_SUPER_USER,ROLE_USER"/>
+        <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users.html?">
+            <Item name="ViewUsers" title="menu.admin.users" page="/admin/users.html?"/>
+            <Item name="ActiveUsers" title="mainMenu.activeUsers" page="/admin/activeUsers.html?"/>
+            <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload.html?"/>
+            <Item name="FileUpload" title="menu.selectFile" page="/fileupload.html?"/>
+            <Item name="FlushCache" title="menu.flushCache" page="/admin/flushCache.html?"/>
+            <Item name="Clickstream" title="menu.clickstream" page="/admin/clickstreams.jsp"/>
+        </Menu>
+        <Menu name="ProjectSubMenu" title="menu.project" roles="ROLE_SUPER_USER,ROLE_USER">
+        	<Item name="ProjectDetail" title="menu.project" page="/project/projectForm.html?"></Item>
+        	<Item name="Access" title="menu.project.access" page="/project/projectAccessForm.html?"></Item>
+       	 	<Item name="ToDo" title="menu.toDo" page="/project/toDoList.html?"></Item>
+        	<Item name="notes" title="menu.notes" page="/project/noteList.html?"></Item>
+        </Menu>
+         <Menu name="MeetingSubMenu" title="menu.meeting" roles="ROLE_SUPER_USER,ROLE_USER">
+        	<Item name="MeetingDetail" title="menu.meeting" page="/lab/meetingForm.html?"></Item>
+        	<Item name="Topics" title="menu.meeting.topics" page="/lab/meetingItemList.html?"></Item>
+        	<Item name="Documents" title="menu.meeting.documents" page="/lab/meetingFileList.html?"/>
+        </Menu>
+    </Menus>
+</MenuConfig>

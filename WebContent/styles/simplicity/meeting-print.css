@@ -1,0 +1,45 @@
+
+.meeting-subject {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 24px;
+	background-color: #CCC;
+	text-align: center;
+}
+.meeting-table {
+	width: 500px;
+	text-align: left;
+	position: absolute;
+	top: 40px;
+	left: 100px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+.meeting-column-left{
+	width: 150px;
+	background-color: #CCC;
+}
+.meeting-column-right {
+	background-color: #CCC;
+}
+.meeting-topic {
+	background-color: #CCC;
+	text-align: center;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 18px;
+}
+.meeting-speaker {
+	background-color: #CCC;
+	text-align: center;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 18px;
+}

@@ -1,0 +1,6 @@
+---------- this is a system generated email, please do not reply -----------
+${staticMessage}
+Submitted By:${submittedUser.lastName},${submittedUser.firstName}
+Total Cost:${order.totalPrice}
+You can see it through url at: ${applicationURL}
+

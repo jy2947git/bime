@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="buildweb" default="packageDist" basedir=".">
+    <property file="build.properties" />
+   	
+    <path id="ear.lib">
+    	<!--
+        <fileset dir="${ear.build.dir}/earlib">
+              <include name="**/*.jar"/>
+        </fileset>
+        -->
+    </path>
+   
+    <path id="server.lib">
+        <fileset dir="${j2ee.lib}">
+              <include name="**/*.jar"/>
+        </fileset>
+    </path>
+   
+    <path id="webinfo.lib">
+        <fileset dir="${webcontent.dir}/WEB-INF/lib">
+                      <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <path id="class.path">
+        <path refid="webinfo.lib"/>
+        <path refid="ear.lib" />
+        <path refid="server.lib"/>
+    </path>
+   
+    <target name="init" depends="setCustomerId" description="create directory">
+        <!-- Create the time stamp -->
+        <tstamp />
+    	<property name="build.dir" value="${build.base.dir}/${customer.id}"/>
+    	<property name="dist.dir" value="${dist.base.dir}/${customer.id}"/>
+        <property name="deploy.dir" value="${build.dir}/deploy"/>	
+        <delete dir="${build.dir}" />
+       	<delete dir="${dist.dir}"/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build.dir}" />
+    	<mkdir dir="${build.dir}/classes" />
+    	<mkdir dir="${dist.dir}"/>
+    	<mkdir dir="${deploy.dir}" />
+
+    	
+    </target>
+   
+    <target name="copyResourceFiles" description="copy the resource files to classes directory">
+        <copy todir="${build.dir}/classes" overwrite="true">
+                <fileset dir="${resource.dir}">
+                        <include name="*.*" />
+                       
+                </fileset>
+        </copy>
+    </target>
+   
+	
+	<target name="copyNonSourceFiles" description="copy shell files and sql files">
+		<copy todir="${deploy.dir}" overwrite="true">
+				                <fileset dir="${basedir}/deploy">
+				                        <include name="**/*" />
+				                </fileset>
+		</copy>
+		<copy todir="${build.dir}" overwrite="true">
+						                <fileset dir="${webcontent.dir}/WEB-INF">
+						                        <include name="web.xml" />
+						                		
+						                </fileset>
+		</copy>
+	</target>
+   
+    <target name="compile" depends="" description="compile the java source ">
+        <echo>
+             +-----------------------------------------------------------+
+             +                                                           +
+             +                 Compile the Source Code  of ${customer.id}   +
+             +                                                           +
+             +-----------------------------------------------------------+
+        </echo>
+
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src.java.dir}" destdir="${build.dir}/classes" target="1.6" failonerror="true" listfiles="false" debug="on">
+            <classpath>
+                <path refid="class.path" />
+            </classpath>
+           
+        </javac>
+
+    </target>
+   
+    <target name="dist" depends="init,compile,copyResourceFiles,copyNonSourceFiles" description="generate the distribution">
+        <echo>
+             +-----------------------------------------------------------+
+             +                                                           +
+             +             Create Project Distribution                   +
+             +                                                           +
+             +-----------------------------------------------------------+
+        </echo>       
+   
+
+        <war destfile="${build.dir}/${customer.id}.war" basedir="${webcontent.dir}" webxml="${build.dir}/web.xml">
+
+              <classes dir="${build.dir}/classes"/>
+
+
+        </war>
+
+    </target>
+	
+	<target name="setCustomerId" unless="customer.id" description="set customer id if not">
+		<property name="customer.id" value="bime"/>
+	</target>
+	
+	<target name="packageDist" depends="dist" description="createa a zip file with uncompressed war file and scripts">
+		<echo>creating final package</echo>
+		<zip destfile="${dist.dir}/${customer.id}.zip">
+			<zipfileset dir="${build.dir}" includes="*.war" prefix="www"/>
+			<zipfileset dir="${deploy.dir}" includes="**/*" prefix="deploy"/>
+			
+		</zip>
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	<target name="deploy" depends="packageDist">
+	      <scp todir="${user}:${pass}@174.143.158.237:/usr/local" sftp="true" >
+	         <fileset dir="${dist.dir}">
+	            <include name="${customer.id}.zip"/>
+	         	<include name="*.sh"/>
+	         </fileset>
+	      </scp>
+	   </target>
+	
+</project>
