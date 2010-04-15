@@ -21,9 +21,10 @@
         	</Item>
         	
         </Menu>
-        <Menu name="LabMenu" title="menu.lab" page="/project/protocolList.html?" roles="ROLE_SUPER_USER,ROLE_USER">
-        	<Item name="protocols" title="menu.protocol" page="/project/protocolList.html?"></Item>
+        <Menu name="LabMenu" title="menu.lab" page="/lab/meetingList.html?" roles="ROLE_SUPER_USER,ROLE_USER">
+        	
         	<Item name="meeting" title="menu.meeting" page="/lab/meetingList.html?"></Item>
+        	<Item name="protocols" title="menu.protocol" page="/project/protocolList.html?"></Item>
         </Menu>
         <Menu name="ProjectMenu" title="menu.projects" page="/project/projectList.html?" roles="ROLE_SUPER_USER,ROLE_USER">
         	
