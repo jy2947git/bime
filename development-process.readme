@@ -1,0 +1,141 @@
+//------------------------------------------------------
+// Example of development case 1
+//------------------------------------------------------
+Assume you are adding a attribute to the "Project", for example, "Fund". You will typically take below steps
+1, edit the model class to add the new property
+Open the com.focaplo.myfuse.model.ManagedProject
+Add below
+		@Column
+		private String fund;
+@Column annotation indicates this property is persistable and will be a table column
+(see http://docs.jboss.org/hibernate/stable/annotations/reference/en/html/ for JPA/Hibernate Annotations)
+
+2, No need to change Dao interface/implementation for example ProjectDao, ProjectDaoHibernate since we are not doing anything special to this new property, all existing dao functions should be enough.
+3, select the tools/build_hiberbate_tools.xml, and run as Ant script, choose "recreateDatabase" target. This Ant script will read the model classes and re-generate the DDL (chema.sql) and update the local MySql with the new column.
+Note, all the existing data will be wiped out except those default records.
+4, run junit test case if there is in the com.focaplo.myfuse.dao package.
+5, No need to change service interface/implementation for example ProjectManager, ProjectManagerImpl since nothing of this new property need special care.
+6, Edit /WebContent/WEB-INF/pages/project/projectForm.jsp to add this new field, for example,
+		<div>
+            <appfuse:label styleClass="desc" key="project.fund"/>
+            <form:errors path="fund" cssClass="fieldError"/>
+            <form:input path="fund" id="fund" cssClass="text medium" cssErrorClass="text medium error" maxlength="50"/>
+        </div>
+note- the "path" MUST BE EXACTLY SAME AS the property name in the ManagedProject class.
+The "project.fund" is a label key, which you can add to resources/ApplicationResources.properties, ie, project.fund=Fund
+7, Assume this attribute will also be displayed in the project list table. 
+Edit the WebContent/WEB-INF/pages/project/include/include_projectListTable.jsp and add below
+<display:column property="fund" escapeXml="true" sortable="false" titleKey="project.fund" style="width: 20%"/>
+note- the property value in above line MUST BE EXACTLY THE SAME AS the property name in the ManagedProject domain class.
+8, Assume this is a required field, edit WEB-INF/validation.xml, find the <form name="ManagedProject">, add below
+			<field property="fund"
+                     depends="required">
+
+                  <arg0 key="project.fund"/>
+              </field>
+same as before, make sure the property match the value in the form jsp.
+9, Edit the resources/ApplicationResources.properties to add any labels
+10, retart server.
+
+//------------------------------------------------------
+// Example of development case 2
+//------------------------------------------------------
+Assume you are adding a new page under Project tab, for example, "ticket". Basically a project can have many tickets and user can create/display/edit tickets.
+A ticket has properties like "assignDate", "endDate", "assignee", "status"
+1, create a new class in com.focaplo.myfuse.model package, for example, Ticket, make it extend the BaseObject class and implement Seriablizable
+Add @Entity to the class level to indicate this class will be mapped to a table
+Add an ID field which will be identity type in MySQL
+		@Id 
+		@GeneratedValue(strategy=GenerationType.IDENTITY)
+		private Long id;
+Add all the properties with @Column annotation, and getters and setters.
+2, take care of the one-to-many relationship between Project and Ticket.
+Add below Many-To-One annotation in the Ticket class
+	@ManyToOne
+	@JoinColumn(name="managed_project_id")
+	private ManagedProject managedProject;
+Add below One-To-Many annotation in the ManagedProject class
+	@OneToMany(mappedBy="managedProject",cascade=CascadeType.ALL)
+	private Set<Ticket> tickets=new HashSet<Ticket>();
+3, Add the new class to the Hibernate configuration files, update both /tools/hibernate.cfg.xml and /resources/hibernate.cfg.xml, add below
+	<mapping class="com.focaplo.myfuse.model.Ticket"/>
+	
+4, run the tools/build_hibernate_tools.xml to regenerate DDL and update the local database with the new table.
+5, add coupld of unit test cases to the ProjectDao to test CRUD operations of Ticket and Project.
+6, add methods like "getTicketsOfProject" to ProjectDao and ProjectManager, this will be used to retreive list of Tickets to display in the List page.
+7, Now the middel tier and back tier are ready, move on to the front end, fist, need a new List-Controller to manage the "List" page and a Form-Controller to manage the "form" page.
+First create TicketListController in the com.focaplo.mufuse.webapp.controller package and make it extend the BaseListController. Because the BaseListController has been set up to take care of the list page, the TicketListController only need add one method to return the Ticket.class.
+Then create TicketFormController to extend BaseFormController. Copy and paste the ProtocolFormController, and make below changes:
+replace all the "managedProtocol" with "ticket", repalce all the "ManagedProtocol" with "Ticket", and remove those lines only applying to Protocol.
+8, Next to configure the new web controllers to integrate with Spring MVC. Edit the /WebContent/WEB-INF/dispatcher-servlet.xml, add below Spring bean definations
+	<bean id="ticketListController" class="com.focaplo.myfuse.webapp.controller.TicketListController">
+		<property name="includedListView" value="project/include/include_ticketListTable"/>
+		<property name="listView" value="project/protocolList"/>
+	</bean>
+	<bean id="ticketFormController" class="com.focaplo.myfuse.webapp.controller.TicketFormController">
+		<property name="projectManager" ref="projectManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/project/ticketForm"/>
+        <property name="successView" value="redirect:ticketList.html"/>
+        <property name="cancelView" value="redirect:tikcketList.html"/>
+	</bean>
+Note, in above xml, we are referring to 3 jsp files: project/ticketList.jsp, project/ticketForm.jsp, and project/include/include_ticketListTable.jsp
+(although you see .html as path, the real file is actually jsp files. The Spring MVC will interpret all the .html and load the correponding jsp files)
+
+9, Still in the dispatcher-servlet.xml, add below URL mapping rules
+				/project/ticketList.html=ticketListController
+                /project/include/include_ticketListTable.html=ticketListController
+                /project/ticketForm.html=ticketFormController
+   This basically tells Spring MVC to execute the Ticket List/Form controllers for above urls (note the .html)
+10, Now create 2 jsp files - /WebContent/WEB-INF/pages/project/ticketList.jsp and /project/include/include_ticketListTable.jsp.
+Copy/paste the protocolList.jsp and include_protocolListTable.jsp to the new files.Change "protocol" to "ticket"
+The ticketList.jsp is pretty simple, it just defines the "add ticket" and "delete ticket" and include the include_ticketListTable.jsp to display the tickets.
+Note the "add" is traditional href which will display the form page; the "delete" will be asynchronous through the Prototype framework's Ajax support
+	function deleteTicket(itemId){
+		new Ajax.Updater('myListDiv','<c:url value='/project/include/include_ticketListTable.html'/>',{method:'get', parameters:{from:'list',requestedMethod:'delete',selected:itemId}});
+	}
+Above javascript will send request to url "/project/include/include_ticketListTable.html?from=list&id=12345", which will be handled by the TicketListController. The TicketListController will delete the ticket through ProjectManager and forward to jsp "include/include_ticketListTable.jsp", to display the updated tickets table; the HTML code then will be used to replace the <div> with Ajax.
+The include_ticketListTable.jsp is to display the tickets. 
+	<display:table name="ticketList" cellspacing="0" cellpadding="0" requestURI="" 
+    defaultsort="1" id="protocol" pagesize="25" class="table" export="false">
+
+    <display:column property="status" escapeXml="true" sortable="false" titleKey="ticket.status" style="width: 30%"/>
+	...
+	<display:column style="width: 16%; padding-left: 15px" media="html">
+        <a href="<c:url value='/project/ticketForm.html?from=list&id=${ticket.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="ticket.edit"/>"/></a>&nbsp;
+         <a href="javascript:deleteTicket('${ticket.id}')"><img src="<c:url value='/images/cross.png'/>" alt='<fmt:message key="ticket.delete"/>'/></a>
+    </display:column>
+    <display:setProperty name="paging.banner.item_name" value="ticket"/>
+    <display:setProperty name="paging.banner.items_name" value="tickets"/>
+</display:table>
+Note, the <display:table name="ticketList" the "ticketList" is the request attribute created by the controller. The rule of name is model class name (first charactor small-case) plus "List", for example, "Ticket" will be "ticketList", "ManagedProject" will be "managedProjectList" (refer to the BaseListController)
+
+11, create the /WEB-INF/pages/project/ticketForm.jsp and copy/paste the protocolForm.jsp into the new file.
+Make sure the comamnd-name "ticket" match the command-name defined in the FormController class.
+<spring:bind path="ticket.*">
+<form:form commandName="ticket" method="post" action="ticketForm.html" onsubmit="return onFormSubmit(this)" id="ticketForm">
+<script type="text/javascript">
+function onFormSubmit(theForm) {
+    return validateTicket(theForm);
+}
+</script>
+<v:javascript formName="ticket" staticJavascript="false"/>
+
+12,Now that we have the struts-validation turned on the ticket page, we need to add the ticket form to /WEB-INF/validation.xml
+	<form name="ticket">
+              <field property="status"
+                     depends="required">
+                  <arg0 key="ticket.status"/>
+              </field>
+    </form>
+    note the form name is "ticket" instead of "ticketForm", this matches the return validateTicket(theForm); and <v:javascript formName="ticket" staticJavascript="false"/> in form jsp.
+13, now we are ready, only need to add a new menu item to the /WEB-INF/menu-config.xml, add below to "ProjectSubMenu"
+	<Item name="tickets" title="menu.tickets" page="/project/ticketList.html"></Item>
+14, restart server and test
+15, add whatever labels to the ApplicationResources.properties
+
+1, run the build.xml which will compile and create the distribution zip file "bime.zip"
+2, scp the bime.zip to the server /usr/local/bime-home/bime directory
+3, if first time, then scp the /deploy/automation/deploy.sh to /usr/local/bime-home/bime directory too. chmod +x *.sh
+4, log on the server, enter into the /usr/local/bime-home/bime directory. If first time, or if need to update database schema, run command ./deployment.sh 1; otherise, run ./deployment 0
+5. kill and restart tomcat-1 server at /usr/local/tomcat6-1
