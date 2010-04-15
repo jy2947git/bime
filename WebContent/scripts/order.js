@@ -26,7 +26,7 @@ function fillTable() {
 	      dwr.util.setValue("tableAmount" + id, item.amount);
 	      dwr.util.setValue("tableSupplier" + id, item.supplier);
 	      
-	      $("pattern" + id).style.display = "table-row";
+	      $("pattern" + id).style.display = ''; //try to make both Firefox and IE happy
 	     
 	      itemCache[id] = item;
 	    }

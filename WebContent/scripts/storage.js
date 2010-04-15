@@ -21,7 +21,7 @@ function fillTable() {
 	      dwr.util.setValue("tableName" + id, section.name);
 	      dwr.util.setValue("tableType" + id, section.type);
 	     
-	      $("pattern" + id).style.display = "table-row";
+	      $("pattern" + id).style.display = '';//compatible to both firefox and IE "table-row";
 	     
 	      sectionCache[id] = section;
 	    }

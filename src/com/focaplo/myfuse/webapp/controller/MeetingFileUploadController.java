@@ -103,6 +103,7 @@ public class MeetingFileUploadController extends BaseFormController {
         	//get lab
         	String labName = ThreadBoundContext.getValue();
         	Lab lab = this.labManager.getLabByName(labName);
+
         	this.labManager.uploadMeetingFile(lab, meetingFile, stream);
         }catch(Exception e){
         	log.error("error",e);

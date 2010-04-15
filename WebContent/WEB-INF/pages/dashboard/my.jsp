@@ -18,7 +18,7 @@
 <display:table name="mySubmittedOrderList" cellspacing="0" cellpadding="0" requestURI="" 
     defaultsort="1" id="order" pagesize="25" class="table" export="true">
     <display:column property="accountNumber" escapeXml="true" sortable="true" titleKey="order.accountName" style="width: 20%"
-        url="/inventory/order/orderForm.html?from=list" paramId="id" paramProperty="id"/>
+        url="/inventory/orderForm.html?from=list" paramId="id" paramProperty="id"/>
     <display:column property="createdDate" escapeXml="false" sortable="true" titleKey="order.createdDate" format="{0,date,MM/dd/yyyy}" style="width: 20%"/> 
 	<display:column property="totalPrice" escapeXml="true" sortable="true" titleKey="order.totalPrice" style="width: 20%"/> 
 	<display:column property="fundName" escapeXml="true" sortable="true" titleKey="order.fundName" style="width: 20%"/> 
@@ -32,7 +32,7 @@
 <display:table name="myForApprovalOrderList" cellspacing="0" cellpadding="0" requestURI="" 
     defaultsort="1" id="order" pagesize="25" class="table" export="true">
     <display:column property="accountNumber" escapeXml="true" sortable="true" titleKey="order.accountName" style="width: 20%"
-        url="/inventory/order/orderForm.html?from=list" paramId="id" paramProperty="id"/>
+        url="/inventory/orderForm.html?from=list" paramId="id" paramProperty="id"/>
     <display:column property="createdDate" escapeXml="false" sortable="true" titleKey="order.createdDate" format="{0,date,MM/dd/yyyy}" style="width: 20%"/> 
 	<display:column property="totalPrice" escapeXml="true" sortable="true" titleKey="order.totalPrice" style="width: 20%"/> 
 	<display:column property="fundName" escapeXml="true" sortable="true" titleKey="order.fundName" style="width: 20%"/> 

@@ -95,7 +95,13 @@ public class LabManagerImpl extends UniversalManagerImpl implements LabManager {
 	}
 
 	public Lab getLabByName(String labName) {
-		return this.labDao.getLabByname(labName);
+		Lab lab = this.labDao.getLabByname(labName);
+		if(lab==null){
+			lab = new Lab();
+			lab.setName("bime");
+			lab.setStorageIdentity("/bime");
+		}
+		return lab;
 	}
 
 	public void removeLabByName(String labName) {

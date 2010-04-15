@@ -119,7 +119,7 @@
 		</zip>
 		<delete dir="${build.dir}"/>
 	</target>
-	
+	<!-- scp -i .ec2/focaplo-ec2.pem ./bime.zip ubuntu@www.bimelab.com:/usr/local/bime-home/bime -->
 	<target name="deploy" depends="packageDist">
 	      <scp todir="${user}:${pass}@174.143.158.237:/usr/local" sftp="true" >
 	         <fileset dir="${dist.dir}">

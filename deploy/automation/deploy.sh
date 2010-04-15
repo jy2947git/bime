@@ -5,12 +5,6 @@
 #
 #
 #
-if [ $# -eq 0 ]
-then
-refreshDb=0
-else
-refreshDb=1
-fi
 
 
 echo install db option is $refreshDb
@@ -26,7 +20,7 @@ jar xvf bime.war
 rm -f bime.war
 echo pre-compiling jsp files...
 /usr/local/apache-ant-1.7.1/bin/ant -Dtomcat.home=/usr/local/tomcat6-1 -Dwebapp.path=./ -f precompile_jsp.xml
-if [ $refreshDb -eq 1 ]
+if [ $1 -gt 0 ]
 then
 echo "recreating database...."
 cd ../scripts

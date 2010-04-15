@@ -23,6 +23,9 @@
                 <prop key="com.focaplo.myfuse.exception.UnauthorizedAccessException">        
                     unauthorizedAccessFailure
                 </prop>
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">        
+                    maxLengthExceeded
+                </prop>
             </props>
         </property>
         <property name="defaultErrorView" value="generalFailure" />
