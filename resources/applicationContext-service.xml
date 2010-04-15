@@ -70,13 +70,13 @@
     <bean id="mailEngine" class="com.focaplo.myfuse.service.MailEngine">
         <property name="mailSender" ref="mailSender"/>
         <property name="velocityEngine" ref="velocityEngine"/>
-        <!-- <property name="from" value="${mail.default.from}"/> -->
+        <property name="from" value="${mail.default.from}"/>
         <property name="sendToQueue" value="true"/>
         <!-- <property name="queueSender" ref="emailQueueSender"/> -->
     </bean>
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <!--  <property name="host" value="${mail.host}"/>-->
+        <property name="host" value="${mail.host}"/>
         <property name="defaultEncoding" value="UTF-8"/> 
         <!-- Uncomment if you need to authenticate with your SMTP Server -->
         <!--property name="username" value="${mail.username}"/>
@@ -102,7 +102,7 @@
     </bean>
 
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
-        <!--  <property name="from" value="${mail.default.from}"/>-->
+        <property name="from" value="${mail.default.from}"/>
     </bean>
 
     <!-- =================================================================== -->

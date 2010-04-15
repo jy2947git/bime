@@ -1,3 +1,5 @@
+							Scale in Cloud
+
 In the first architecture article, we talked about bime and especially how we re-factor bime to be able to serve multiple
 clients(labs) while still maintaining separated lab database.
 
@@ -10,7 +12,7 @@ Synchronous communication is usually simple by demands high level of latency, fo
 Asynchronous communication is good for throughput because the requester doesn't have to wait for response. "Queue" is usually involved in asynchronous communications.
 
 2, request only vs request-reply
-Whether the requester needs a response from the receiver? It might be good practice to have it.
+In general, request-reply provide better reliability, and of course more complicated.
 
 In our case, the Bime-Controller needs to 
 1)let the bime server instance know to prepare the datasource etc for the new client
@@ -40,41 +42,19 @@ Also, in the scenario of N clients requested at same time to Bime Controller, we
 N clients on it......it is a concurrency issue. Similarly if we have N clients requests, and one Bime instance has capacity to host new clients. In the multi-threading environment,
 we may ask the Bime instance to set up for N new clients, which is beyond its limit.
 
-Now we are more of talking of a task management solution.
+Now we are more of talking of how to scale in cloud environment - our approach is
+1, there will be a Task Manager within the Bime Controller web application.  Task Manager creates and manages a small internal queue (called Engagement Queue) for EVERY existing worker (Bime) instance; The queue
+is to hold the "task", in our case, the client being served by this particular Bime EC2 instance. Bime Controller exposes a RESTful interface for Bime instance to report its status.
+2, When Bime instance starts up, it will make a Restful POST call to Bime Controller to update its status - name, IP, the names of the clients; and task manager will update its engagement queue.
+3, When a new client signed up, Bime Controller will first consult with the Task Manager: please add a new client ABC, and how long will it take? 
+4, Task manager will check all the engagement queues to see which worker has spare capacity - if found, it will immediately put a task into the engagement queue (synchronized); tell Bime Controller that "Got it, working on it, it will be soon". Task manager then make a Restful 
+POST call to the particular worker instance to ask it to check its queue; Bime check Bime will prepare for the new client and make a call to the call-back URL once it is done; Task Manager then inform Bime Controller that the work is done.
+5, If no worker has more spare catacity, then a new worker needs to be created; First, task manager will notify Bime Controller that "it will take a while, so why not just return message to user and we will notify him through email later"; Task manager then create a new engagement queue for the future new instance, and put the request into the queue; it then will issue command to
+create a new worker server instance (ie, EC2); This will take a while, so Task manager will return immediately.
+6, Once the new worker instnace starts, it will 
 
 
 
-So, we are sought of a request-reply type of talk between bime-controller server and bime-server(s)
-
-
-And we will use "Queue" to achieve this. Basically, we will have a "queue" server, to serve as the communication channel among all the server instances.
-For example, to set up a new client, we will have a "topic" named "PleaseSetUpNewClientTopic". The Bime-Controller can put a message to this topic, and all the Bime applications
-will subscribe to this topic.
-When a new client sign up with Bime service, Bime-Controller will put a new message to the topic with below data:
-instance-name: server04
-client-name: lab555
-client-admin-parameter: adm1noflab555
-Every Bime server will receive this message. First, it will check whether the "instance-name" matches its name, if not, discard; otherwise, it will execute the steps described above:
-create directory, create files, and execute shell script. After everything is done, it will send a reply message to queue "SetUpNewClientResponseQueue" to tell the Bime-Controller
-that everything is prepared for the client and Bime-Controller will then display success message to user.
-
-Now our new structure becomes
-http://lab1.bime.com                                     						                             lab1 database
-http://lab2.bime.com -------> server0 Haproxy/apache   ----->   server1: bime on tomcat, mysql server ---->  lab2 database
-http://lab3.bime.com                                  |         server2: bime on tomcat, mysql server		 lab3 database
-                                                      |-        server3: bime on tomcat, mysql server
-                                                (bus) |-        server4: bime on tomcat, mysql server
-                                                      |-        ...
-                                                      |-        server100: bime-controller on tomcat, mysql sever  --->  bime-controller database
-                                                      |-
-                                                  server101: Hornetq (queue server)
-(of course, haproxy, bime-controller, and hornetq can all be installed on the same physical server)
-
-Queue server has other usages too, for example
-1, to send control messages. When we have a new version of Bime to deploy, we can send a message to all the Bime servers and tell them to download the new code and install.
-2, to collect status
-
-Regarding the creating new client task, there are still areas not covered.
 First, we need to re-configure the Haproxy to tell it the mapping between "lab30.bime.com" to "sever9". That means, we need a small application on the same server with Haproxy.
 It will listen to a queue "ReconfigureForNewClient" and update the configuration file with messages sent from Bime-Controller.
 Second, In above example, we were assuming there is areadly a Bime server running and we were only adding data source. What if all the existing servers have full compacity (remeber
