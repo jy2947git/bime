@@ -11,15 +11,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.providers.AuthenticationProvider;
-import org.springframework.security.providers.ProviderManager;
-import org.springframework.security.providers.encoding.PasswordEncoder;
-import org.springframework.security.providers.rememberme.RememberMeAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.RememberMeAuthenticationProvider;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.service.AuthorizationService;
-import com.focaplo.myfuse.service.LookupManager;
+import com.focaplo.myfuse.service.LookupService;
 
 /**
  * <p>StartupListener class used to initialize and database settings
@@ -98,7 +98,7 @@ public class StartupListener implements ServletContextListener {
      */
     public static void setupContext(ServletContext context) {
         ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
-        LookupManager mgr = (LookupManager) ctx.getBean("lookupManager");
+        LookupService mgr = (LookupService) ctx.getBean("lookupManager");
 
         // get list of possible roles
         context.setAttribute(Constants.AVAILABLE_ROLES, mgr.getAllRoles());

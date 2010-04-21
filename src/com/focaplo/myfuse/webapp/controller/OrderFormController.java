@@ -14,41 +14,37 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.Constants;
-import com.focaplo.myfuse.exception.UserActivityException;
 import com.focaplo.myfuse.model.ItemCategory;
 import com.focaplo.myfuse.model.ManagedItem;
 import com.focaplo.myfuse.model.ManagedOrder;
-import com.focaplo.myfuse.model.Refrigerator;
-import com.focaplo.myfuse.model.Storage;
-import com.focaplo.myfuse.model.StorageSection;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.InventoryManager;
-import com.focaplo.myfuse.service.OrderManager;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.InventoryService;
+import com.focaplo.myfuse.service.OrderService;
+import com.focaplo.myfuse.service.UserService;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 
 public class OrderFormController extends BaseFormController {
 	Logger log = LogManager.getLogger(this.getClass());
-	private OrderManager orderManager;
-	private InventoryManager inventoryManager;
-	private UserManager userManager;
+	private OrderService orderManager;
+	private InventoryService inventoryManager;
+	private UserService userManager;
 	
-	public void setOrderManager(OrderManager orderManager) {
+	public void setOrderManager(OrderService orderManager) {
 		this.orderManager = orderManager;
 	}
 
-	public void setInventoryManager(InventoryManager inventoryManager) {
+	public void setInventoryManager(InventoryService inventoryManager) {
 		this.inventoryManager = inventoryManager;
 	}
 
-	public void setUserManager(UserManager userManager) {
+	public void setUserManager(UserService userManager) {
 		this.userManager = userManager;
 	}
 

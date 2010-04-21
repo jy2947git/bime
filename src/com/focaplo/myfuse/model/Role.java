@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.springframework.security.GrantedAuthority;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -33,7 +32,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
         query = "select r from Role r where r.id = :name "
         )
 })
-public class Role implements Serializable, GrantedAuthority {
+public class Role implements Serializable, org.springframework.security.core.GrantedAuthority {
     private static final long serialVersionUID = 3690197650654049848L;
 //    private Long id;
     @Id 

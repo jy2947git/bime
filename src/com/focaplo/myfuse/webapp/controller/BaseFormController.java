@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
@@ -30,8 +30,8 @@ import com.focaplo.myfuse.exception.UnauthorizedAccessException;
 import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.service.AuthorizationService;
-import com.focaplo.myfuse.service.MailEngine;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.UserService;
+import com.focaplo.myfuse.service.impl.MailEngine;
 
 /**
  * Implementation of <strong>SimpleFormController</strong> that contains
@@ -46,7 +46,7 @@ import com.focaplo.myfuse.service.UserManager;
 public class BaseFormController extends SimpleFormController {
     protected final transient Log log = LogFactory.getLog(getClass());
     public static final String MESSAGES_KEY = "successMessages";
-    private UserManager userManager = null;
+    private UserService userManager = null;
     protected MailEngine mailEngine = null;
     protected SimpleMailMessage message = null;
     protected String templateName = null;
@@ -59,11 +59,11 @@ public class BaseFormController extends SimpleFormController {
 		this.authorizationManager = authorizationManager;
 	}
 
-	public void setUserManager(UserManager userManager) {
+	public void setUserManager(UserService userManager) {
         this.userManager = userManager;
     }
 
-    public UserManager getUserManager() {
+    public UserService getUserManager() {
         return this.userManager;
     }
 

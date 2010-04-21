@@ -1,6 +1,6 @@
 <%@ include file="/common/taglibs.jsp"%>
 <%@ page import="com.focaplo.myfuse.model.*" %>
-<%@ page import="org.springframework.security.context.SecurityContextHolder"%>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <head>
     <title><fmt:message key="order.title"/></title>
     <meta name="heading" content="<fmt:message key='order.heading'/>"/>

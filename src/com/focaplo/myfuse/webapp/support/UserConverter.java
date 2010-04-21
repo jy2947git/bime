@@ -4,15 +4,15 @@ import java.beans.PropertyEditorSupport;
 
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.ProjectManager;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.ProjectService;
+import com.focaplo.myfuse.service.UserService;
 
 public class UserConverter extends PropertyEditorSupport {
-	private UserManager userManager;
+	private UserService userManager;
 	
 
 	
-	public void setUserManager(UserManager userManager) {
+	public void setUserManager(UserService userManager) {
 		this.userManager = userManager;
 	}
 

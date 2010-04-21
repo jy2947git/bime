@@ -13,22 +13,22 @@ import org.springframework.web.servlet.mvc.Controller;
 
 import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.MeetingFile;
-import com.focaplo.myfuse.service.LabManager;
-import com.focaplo.myfuse.service.StorageManager;
+import com.focaplo.myfuse.service.LabService;
+import com.focaplo.myfuse.service.StorageService;
 import com.focaplo.myfuse.webapp.spring.ThreadBoundContext;
 
 public class MeetingFileDownloadController implements Controller {
 	protected transient final Log log = LogFactory.getLog(getClass());
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 	@Autowired
-	private StorageManager storageService;
+	private StorageService storageService;
 	
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 
-	public void setStorageService(StorageManager storageService) {
+	public void setStorageService(StorageService storageService) {
 		this.storageService = storageService;
 	}
 

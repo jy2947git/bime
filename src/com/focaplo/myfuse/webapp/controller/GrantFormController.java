@@ -16,18 +16,18 @@ import com.focaplo.myfuse.model.Equipment;
 import com.focaplo.myfuse.model.ManagedGrant;
 import com.focaplo.myfuse.model.Role;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.GrantManager;
-import com.focaplo.myfuse.service.InventoryManager;
+import com.focaplo.myfuse.service.GrantService;
+import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class GrantFormController extends BaseFormController {
 
-	private GrantManager grantManager;
+	private GrantService grantManager;
 
 
 
 
-	public void setGrantManager(GrantManager grantManager) {
+	public void setGrantManager(GrantService grantManager) {
 		this.grantManager = grantManager;
 	}
 

@@ -14,33 +14,33 @@ import com.focaplo.myfuse.model.ExperimentImage;
 import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.Securable;
-import com.focaplo.myfuse.service.LabManager;
-import com.focaplo.myfuse.service.ProjectManager;
-import com.focaplo.myfuse.service.StorageManager;
+import com.focaplo.myfuse.service.LabService;
+import com.focaplo.myfuse.service.ProjectService;
+import com.focaplo.myfuse.service.StorageService;
 import com.focaplo.myfuse.webapp.spring.ThreadBoundContext;
 
 public class ExperimentNoteImpageDownloadController extends BaseFormController {
 	protected transient final Log log = LogFactory.getLog(getClass());
 	@Autowired
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 	@Autowired
-	private StorageManager storageService;
+	private StorageService storageService;
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 
-	public void setStorageService(StorageManager storageService) {
+	public void setStorageService(StorageService storageService) {
 		this.storageService = storageService;
 	}
 
 
 
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 
 
 
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

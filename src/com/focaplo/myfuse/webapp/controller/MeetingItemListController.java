@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.focaplo.myfuse.model.LabMeetingItem;
-import com.focaplo.myfuse.service.LabManager;
+import com.focaplo.myfuse.service.LabService;
 
 public class MeetingItemListController extends BaseListController {
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 	
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 

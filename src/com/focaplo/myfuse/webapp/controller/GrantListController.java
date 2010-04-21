@@ -15,18 +15,18 @@ import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.model.Equipment;
 import com.focaplo.myfuse.model.ManagedGrant;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.GrantManager;
-import com.focaplo.myfuse.service.InventoryManager;
+import com.focaplo.myfuse.service.GrantService;
+import com.focaplo.myfuse.service.InventoryService;
 
 public class GrantListController implements Controller {
 
-private GrantManager grantManager;
+private GrantService grantManager;
 
 Logger log = LogManager.getLogger(this.getClass());
 	
 
 	
-	public void setGrantManager(GrantManager grantManager) {
+	public void setGrantManager(GrantService grantManager) {
 	this.grantManager = grantManager;
 }
 

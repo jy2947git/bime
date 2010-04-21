@@ -4,12 +4,12 @@
 <dwr>
     <allow>
         <create creator="spring" javascript="UserManager">
-            <param name="class" value="com.focaplo.myfuse.service.UserManager"/>
+            <param name="class" value="com.focaplo.myfuse.service.UserService"/>
             <param name="beanName" value="userManager"/>
             <include method="getUsers"/>
         </create>
         <create creator="spring" javascript="InventoryManager">
-            <param name="class" value="com.focaplo.myfuse.service.InventoryManager"/>
+            <param name="class" value="com.focaplo.myfuse.service.InventoryService"/>
             <param name="beanName" value="inventoryManager"/>
             <include method="updateStorageSection"/>
             <include method="deleteStorageSection"/>
@@ -17,7 +17,7 @@
             <include method="saveStorageSection"/>
         </create>
         <create creator="spring" javascript="OrderManager">
-            <param name="class" value="com.focaplo.myfuse.service.OrderManager"/>
+            <param name="class" value="com.focaplo.myfuse.service.OrderService"/>
             <param name="beanName" value="orderManager"/>
             
         </create>

@@ -22,8 +22,8 @@ import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.LabMeeting;
 import com.focaplo.myfuse.model.MeetingFile;
-import com.focaplo.myfuse.service.LabManager;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.LabService;
+import com.focaplo.myfuse.service.ProjectService;
 import com.focaplo.myfuse.webapp.spring.ThreadBoundContext;
 
 /**
@@ -37,20 +37,20 @@ import com.focaplo.myfuse.webapp.spring.ThreadBoundContext;
  */
 public class ExperimentImageUploadController extends BaseFormController {
 	@Autowired
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 	private boolean encryptFile=true;
 	
 	public void setEncryptFile(boolean encryptFile) {
 		this.encryptFile = encryptFile;
 	}
 
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 	

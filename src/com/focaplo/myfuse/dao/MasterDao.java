@@ -8,16 +8,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.focaplo.myfuse.webapp.spring.ThreadBoundContext;
 
 public class MasterDao implements UserDetailsService{
 	protected final Log log = LogFactory.getLog(getClass());
 	private SimpleJdbcTemplate simpleJdbcTemplate;
-	private UserDao userDao;
+	private IUserDao userDao;
 	
 	public void setDataSource(DataSource dataSource) {
 	    this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
@@ -27,11 +27,11 @@ public class MasterDao implements UserDetailsService{
 		return simpleJdbcTemplate;
 	}
 	
-	public UserDao getUserDao() {
+	public IUserDao getUserDao() {
 		return userDao;
 	}
 
-	public void setUserDao(UserDao userDao) {
+	public void setUserDao(IUserDao userDao) {
 		this.userDao = userDao;
 	}
 

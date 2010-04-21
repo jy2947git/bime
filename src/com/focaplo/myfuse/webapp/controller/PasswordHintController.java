@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.MailEngine;
-import com.focaplo.myfuse.service.UserManager;
-import com.focaplo.myfuse.webapp.util.RequestUtil;
-
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+
+import com.focaplo.myfuse.model.User;
+import com.focaplo.myfuse.service.UserService;
+import com.focaplo.myfuse.service.impl.MailEngine;
+import com.focaplo.myfuse.webapp.util.RequestUtil;
+
 
 /**
  * Simple class to retrieve and send a password hint to users.
@@ -30,12 +30,12 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
  */
 public class PasswordHintController implements Controller {
     private final Log log = LogFactory.getLog(PasswordHintController.class);
-    private UserManager userManager = null;
+    private UserService userManager = null;
     private MessageSource messageSource = null;
     protected MailEngine mailEngine = null;
     protected SimpleMailMessage message = null;
     
-    public void setUserManager(UserManager userManager) {
+    public void setUserManager(UserService userManager) {
         this.userManager = userManager;
     }
 

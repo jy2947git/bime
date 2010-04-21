@@ -25,16 +25,16 @@ import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.Role;
 import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.InventoryManager;
-import com.focaplo.myfuse.service.ProjectManager;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.InventoryService;
+import com.focaplo.myfuse.service.ProjectService;
+import com.focaplo.myfuse.service.UserService;
 import com.focaplo.myfuse.webapp.support.UserConverter;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class ProjectFormController extends BaseFormController {
 
-	private ProjectManager projectManager;
-	private UserManager userManager;
+	private ProjectService projectManager;
+	private UserService userManager;
 	private UserConverter userConverter;
 	
 	public void setUserConverter(UserConverter userConverter) {
@@ -43,19 +43,19 @@ public class ProjectFormController extends BaseFormController {
 
 
 
-	public UserManager getUserManager() {
+	public UserService getUserManager() {
 		return userManager;
 	}
 
 
 
-	public void setUserManager(UserManager userManager) {
+	public void setUserManager(UserService userManager) {
 		this.userManager = userManager;
 	}
 
 
 
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

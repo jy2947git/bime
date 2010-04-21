@@ -10,15 +10,15 @@ import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.model.StorageOthers;
-import com.focaplo.myfuse.service.InventoryManager;
+import com.focaplo.myfuse.service.InventoryService;
 
 public class StorageOthersFormController extends BaseFormController {
 
-	private InventoryManager inventoryManager;
+	private InventoryService inventoryManager;
 
 
 	
-	public void setInventoryManager(InventoryManager inventoryManager) {
+	public void setInventoryManager(InventoryService inventoryManager) {
 		this.inventoryManager = inventoryManager;
 	}
 

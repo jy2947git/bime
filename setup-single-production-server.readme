@@ -19,7 +19,10 @@ cd /usr/local
 sudo wget http://apache.deathculture.net/tomcat/tomcat-6/v6.0.26/bin/apache-tomcat-6.0.26.zip
 sudo unzip apache-tomcat-6.0.26.zip
 sudo mv -r apache-tomcat-6.0.26 tomcat6-1
-configure Tomcat
+sudo rm /usr/local/tomcat6-1/webapps/*
+sudo mkdir -p /usr/local/tomcat6-1/conf/Catalina/localhost
+
+
 
 5, install FTP server on linux (reference https://help.ubuntu.com/9.10/serverguide/C/ftp-server.html)
 sudo apt-get install vstpd
@@ -44,9 +47,7 @@ cd /usr/local/bime-home/bime
 chmod +x *.sh
 If first time, or need to update database, run "./deploy.sh 2", otherwise run "./deploy.sh 0"
 If first time, need to configure Tomcat 
-rm /usr/local/tomcat6-1/webapps/*
-rm /usr/local/tomcat6-1/conf/Catalina/localhost/*
-cp /usr/local/bime-home/bime/deploy/tomcat/ROOT.xml /usr/local/tomcat6-1/conf/Catalina/localhost
+sudo cp /usr/local/bime-home/bime/deploy/tomcat/ROOT.xml /usr/local/tomcat6-1/conf/Catalina/localhost
 
 9, install and configure Exim4 to send email
 3, install Exim4 to send email (reference https://help.ubuntu.com/9.10/serverguide/C/exim4.html)

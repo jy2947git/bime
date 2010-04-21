@@ -10,16 +10,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.focaplo.myfuse.model.Lab;
-import com.focaplo.myfuse.service.LabManager;
+import com.focaplo.myfuse.service.LabService;
 import com.focaplo.myfuse.webapp.spring.DynDataSourceRegister;
 
 public class RemoveLabController implements Controller {
 	protected final transient Log log = LogFactory.getLog(getClass());
 	private DynDataSourceRegister dynDataSourceRegister;
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 	
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 

@@ -1,20 +1,23 @@
 package com.focaplo.myfuse.webapp.controller;
 
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-import com.focaplo.myfuse.Constants;
-import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.RoleManager;
-import com.focaplo.myfuse.service.UserExistsException;
-import com.focaplo.myfuse.webapp.util.RequestUtil;
-import org.springframework.mail.MailException;
-import org.springframework.validation.BindException;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Locale;
+
+import org.springframework.mail.MailException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindException;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.focaplo.myfuse.Constants;
+import com.focaplo.myfuse.exception.UserExistsException;
+import com.focaplo.myfuse.model.User;
+import com.focaplo.myfuse.service.RoleService;
+import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 /**
  * Controller to signup new users.
@@ -22,9 +25,9 @@ import java.util.Locale;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 public class SignupController extends BaseFormController {
-    private RoleManager roleManager;
+    private RoleService roleManager;
 
-    public void setRoleManager(RoleManager roleManager) {
+    public void setRoleManager(RoleService roleManager) {
         this.roleManager = roleManager;
     }
 

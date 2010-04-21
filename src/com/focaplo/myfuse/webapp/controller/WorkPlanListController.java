@@ -15,15 +15,15 @@ import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.WorkMonthlyPlan;
 import com.focaplo.myfuse.model.WorkPlan;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 
 public class WorkPlanListController implements Controller {
 
 	Logger log = LogManager.getLogger(this.getClass());
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 	
 	
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

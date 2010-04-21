@@ -14,9 +14,9 @@ import javax.crypto.spec.IvParameterSpec;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.focaplo.myfuse.service.Encrypter;
+import com.focaplo.myfuse.service.EncryptionService;
 
-public class DESEncrypter implements Encrypter{
+public class DESEncrypter implements EncryptionService{
 	protected final Log log = LogFactory.getLog(getClass());
 
 

@@ -16,7 +16,7 @@ import com.focaplo.myfuse.model.Equipment;
 import com.focaplo.myfuse.model.Storage;
 import com.focaplo.myfuse.model.StorageOthers;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.InventoryManager;
+import com.focaplo.myfuse.service.InventoryService;
 
 public class StorageOthersListController extends BaseListController {
 

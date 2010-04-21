@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.UserService;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -25,9 +25,9 @@ import org.springframework.web.servlet.mvc.Controller;
  */
 public class UserController implements Controller {
     private transient final Log log = LogFactory.getLog(UserController.class);
-    protected UserManager mgr = null;
+    protected UserService mgr = null;
 
-    public void setUserManager(UserManager userManager) {
+    public void setUserManager(UserService userManager) {
         this.mgr = userManager;
     }
 

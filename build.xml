@@ -50,6 +50,15 @@
                         <include name="*.*" />
                        
                 </fileset>
+        	 <fileset dir="${config.dir}">
+        	                        <include name="*.*" />
+        	                       
+        	                </fileset>
+                	 <fileset dir="${template.dir}">
+                	                        <include name="*.*" />
+                	                       
+                	                </fileset>
+                	
         </copy>
     </target>
    
@@ -118,15 +127,12 @@
 			
 		</zip>
 		<delete dir="${build.dir}"/>
+		<echo>cp ${dist.dir}/bime.zip /usr/local/bime-home/bime</echo>
+		<echo> scp -i ~/.ec2/focaplo-ec2.pem ${dist.dir}/bime.zip ubuntu@www.bimelab.com:/usr/local/bime-home/bime</echo>
 	</target>
-	<!-- scp -i .ec2/focaplo-ec2.pem ./bime.zip ubuntu@www.bimelab.com:/usr/local/bime-home/bime -->
-	<target name="deploy" depends="packageDist">
-	      <scp todir="${user}:${pass}@174.143.158.237:/usr/local" sftp="true" >
-	         <fileset dir="${dist.dir}">
-	            <include name="${customer.id}.zip"/>
-	         	<include name="*.sh"/>
-	         </fileset>
-	      </scp>
-	   </target>
+	<!-- scp -i ~/.ec2/focaplo-ec2.pem ${dist.dir}/bime.zip ubuntu@www.bimelab.com:/usr/local/bime-home/bime -->
+	<target name="upload" depends="packageDist">
+	      
+	  </target>
 	
 </project>

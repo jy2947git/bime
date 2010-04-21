@@ -10,7 +10,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -19,12 +19,12 @@ import com.focaplo.myfuse.model.BaseObject;
 import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.service.AuthorizationService;
-import com.focaplo.myfuse.service.UniversalManager;
+import com.focaplo.myfuse.service.UniversalService;
 
 public abstract class BaseListController implements Controller {
 	@Autowired
 	@Qualifier(value="manager")
-	UniversalManager manager;
+	UniversalService manager;
 	Logger log = LogManager.getLogger(this.getClass());
 	
 	@Autowired
@@ -53,7 +53,7 @@ public abstract class BaseListController implements Controller {
 		return simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1) + "List";
 		
 	}
-	public void setManager(UniversalManager universalManager) {
+	public void setManager(UniversalService universalManager) {
 		this.manager = universalManager;
 	}
 	

@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.focaplo.myfuse.model.ManagedProject;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 @Controller
 public class BaseProjectController{
 	Logger log = LogManager.getLogger(this.getClass());
 	@Autowired
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 	
 	
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}	
 	

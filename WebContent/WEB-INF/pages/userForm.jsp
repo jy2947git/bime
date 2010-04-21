@@ -104,7 +104,7 @@
                 <form:input path="email" id="email" cssClass="text medium" cssErrorClass="text medium error"/>
             </div>
             <div>
-                <appfuse:label styleClass="desc" key="user.workPhoneNumber"/>
+                <appfuse:label styleClass="desc" key="user.workPhone"/>
                 <form:errors path="workPhoneNumber" cssClass="fieldError"/>
                 <form:input path="workPhoneNumber" id="workPhoneNumber" cssClass="text medium" cssErrorClass="text medium error"/>
             </div>

@@ -1,48 +1,46 @@
 package com.focaplo.myfuse.webapp.controller;
 
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationTrustResolver;
-import org.springframework.security.AuthenticationTrustResolverImpl;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
-import org.apache.commons.lang.StringUtils;
-import com.focaplo.myfuse.Constants;
-import com.focaplo.myfuse.model.ItemCategory;
-import com.focaplo.myfuse.model.Role;
-import com.focaplo.myfuse.model.Storage;
-import com.focaplo.myfuse.model.StorageSection;
-import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.RoleManager;
-import com.focaplo.myfuse.service.UserExistsException;
-import com.focaplo.myfuse.service.UserManager;
-import com.focaplo.myfuse.webapp.util.RequestUtil;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.mail.MailException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.mail.MailException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import com.focaplo.myfuse.Constants;
+import com.focaplo.myfuse.exception.UserExistsException;
+import com.focaplo.myfuse.model.Role;
+import com.focaplo.myfuse.model.User;
+import com.focaplo.myfuse.service.RoleService;
+import com.focaplo.myfuse.service.UserService;
+import com.focaplo.myfuse.webapp.util.RequestUtil;
+
 /**
  * Implementation of <strong>SimpleFormController</strong> that interacts with
- * the {@link UserManager} to retrieve/persist values to the database.
+ * the {@link UserService} to retrieve/persist values to the database.
  *
  * <p><a href="UserFormController.java.html"><i>View Source</i></a>
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 public class UserFormController extends BaseFormController {
-    private RoleManager roleManager;
+    private RoleService roleManager;
     
-    public void setRoleManager(RoleManager roleManager) {
+    public void setRoleManager(RoleService roleManager) {
         this.roleManager = roleManager;
     }
     

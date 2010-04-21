@@ -16,18 +16,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.ProjectManager;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.ProjectService;
+import com.focaplo.myfuse.service.UserService;
 
 public class ProjectAccessFormController extends BaseFormController {
-	private ProjectManager projectManager;
-	private UserManager userManager;
+	private ProjectService projectManager;
+	private UserService userManager;
 	
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 
-	public void setUserManager(UserManager userManager) {
+	public void setUserManager(UserService userManager) {
 		this.userManager = userManager;
 	}
 

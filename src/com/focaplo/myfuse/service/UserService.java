@@ -1,16 +1,30 @@
 package com.focaplo.myfuse.service;
 
-import com.focaplo.myfuse.model.User;
-import org.springframework.security.userdetails.UsernameNotFoundException;
-
-import javax.jws.WebService;
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.focaplo.myfuse.dao.IUserDao;
+import com.focaplo.myfuse.exception.UserExistsException;
+import com.focaplo.myfuse.model.LabelValue;
+import com.focaplo.myfuse.model.User;
+
+
 /**
- * Web Service interface so hierarchy of Universal and Generic Managers isn't carried through.
+ * Business Service Interface to handle communication between web and
+ * persistence layer.
+ *
+ * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
+ *  Modified by <a href="mailto:dan@getrolling.com">Dan Kibler </a> 
  */
-@WebService
-public interface UserService {
+public interface UserService extends UniversalService {
+
+    /**
+     * Convenience method for testing - allows you to mock the DAO and set it on an interface.
+     * @param userDao the UserDao implementation to use
+     */
+    void setUserDao(IUserDao userDao);
+
     /**
      * Retrieves a user by userId.  An exception is thrown if user not found
      *
@@ -33,14 +47,14 @@ public interface UserService {
      * @param user parameters to filter on
      * @return List
      */
-    List<User> getUsers(User user);
+    List getUsers(User user);
 
     /**
-     * Saves a user's information
+     * Saves a user's information.
      *
      * @param user the user's information
      * @throws UserExistsException thrown when user already exists
-     * @return updated user
+     * @return user the updated user object
      */
     User saveUser(User user) throws UserExistsException;
 
@@ -50,4 +64,10 @@ public interface UserService {
      * @param userId the user's id
      */
     void removeUser(String userId);
+
+	List<User> getUsersWithRole(String superUserRole);
+
+	List<LabelValue> getLabelValueListOfUsers();
+
+	List<User> getAllLabUsers();
 }

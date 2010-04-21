@@ -12,14 +12,14 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.MailEngine;
+import com.focaplo.myfuse.service.impl.MailEngine;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class MyExceptionHandler extends SimpleMappingExceptionResolver {

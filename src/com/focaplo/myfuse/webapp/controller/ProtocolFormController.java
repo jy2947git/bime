@@ -6,21 +6,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.model.ExperimentProtocol;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 
 public class ProtocolFormController extends BaseFormController {
 
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 
 
 	
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

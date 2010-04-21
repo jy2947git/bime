@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.focaplo.myfuse.model.WorkLog;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 
 public class WorkLogListController extends BaseListController{
 
@@ -18,10 +18,10 @@ public class WorkLogListController extends BaseListController{
 	}
 
 	@Autowired
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 	
 	
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

@@ -20,15 +20,15 @@ import com.focaplo.myfuse.model.LabMeeting;
 import com.focaplo.myfuse.model.LabelValue;
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.LabManager;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.LabService;
+import com.focaplo.myfuse.service.UserService;
 import com.focaplo.myfuse.webapp.support.UserConverter;
 
 public class MeetingFormController extends BaseFormController {
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 	@Autowired
-	private UserManager userManager;
+	private UserService userManager;
 	@Autowired
 	private UserConverter userConverter;
 	
@@ -36,19 +36,19 @@ public class MeetingFormController extends BaseFormController {
 		this.userConverter = userConverter;
 	}
 
-	public LabManager getLabManager() {
+	public LabService getLabManager() {
 		return labManager;
 	}
 
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 
-	public UserManager getUserManager() {
+	public UserService getUserManager() {
 		return userManager;
 	}
 
-	public void setUserManager(UserManager userManager) {
+	public void setUserManager(UserService userManager) {
 		this.userManager = userManager;
 	}
 

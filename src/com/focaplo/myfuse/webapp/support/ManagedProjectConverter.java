@@ -3,13 +3,13 @@ package com.focaplo.myfuse.webapp.support;
 import java.beans.PropertyEditorSupport;
 
 import com.focaplo.myfuse.model.ManagedProject;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 
 public class ManagedProjectConverter extends PropertyEditorSupport {
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 	
 
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

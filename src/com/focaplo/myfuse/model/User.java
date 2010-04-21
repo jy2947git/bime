@@ -1,9 +1,9 @@
 package com.focaplo.myfuse.model;
 
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.userdetails.UserDetails;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.focaplo.myfuse.Constants;
 
@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,7 +24,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="app_user")
-public class User extends BaseObject implements Serializable, UserDetails {
+public class User extends BaseObject implements Serializable, org.springframework.security.core.userdetails.UserDetails {
     private static final long serialVersionUID = 3832626162173359411L;
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -200,8 +201,10 @@ public class User extends BaseObject implements Serializable, UserDetails {
      * @return GrantedAuthority[] an array of roles.
      */
     @Transient
-    public GrantedAuthority[] getAuthorities() {
-        return roles.toArray(new GrantedAuthority[0]);
+    public Collection<GrantedAuthority> getAuthorities() {
+    	Set<GrantedAuthority> auths = new HashSet<GrantedAuthority>();
+    	auths.addAll(roles);
+    	return auths;
     }
 
     
@@ -348,20 +351,20 @@ public class User extends BaseObject implements Serializable, UserDetails {
         ToStringBuilder sb = new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
                 .append("username", this.username);
 
-        GrantedAuthority[] auths = this.getAuthorities();
+        Collection<GrantedAuthority> auths = this.getAuthorities();
         if (auths != null) {
             sb.append("Granted Authorities: ");
 
-            for (int i = 0; i < auths.length; i++) {
-                if (i > 0) {
+            for (GrantedAuthority auth:auths) {
+                
                     sb.append(", ");
-                }
-                sb.append(auths[i].toString());
+                
+                sb.append(auth.toString());
             }
         } else {
             sb.append("No Granted Authorities");
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 
 	public String getWorkPhoneNumber() {

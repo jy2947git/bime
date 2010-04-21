@@ -15,16 +15,16 @@ import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.model.Equipment;
 import com.focaplo.myfuse.model.Role;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.InventoryManager;
+import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class EquipmentFormController extends BaseFormController {
 
-	private InventoryManager inventoryManager;
+	private InventoryService inventoryManager;
 
 
 	
-	public void setInventoryManager(InventoryManager inventoryManager) {
+	public void setInventoryManager(InventoryService inventoryManager) {
 		this.inventoryManager = inventoryManager;
 	}
 

@@ -22,10 +22,10 @@ import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.WorkMonthlyPlan;
 import com.focaplo.myfuse.model.WorkPlan;
 import com.focaplo.myfuse.model.WorkWeeklyPlan;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 
 public class WorkPlanFormController extends BaseFormController {
-	protected ProjectManager projectManager;
+	protected ProjectService projectManager;
 	protected PropertyEditorSupport projectConverter;
 	protected boolean monthly=true;
 	
@@ -35,7 +35,7 @@ public class WorkPlanFormController extends BaseFormController {
 
 
 
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

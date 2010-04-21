@@ -10,32 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.mail.MailException;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.model.ItemCategory;
 import com.focaplo.myfuse.model.ManagedItem;
-import com.focaplo.myfuse.model.Refrigerator;
-import com.focaplo.myfuse.model.Role;
 import com.focaplo.myfuse.model.Storage;
 import com.focaplo.myfuse.model.StorageSection;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.InventoryManager;
-import com.focaplo.myfuse.webapp.util.RequestUtil;
+import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.webapp.wrapper.ManagedItemWrapper;
 
 public class InventoryItemFormController extends BaseFormController {
 
-	private InventoryManager inventoryManager;
+	private InventoryService inventoryManager;
 
 
 	
-	public void setInventoryManager(InventoryManager inventoryManager) {
+	public void setInventoryManager(InventoryService inventoryManager) {
 		this.inventoryManager = inventoryManager;
 	}
 

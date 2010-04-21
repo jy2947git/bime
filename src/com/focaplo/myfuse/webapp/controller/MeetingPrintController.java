@@ -8,13 +8,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.focaplo.myfuse.model.LabMeeting;
-import com.focaplo.myfuse.service.LabManager;
+import com.focaplo.myfuse.service.LabService;
 
 public class MeetingPrintController implements Controller {
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 	
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 

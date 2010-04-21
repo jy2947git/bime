@@ -16,7 +16,7 @@ import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.service.AuthorizationService;
 
-public class AuthorizationManager extends UniversalManagerImpl implements AuthorizationService{
+public class AuthorizationManager extends UniversalManager implements AuthorizationService{
 	protected final Log log = LogFactory.getLog(getClass());
 	/*
 	 * key: user-name

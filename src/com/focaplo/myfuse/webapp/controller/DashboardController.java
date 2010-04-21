@@ -9,35 +9,35 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.GrantManager;
-import com.focaplo.myfuse.service.InventoryManager;
-import com.focaplo.myfuse.service.OrderManager;
-import com.focaplo.myfuse.service.ProjectManager;
-import com.focaplo.myfuse.service.UserManager;
+import com.focaplo.myfuse.service.GrantService;
+import com.focaplo.myfuse.service.InventoryService;
+import com.focaplo.myfuse.service.OrderService;
+import com.focaplo.myfuse.service.ProjectService;
+import com.focaplo.myfuse.service.UserService;
 
 public class DashboardController implements Controller {
 	Logger log = LogManager.getLogger(this.getClass());
-	private OrderManager orderManager;
-	private UserManager userManager;
+	private OrderService orderManager;
+	private UserService userManager;
 	
-	public void setOrderManager(OrderManager orderManager) {
+	public void setOrderManager(OrderService orderManager) {
 		this.orderManager = orderManager;
 	}
 	
-	public void setUserManager(UserManager userManager) {
+	public void setUserManager(UserService userManager) {
 		this.userManager = userManager;
 	}
 
-	private InventoryManager inventoryManager;
-	public void setInventoryManager(InventoryManager inventoryManager) {
+	private InventoryService inventoryManager;
+	public void setInventoryManager(InventoryService inventoryManager) {
 		this.inventoryManager = inventoryManager;
 	}
-	private GrantManager grantManager;
-	public void setGrantManager(GrantManager grantManager) {
+	private GrantService grantManager;
+	public void setGrantManager(GrantService grantManager) {
 		this.grantManager = grantManager;
 	}
-	private ProjectManager projectManager;
-	public void setProjectManager(ProjectManager projectManager) {
+	private ProjectService projectManager;
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 	public ModelAndView handleRequest(HttpServletRequest arg0,

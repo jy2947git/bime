@@ -11,12 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.model.ToDo;
 import com.focaplo.myfuse.model.WorkLog;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 
 public class WorkLogFormController extends BaseFormController {
-	protected ProjectManager projectManager;
+	protected ProjectService projectManager;
 
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

@@ -21,9 +21,9 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.focaplo.myfuse.service.Encrypter;
+import com.focaplo.myfuse.service.EncryptionService;
 
-public class AESEncrypter implements Encrypter{
+public class AESEncrypter implements EncryptionService{
 	protected final Log log = LogFactory.getLog(getClass());
 	private byte[] salt = new byte[]{
 		(byte)0x28,(byte)0x94,(byte)0x95,(byte)0x75,

@@ -1,7 +1,7 @@
 package com.focaplo.myfuse.webapp.listener;
 
-import java.util.Set;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -9,14 +9,15 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionContextIntegrationFilter;
+
 import com.focaplo.myfuse.model.User;
-import org.springframework.security.context.HttpSessionContextIntegrationFilter;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationTrustResolverImpl;
-import org.springframework.security.AuthenticationTrustResolver;
-import org.springframework.security.ui.webapp.AuthenticationProcessingFilter;
+
 
 
 /**

@@ -25,13 +25,13 @@ import com.focaplo.myfuse.model.WorkMonthlyPlan;
 import com.focaplo.myfuse.model.WorkPlan;
 import com.focaplo.myfuse.model.WorkPlanItem;
 import com.focaplo.myfuse.model.WorkWeeklyPlan;
-import com.focaplo.myfuse.service.ProjectManager;
+import com.focaplo.myfuse.service.ProjectService;
 
 public class ToDoFormController extends BaseFormController {
 	@Autowired
-	protected ProjectManager projectManager;
+	protected ProjectService projectManager;
 
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 

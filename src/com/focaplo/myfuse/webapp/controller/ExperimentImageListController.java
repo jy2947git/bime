@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.model.ExperimentImage;
@@ -14,28 +14,28 @@ import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.service.LabManager;
-import com.focaplo.myfuse.service.ProjectManager;
-import com.focaplo.myfuse.service.StorageManager;
+import com.focaplo.myfuse.service.LabService;
+import com.focaplo.myfuse.service.ProjectService;
+import com.focaplo.myfuse.service.StorageService;
 import com.focaplo.myfuse.webapp.spring.ThreadBoundContext;
 
 public class ExperimentImageListController extends BaseListController{
 	@Autowired
-	private ProjectManager projectManager;
+	private ProjectService projectManager;
 	@Autowired
-	private LabManager labManager;
+	private LabService labManager;
 	@Autowired
-	private StorageManager storageService;
+	private StorageService storageService;
 	
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
 	}
 
-	public void setLabManager(LabManager labManager) {
+	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 
-	public void setStorageService(StorageManager storageService) {
+	public void setStorageService(StorageService storageService) {
 		this.storageService = storageService;
 	}
 	@Override
