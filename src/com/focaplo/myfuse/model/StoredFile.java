@@ -42,16 +42,6 @@ public class StoredFile extends BaseObject {
 	private boolean encrypted;
 	@Transient
 	private String password;
-	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
 
 	@Override
 	public String toString() {

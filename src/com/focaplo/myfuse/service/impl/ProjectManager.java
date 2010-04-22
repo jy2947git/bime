@@ -19,14 +19,9 @@ import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.ToDo;
 import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.model.WorkLog;
-import com.focaplo.myfuse.model.WorkMonthlyPlan;
-import com.focaplo.myfuse.model.WorkPlan;
-import com.focaplo.myfuse.model.WorkPlanItem;
-import com.focaplo.myfuse.model.WorkWeeklyPlan;
 import com.focaplo.myfuse.service.AuthorizationService;
 import com.focaplo.myfuse.service.ProjectService;
 import com.focaplo.myfuse.service.StorageService;
-import com.lowagie.text.Image;
 
 public class ProjectManager extends UniversalManager implements
 		ProjectService {
@@ -59,32 +54,6 @@ public class ProjectManager extends UniversalManager implements
 		return null;
 	}
 
-	public void saveWorkPlanItem(WorkPlanItem wpi){
-		this.projectDao.saveOrUpdate(wpi);
-		WorkLog log = new WorkLog();
-		log.setMessage("work plan item created on " + new Date());
-		
-		this.projectDao.saveOrUpdate(log);
-	}
-	
-	public void saveWorkPlan(WorkPlan wp) {
-		this.projectDao.saveOrUpdate(wp);
-		Set<WorkPlanItem> items = wp.getWorkPlanItems();
-		for(WorkPlanItem item:items){
-			item.setWorkPlan(wp);
-			this.saveWorkPlanItem(item);
-		}
-		
-	}
-
-	public void saveMonthlyWorkPlan(WorkMonthlyPlan wmp){
-		this.saveWorkPlan(wmp);
-		Set<WorkWeeklyPlan> weeklys = wmp.getWeeklyPlans();
-		for(WorkWeeklyPlan wwp:weeklys){
-			wwp.setWorkMonthlyPlan(wmp);
-			this.saveWorkPlan(wwp);
-		}
-	}
 
 	public void saveExperimentNote(ExperimentNote note) {
 		log.info("find " + note.getAccessedBy().size());
@@ -145,25 +114,7 @@ public class ProjectManager extends UniversalManager implements
 		}
 	}
 
-	public void deleteWorkPlans(List<Long> toBeDeleted) {
-		for(Long id:toBeDeleted){
-			this.projectDao.remove(WorkPlan.class, id);
-		}
-	}
-
-	public List<WorkPlanItem> getPlanItemsOfWorkPlan(Long planId) {
-		return this.projectDao.getPlanItemsOfWorkPlan(planId);
-	}
 	
-	public void deleteWorkPlanItems(List<Long> toBeDeleted){
-		for(Long id:toBeDeleted){
-			this.projectDao.remove(WorkPlanItem.class, id);
-		}
-	}
-
-	public List<WorkPlan> getWorkPlanOfProject(Long id) {
-		return this.projectDao.getWorkPlanOfProject(id);
-	}
 
 	public List<ExperimentNote> getNotesOfProject(Long projectId) {
 		return this.projectDao.getNotesOfProject(projectId);

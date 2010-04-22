@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
@@ -31,23 +32,11 @@ public class Storage extends BaseObject implements Serializable {
 	private Set<StorageSection> sections = new HashSet<StorageSection>();
 	@Column(nullable=true,length=50)
 	private String location;
-	@Column(nullable=true,length=50)
-	private String contactPersion;
-	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn
+	private User contactPerson;
+	@Column(nullable=false,length=100)
+	private String alias;
 
 	public Long getId() {
 		return id;
@@ -89,12 +78,23 @@ public class Storage extends BaseObject implements Serializable {
 		this.location = location;
 	}
 
-	public String getContactPersion() {
-		return contactPersion;
+
+
+
+	public User getContactPerson() {
+		return contactPerson;
 	}
 
-	public void setContactPersion(String contactPersion) {
-		this.contactPersion = contactPersion;
+	public void setContactPerson(User contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 }

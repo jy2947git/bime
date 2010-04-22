@@ -20,11 +20,6 @@ import com.focaplo.myfuse.model.LabelValue;
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.ToDo;
-import com.focaplo.myfuse.model.WorkLog;
-import com.focaplo.myfuse.model.WorkMonthlyPlan;
-import com.focaplo.myfuse.model.WorkPlan;
-import com.focaplo.myfuse.model.WorkPlanItem;
-import com.focaplo.myfuse.model.WorkWeeklyPlan;
 import com.focaplo.myfuse.service.ProjectService;
 
 public class ToDoFormController extends BaseFormController {

@@ -60,21 +60,6 @@ public class ManagedOrder extends BaseObject implements Serializable {
 	@Column(nullable=true)
 	@OneToMany(mappedBy="order",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>();
-	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

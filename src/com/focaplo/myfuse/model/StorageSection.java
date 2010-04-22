@@ -30,23 +30,12 @@ public class StorageSection extends BaseObject implements Serializable {
 	private Storage storage;
 	@OneToMany(mappedBy="storageSection", fetch=FetchType.LAZY)
 	private Set<ManagedItem> managedItems = new HashSet<ManagedItem>();
+	@Column(nullable=false,length=100)
+	private String alias;
+	
 	@Transient
 	public String getFullName(){
 		return this.getStorage().getName() + "-" + this.getName();
-	}
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
 	}
 
 	public Storage getStorage() {
@@ -87,6 +76,14 @@ public class StorageSection extends BaseObject implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 }

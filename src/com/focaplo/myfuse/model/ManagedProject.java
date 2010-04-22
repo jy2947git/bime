@@ -87,15 +87,6 @@ public class ManagedProject extends BaseObject  implements Serializable, Securab
 		}
 		return accessUserLabels;
 	}
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
 
 	public Long getId() {
 		return id;
@@ -105,10 +96,7 @@ public class ManagedProject extends BaseObject  implements Serializable, Securab
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return null;
-	}
+
 
 	public String getName() {
 		return name;

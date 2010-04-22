@@ -102,20 +102,6 @@ public class LabMeeting extends BaseObject implements Serializable {
 		this.endCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(segs[0]));
 		this.endCalendar.set(Calendar.MINUTE, Integer.parseInt(segs[1]));
 	}
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

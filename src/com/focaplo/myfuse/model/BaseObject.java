@@ -32,7 +32,9 @@ public abstract class BaseObject implements Serializable {
      * Returns a multi-line String with key=value pairs.
      * @return a String representation of this class.
      */
-    public abstract String toString();
+    public String toString(){
+    	return this.getClass() + " " + this.getId();
+    }
 
     /**
      * Compares object equality. When using Hibernate, the primary key should
@@ -40,7 +42,9 @@ public abstract class BaseObject implements Serializable {
      * @param o object to compare to
      * @return true/false based on equality tests
      */
-    public abstract boolean equals(Object o);
+    public boolean equals(BaseObject o){
+    	return this.getId()==o.getId();
+    }
 
     /**
      * When you override equals, you should override hashCode. See "Why are
@@ -48,7 +52,9 @@ public abstract class BaseObject implements Serializable {
      * http://www.hibernate.org/109.html
      * @return hashCode
      */
-    public abstract int hashCode();
+    public int hashCode(){
+    	return super.hashCode();
+    }
     
     public abstract Long getId();
     

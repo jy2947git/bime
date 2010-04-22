@@ -27,7 +27,7 @@
         url="/inventory/storage/othersForm.html?from=list" paramId="id" paramProperty="id"/>
     <display:column property="type" escapeXml="true" sortable="true" titleKey="storage.type" style="width: 20%"/>
     <display:column property="location" escapeXml="true" sortable="true" titleKey="storage.location" style="width: 15%"/>
-    <display:column property="contactPersion" escapeXml="true" sortable="true" titleKey="storage.contactPerson" style="width: 15%"/>
+    <display:column property="contactPerson.fullName" escapeXml="true" sortable="true" titleKey="storage.contactPerson" style="width: 15%"/>
     
 
     <display:setProperty name="paging.banner.item_name" value="storage"/>

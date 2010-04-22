@@ -63,7 +63,7 @@
 			<appfuse:label styleClass="desc" key="item.storage"/>
 			<form:select path="storageSectionId">
             
-            <form:options items="${storageSectionList}" itemValue="id" itemLabel="fullName"/>
+            <form:options items="${storageSectionList}" itemValue="id" itemLabel="alias"/>
             <form:option value="" label="-----please select -----"/>
         	</form:select>
       </div>

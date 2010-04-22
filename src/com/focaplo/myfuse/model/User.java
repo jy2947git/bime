@@ -86,6 +86,8 @@ public class User extends BaseObject implements Serializable, org.springframewor
     @Column(nullable=true)
     private Date startDate;
     @Column(nullable=true)
+    private Date birthDate;
+    @Column(nullable=true)
     private Long superUserId;
     
     
@@ -467,6 +469,14 @@ public class User extends BaseObject implements Serializable, org.springframewor
 
 	public void setMeetings(Set<LabMeeting> meetings) {
 		this.meetings = meetings;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
     
     

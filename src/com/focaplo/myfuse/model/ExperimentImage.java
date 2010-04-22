@@ -21,21 +21,6 @@ public class ExperimentImage extends StoredFile implements Serializable{
 		super();
 		this.setFileType(StoredFile.EXPERIMENT_NOTE);
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
  
 
 	public ExperimentNote getExperimentNote() {

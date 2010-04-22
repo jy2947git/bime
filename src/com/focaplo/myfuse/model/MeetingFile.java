@@ -20,21 +20,6 @@ public class MeetingFile extends StoredFile {
 		this.setFileType(StoredFile.MEETING_FILE);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-
 	public LabMeeting getMeeting() {
 		return meeting;
 	}

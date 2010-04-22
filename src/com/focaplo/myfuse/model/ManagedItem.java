@@ -63,20 +63,7 @@ public class ManagedItem extends BaseObject implements Serializable {
 	@JoinColumn(name="order_item_id")
 	private OrderItem orderItem;
 	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
 
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

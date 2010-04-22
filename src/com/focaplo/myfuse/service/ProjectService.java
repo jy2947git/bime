@@ -10,9 +10,6 @@ import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.ToDo;
 import com.focaplo.myfuse.model.WorkLog;
-import com.focaplo.myfuse.model.WorkMonthlyPlan;
-import com.focaplo.myfuse.model.WorkPlan;
-import com.focaplo.myfuse.model.WorkPlanItem;
 
 public interface ProjectService extends UniversalService {
 
@@ -22,12 +19,6 @@ public interface ProjectService extends UniversalService {
 
 
 	List<ManagedProject>  getProjectAccessibleTo(Long userId);
-	
-	void saveWorkPlan(WorkPlan wp);
-	
-	public void saveWorkPlanItem(WorkPlanItem wpi);
-
-	public void saveMonthlyWorkPlan(WorkMonthlyPlan wmp);
 	
 	public void saveProtocol(ExperimentProtocol protocol, boolean realDirty, String dirtyUser);
 	
@@ -40,17 +31,9 @@ public interface ProjectService extends UniversalService {
 	void deleteNotes(List<Long> toBeDeleted);
 
 
-	void deleteWorkPlans(List<Long> toBeDeleted);
 
 
-	List<WorkPlanItem> getPlanItemsOfWorkPlan(Long planId);
 
-
-	void deleteWorkPlanItems(List<Long> toBeDeleted);
-
-
-	List<WorkPlan> getWorkPlanOfProject(Long id);
-	
 	public List<ExperimentNote> getNotesOfProject(Long projectId);
 
 

@@ -78,8 +78,8 @@
             </div>
             <div>
                 <appfuse:label styleClass="desc" key="storage.contactPerson"/>
-                <form:errors path="contactPersion" cssClass="fieldError"/>
-                <form:input path="contactPersion" id="contactPersion" cssClass="text medium" cssErrorClass="text medium error"/>
+                <form:errors path="contactPerson" cssClass="fieldError"/>
+                <form:input path="contactPerson" id="contactPerson" cssClass="text medium" cssErrorClass="text medium error"/>
             </div>
         </div>
     </li>

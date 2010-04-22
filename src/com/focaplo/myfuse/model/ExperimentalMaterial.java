@@ -10,21 +10,7 @@ public class ExperimentalMaterial extends BaseObject implements Serializable {
 	private Long id;
 	@Column(nullable=false,length=50)
 	private String name;
-	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
 
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

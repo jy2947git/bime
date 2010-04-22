@@ -15,9 +15,6 @@ import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.ExperimentProtocol;
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.User;
-import com.focaplo.myfuse.model.WorkMonthlyPlan;
-import com.focaplo.myfuse.model.WorkPlanItem;
-import com.focaplo.myfuse.model.WorkWeeklyPlan;
 
 @Transactional
 @TransactionConfiguration(defaultRollback=false)
@@ -57,73 +54,7 @@ public class ProjectManagerTestCase extends BaseManagerTestCase {
 			log.info("participants:" + itf.next().getFullName());
 		}
 	}
-	
-	@Test
-	@Transactional
-	public void testSaveMonthlyWorkPlan(){
-		//create project first
-		
-		ManagedProject wp = createNewProject();
-		WorkMonthlyPlan wmp = new WorkMonthlyPlan();
-		wmp.setManagedProject(wp);
-		wmp.setPlanIdentity("Month:" + (1+Calendar.getInstance().get(Calendar.MONTH)));
-		wmp.setPlanType("MONTHLY");
-		{
-			WorkPlanItem wpi = new WorkPlanItem();
-			Calendar startDate = Calendar.getInstance();
-			startDate.set(Calendar.DAY_OF_MONTH, 0);
-			wpi.setStartDate(startDate.getTime());
-			Calendar endDate = Calendar.getInstance();
-			endDate.add(Calendar.DAY_OF_MONTH, 8);
-			wpi.setEndDate(endDate.getTime());
-			wpi.setStatus(Constants.WORK_STATUS_NOT_STARTED);
-			wpi.setMessage("first do this, then do that");
-			wmp.getWorkPlanItems().add(wpi);
-		}
-		{
-			WorkPlanItem wpi = new WorkPlanItem();
-			Calendar startDate = Calendar.getInstance();
-			startDate.add(Calendar.DAY_OF_MONTH, 8);
-			wpi.setStartDate(startDate.getTime());
-			Calendar endDate = Calendar.getInstance();
-			endDate.add(Calendar.DAY_OF_MONTH, 18);
-			wpi.setEndDate(endDate.getTime());
-			wpi.setStatus(Constants.WORK_STATUS_NOT_STARTED);
-			wpi.setMessage("try do more");
-			wmp.getWorkPlanItems().add(wpi);
-		}
-		{
-			WorkWeeklyPlan wwp = new WorkWeeklyPlan();
-			wwp.setPlanIdentity("week " + 1);
-			{
-				WorkPlanItem wpi = new WorkPlanItem();
-				Calendar startDate = Calendar.getInstance();
-				startDate.set(Calendar.DAY_OF_MONTH, 0);
-				wpi.setStartDate(startDate.getTime());
-				Calendar endDate = Calendar.getInstance();
-				endDate.add(Calendar.DAY_OF_MONTH, 8);
-				wpi.setEndDate(endDate.getTime());
-				wpi.setStatus(Constants.WORK_STATUS_NOT_STARTED);
-				wpi.setMessage("first do this, then do that");
-				wwp.getWorkPlanItems().add(wpi);
-			}
-			{
-				WorkPlanItem wpi = new WorkPlanItem();
-				Calendar startDate = Calendar.getInstance();
-				startDate.add(Calendar.DAY_OF_MONTH, 8);
-				wpi.setStartDate(startDate.getTime());
-				Calendar endDate = Calendar.getInstance();
-				endDate.add(Calendar.DAY_OF_MONTH, 18);
-				wpi.setEndDate(endDate.getTime());
-				wpi.setStatus(Constants.WORK_STATUS_NOT_STARTED);
-				wpi.setMessage("try do more");
-				wwp.getWorkPlanItems().add(wpi);
-			}
-			wmp.getWeeklyPlans().add(wwp);
-		}
-		this.projectManager.saveMonthlyWorkPlan(wmp);
-	}
-	
+
 	@Test
 	@Transactional
 	public void testSaveProtocol(){

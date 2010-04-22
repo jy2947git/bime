@@ -48,20 +48,6 @@ public class ExperimentProtocol extends BaseObject implements Serializable {
 	public String getFullName(){
 		return this.getName() + " - " + this.getProtocolVersion();
 	}
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

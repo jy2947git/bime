@@ -7,20 +7,6 @@ import javax.persistence.*;
 @Table(name="equiptment")
 public class Equipment extends BaseObject implements Serializable {
 
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Long id;
 	@Column(nullable=false,length=50,unique=false)

@@ -38,21 +38,6 @@ public class ItemCategory extends BaseObject implements Serializable {
 	
 	@Column
 	private Integer inventoryThreshold = new Integer(Constants.default_inventory_threshold);
-	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

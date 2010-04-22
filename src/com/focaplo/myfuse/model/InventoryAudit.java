@@ -23,21 +23,6 @@ public class InventoryAudit extends BaseObject implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="managed_item_id")
 	private ManagedItem managedItem;
-	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public String getMessage() {
 		return message;

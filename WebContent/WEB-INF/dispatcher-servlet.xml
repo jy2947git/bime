@@ -265,7 +265,7 @@
 		<property name="includedListView" value="project/include/include_workLogListTable"/>
 		<property name="listView" value="project/include/include_workLogListTable"/>
 	</bean>
-	
+	 
 	<bean id="workLogFormController" class="com.focaplo.myfuse.webapp.controller.WorkLogFormController">
 		<property name="projectManager" ref="projectManager"/>
 		<property name="validator" ref="beanValidator"/>
@@ -274,11 +274,11 @@
         <property name="cancelView" value="redirect:/project/include/include_workLogForm.html"/>
 	</bean>
 	
-	
+	<!--
 	<bean id="workPlanItemListController" class="com.focaplo.myfuse.webapp.controller.WorkPlanItemListController">
 		<property name="projectManager" ref="projectManager"/>
 	</bean>
-	
+	 -->
 	<bean id="meetingListController" class="com.focaplo.myfuse.webapp.controller.MeetingListController">
 		<property name="includedListView" value="lab/include/include_meetingListTable"/>
 		<property name="listView" value="lab/meetingList"/>

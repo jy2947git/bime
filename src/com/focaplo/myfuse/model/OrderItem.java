@@ -39,21 +39,6 @@ public class OrderItem extends BaseObject implements Serializable {
 	private ManagedOrder order;
 	@OneToOne(mappedBy="orderItem", fetch=FetchType.LAZY)
 	private ManagedItem inventoryItem;
-	
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

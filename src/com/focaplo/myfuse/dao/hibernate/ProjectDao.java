@@ -7,21 +7,11 @@ import com.focaplo.myfuse.model.ExperimentImage;
 import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.ToDo;
 import com.focaplo.myfuse.model.WorkLog;
-import com.focaplo.myfuse.model.WorkPlan;
-import com.focaplo.myfuse.model.WorkPlanItem;
 
 public class ProjectDao extends UniversalDao implements
 		IProjectDao {
 
-	@SuppressWarnings("unchecked")
-	public List<WorkPlanItem> getPlanItemsOfWorkPlan(Long planId) {
-		return this.getSessionFactory().getCurrentSession().createQuery("from WorkPlanItem where workPlan.id=?").setLong(0, planId).list();
-	}
 
-	@SuppressWarnings("unchecked")
-	public List<WorkPlan> getWorkPlanOfProject(Long id) {
-		return this.getSessionFactory().getCurrentSession().createQuery("from WorkMonthlyPlan where managedProject.id=?").setLong(0, id).list();
-	}
 
 	@SuppressWarnings("unchecked")
 	public List<ExperimentNote> getNotesOfProject(Long projectId) {

@@ -66,21 +66,6 @@ public class ExperimentNote extends BaseObject implements Serializable, Securabl
 		return accessUserLabels;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
-
 	public Long getId() {
 		return id;
 	}

@@ -62,11 +62,13 @@
                 <form:errors path="location" cssClass="fieldError"/>
                 <form:input path="location" id="location" cssClass="text medium" cssErrorClass="text medium error"/>
             </div>
-            <div>
-                <appfuse:label styleClass="desc" key="storage.contactPerson"/>
-                <form:errors path="contactPersion" cssClass="fieldError"/>
-                <form:input path="contactPersion" id="contactPersion" cssClass="text medium" cssErrorClass="text medium error"/>
-            </div>
+			<div>
+				<appfuse:label styleClass="desc" key="storage.contactPerson"/>
+				<form:select path="contactPerson">
+	            <option value="">------please select-----</option>
+	            <form:options items="${userList}" itemLabel="fullName"/>
+	        	</form:select>
+      		</div>
         </div>
     </li>
    

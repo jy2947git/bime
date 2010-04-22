@@ -28,12 +28,9 @@
         <mapping class="com.focaplo.myfuse.model.LabMeeting"/>
         <mapping class="com.focaplo.myfuse.model.LabMeetingItem"/>
          <mapping class="com.focaplo.myfuse.model.MeetingFile"/>
-        <mapping class="com.focaplo.myfuse.model.WorkLog"/>
-        <mapping class="com.focaplo.myfuse.model.WorkMonthlyPlan"/>
-        <mapping class="com.focaplo.myfuse.model.WorkPlan"/>
-        <mapping class="com.focaplo.myfuse.model.WorkPlanItem"/>
-        <mapping class="com.focaplo.myfuse.model.WorkWeeklyPlan"/>
+		<mapping class="com.focaplo.myfuse.model.WorkLog"/>
         <mapping class="com.focaplo.myfuse.model.ToDo"/>
          <mapping class="com.focaplo.myfuse.model.ResourceUserAuthorization"/>
+          <mapping class="com.focaplo.myfuse.model.ChemicalShelves"/>
     </session-factory>
 </hibernate-configuration>

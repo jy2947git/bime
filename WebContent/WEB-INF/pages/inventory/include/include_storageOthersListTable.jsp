@@ -6,7 +6,7 @@
     <display:column property="name" escapeXml="true" sortable="false" titleKey="storage.name" style="width: 20%"/>
     <display:column property="type" escapeXml="true" sortable="false" titleKey="storage.type" style="width: 20%"/>
     <display:column property="location" escapeXml="true" sortable="false" titleKey="storage.location" style="width: 15%"/>
-    <display:column property="contactPersion" escapeXml="true" sortable="false" titleKey="storage.contactPerson" style="width: 15%"/>
+    <display:column property="contactPerson.fullName" escapeXml="true" sortable="false" titleKey="storage.contactPerson" style="width: 15%"/>
     
 	<display:column style="width: 16%; padding-left: 15px" media="html">
         <a href="<c:url value='/inventory/othersForm.html?from=list&id=${storageOthers.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="storage.edit"/>"/></a>&nbsp;

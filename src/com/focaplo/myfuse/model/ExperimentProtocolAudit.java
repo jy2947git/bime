@@ -20,20 +20,7 @@ public class ExperimentProtocolAudit extends BaseObject implements Serializable 
 	@ManyToOne
 	@JoinColumn(name="experiment_protocol_id")
 	private ExperimentProtocol experimentProtocol;
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
 
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 
 	public Long getId() {
 		return id;

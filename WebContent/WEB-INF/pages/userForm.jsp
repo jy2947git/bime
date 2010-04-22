@@ -5,6 +5,18 @@
     <meta name="heading" content="<fmt:message key='userProfile.heading'/>"/>
     <meta name="menu" content="UserMenu"/>
     <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
+    
+      <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+  <script type="text/javascript">
+  jQuery.noConflict(); 
+  
+  jQuery(document).ready(function(){
+	  jQuery("#startDate").datepicker({showOn:'button',buttonImageOnly:true,buttonImage:'<c:url value='/images/calendar_1.png'/>'});
+	  jQuery("#birthDate").datepicker({showOn:'button',buttonImageOnly:true,buttonImage:'<c:url value='/images/calendar_1.png'/>'});
+  });
+  </script>
 </head>
 
 <spring:bind path="user.*">
@@ -96,6 +108,7 @@
             <form:input path="lastName" id="lastName" cssClass="text medium" cssErrorClass="text medium error" maxlength="50"/>
         </div>
     </li>
+
     <li>
         <div>
             <div class="left">
@@ -110,6 +123,36 @@
             </div>
         </div>
     </li>
+    
+        <li>
+        <div>
+            <div class="left">
+                <appfuse:label styleClass="desc" key="user.cellPhone"/>
+                <form:errors path="cellPhoneNumber" cssClass="fieldError"/>
+                <form:input path="cellPhoneNumber" id="cellPhoneNumber" cssClass="text medium" cssErrorClass="text medium error"/>
+            </div>
+            <div>
+                <appfuse:label styleClass="desc" key="user.homePhone"/>
+                <form:errors path="homePhoneNumber" cssClass="fieldError"/>
+                <form:input path="homePhoneNumber" id="homePhoneNumber" cssClass="text medium" cssErrorClass="text medium error"/>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div>
+            <div class="left">
+                <appfuse:label styleClass="desc" key="user.birthDate"/>
+                <form:errors path="birthDate" cssClass="fieldError"/>
+                <form:input path="birthDate" id="birthDate" cssClass="text medium" cssErrorClass="text medium error"/>
+            </div>
+            <div>
+                <appfuse:label styleClass="desc" key="user.startDate"/>
+                <form:errors path="startDate" cssClass="fieldError"/>
+                <form:input path="startDate" id="startDate" cssClass="text medium" cssErrorClass="text medium error"/>
+            </div>
+        </div>
+    </li>
+    
     <li>
         <div>
             <div class="left">
