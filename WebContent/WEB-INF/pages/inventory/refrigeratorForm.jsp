@@ -63,12 +63,12 @@
             </div>
 
             <div>
-			<appfuse:label styleClass="desc" key="refrigerator.contactPerson"/>
-			<form:select path="contactPerson">
-            <option value="">------please select-----</option>
-            <form:options items="${userList}" itemLabel="fullName"/>
-        	</form:select>
-      	</div>
+				<appfuse:label styleClass="desc" key="refrigerator.contactPerson"/>
+				<form:select path="contactPerson">
+	            <option value="">------please select-----</option>
+	            <form:options items="${userList}" itemLabel="fullName"/>
+	        	</form:select>
+      		</div>
         </div>
     </li>
 

@@ -43,18 +43,14 @@ public class ManagedItem extends BaseObject implements Serializable {
 	@Column(nullable=true, length=50)
 	private String lastUserName;
 	
-	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.MERGE)
-	@JoinColumn(name="storage_section_fk")
-	private StorageSection storageSection;
+	@Column(nullable=true, length=50)
+	private String storigibleUniqueId;
+	
 	@Column(length=50)
 	private String storageNotes;
 	@OneToMany(mappedBy="managedItem",cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
 	private Set<InventoryAudit> inventoryAudits=new HashSet<InventoryAudit>();
 	
-	@Transient
-	public String getStorageDetail(){
-		return this.getStorageSection()==null?this.getStorageNotes():this.getStorageSection().getStorage().getName() + "-" + this.getStorageSection().getStorage().getName() + "(" + this.getStorageNotes()+")";
-	}
 //	
 //	@ManyToOne
 //	@JoinColumn(name="order_item_fk")
@@ -97,12 +93,15 @@ public class ManagedItem extends BaseObject implements Serializable {
 		this.storePersonId = storePersonId;
 	}
 
-	public StorageSection getStorageSection() {
-		return storageSection;
+
+
+
+	public String getStorigibleUniqueId() {
+		return storigibleUniqueId;
 	}
 
-	public void setStorageSection(StorageSection storageSection) {
-		this.storageSection = storageSection;
+	public void setStorigibleUniqueId(String storigibleUniqueId) {
+		this.storigibleUniqueId = storigibleUniqueId;
 	}
 
 	public Date getExpirationDate() {

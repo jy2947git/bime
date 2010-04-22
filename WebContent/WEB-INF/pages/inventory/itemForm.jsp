@@ -61,9 +61,9 @@
    <li>
 		<div class="left">
 			<appfuse:label styleClass="desc" key="item.storage"/>
-			<form:select path="storageSectionId">
+			<form:select path="managedItem.storigibleUniqueId">
             
-            <form:options items="${storageSectionList}" itemValue="id" itemLabel="alias"/>
+            <form:options items="${allStoragableList}" itemValue="storigibleUniqueId" itemLabel="alias"/>
             <form:option value="" label="-----please select -----"/>
         	</form:select>
       </div>

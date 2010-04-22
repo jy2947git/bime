@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 @Entity
 @Table(name="storage_section")
-public class StorageSection extends BaseObject implements Serializable {
+public class StorageSection extends BaseObject implements Serializable, Storagible {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Long id;
 	@Column(nullable=true,length=50)
@@ -28,8 +28,7 @@ public class StorageSection extends BaseObject implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="storage_id")
 	private Storage storage;
-	@OneToMany(mappedBy="storageSection", fetch=FetchType.LAZY)
-	private Set<ManagedItem> managedItems = new HashSet<ManagedItem>();
+
 	@Column(nullable=false,length=100)
 	private String alias;
 	
@@ -46,13 +45,6 @@ public class StorageSection extends BaseObject implements Serializable {
 		this.storage = storage;
 	}
 
-	public Set<ManagedItem> getManagedItems() {
-		return managedItems;
-	}
-
-	public void setManagedItems(Set<ManagedItem> managedItems) {
-		this.managedItems = managedItems;
-	}
 
 	public String getName() {
 		return name;
@@ -86,4 +78,10 @@ public class StorageSection extends BaseObject implements Serializable {
 		this.alias = alias;
 	}
 
+	public Class getStorageType() {
+		return StorageSection.class;
+	}
+	public String getStorigibleUniqueId() {
+		return this.getStorageType().getSimpleName() + "-" + this.getId();
+	}
 }

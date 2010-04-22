@@ -10,7 +10,14 @@ public class ManagedItemWrapper implements Serializable {
 	private Long storageId;
 	private Long itemCategoryId;
 	private Integer inventoryAmount;
+	private String storigibleAlias;
 	
+	public String getStorigibleAlias() {
+		return storigibleAlias;
+	}
+	public void setStorigibleAlias(String storigibleAlias) {
+		this.storigibleAlias = storigibleAlias;
+	}
 	public Integer getInventoryAmount() {
 		return inventoryAmount;
 	}

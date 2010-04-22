@@ -1,6 +1,8 @@
 package com.focaplo.myfuse.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.focaplo.myfuse.model.Equipment;
@@ -11,6 +13,7 @@ import com.focaplo.myfuse.model.OrderItem;
 import com.focaplo.myfuse.model.Refrigerator;
 import com.focaplo.myfuse.model.Storage;
 import com.focaplo.myfuse.model.StorageSection;
+import com.focaplo.myfuse.model.Storagible;
 import com.focaplo.myfuse.service.InventoryService;
 
 public class InventoryManager extends UniversalManager implements
@@ -77,17 +80,6 @@ public class InventoryManager extends UniversalManager implements
 		this.inventoryDao.save(section);
 	}
 
-	public ManagedItem saveManagedItemToStorageSection(ManagedItem item, Long storageSectionId) {
-		if(storageSectionId==null){
-			item.setStorageSection(null);
-		}else{
-			item.setStorageSection((StorageSection) this.get(StorageSection.class, storageSectionId));
-		}
-
-		this.inventoryDao.saveOrUpdate(item);
-		return item;
-		
-	}
 
 	public List<ManagedItem> addOrderToInventory(Long orderId) {
 		//find order items
@@ -136,6 +128,26 @@ public class InventoryManager extends UniversalManager implements
 	public void updateAndCheckInventoryJob() {
 		//
 		log.info("checking inventory....");
+	}
+
+	public List<Storagible> getAllStoragibles() {
+		List<Storage> storages = this.getAll(Storage.class);
+		List<StorageSection> sections = this.getAll(StorageSection.class);
+		
+		//combine the storage and storage sections since user can choose to either store at storage level or section level
+		List<Storagible> allStoragibles = new ArrayList<Storagible>();
+		allStoragibles.addAll(storages);
+		allStoragibles.addAll(sections);
+		//sort by alias
+		Collections.sort(allStoragibles, new Comparator<Storagible>(){
+
+			public int compare(Storagible o1, Storagible o2) {
+				if(o1==null){
+					return -1;
+				}
+				return o1.getAlias().compareTo(o2.getAlias());
+			}});
+		return allStoragibles;
 	}
 
 }

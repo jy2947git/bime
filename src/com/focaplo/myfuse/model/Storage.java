@@ -21,7 +21,7 @@ import javax.persistence.JoinColumn;
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name="storage")
-public class Storage extends BaseObject implements Serializable {
+public class Storage extends BaseObject implements Serializable, Storagible {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Long id;
 	@Column(nullable=false,length=50,unique=false)
@@ -95,6 +95,14 @@ public class Storage extends BaseObject implements Serializable {
 
 	public void setAlias(String alias) {
 		this.alias = alias;
+	}
+
+	public Class getStorageType() {
+		return Storage.class;
+	}
+
+	public String getStorigibleUniqueId() {
+		return this.getStorageType().getSimpleName() + "-" + this.getId();
 	}
 
 }

@@ -9,6 +9,7 @@ import com.focaplo.myfuse.model.OrderItem;
 import com.focaplo.myfuse.model.Refrigerator;
 import com.focaplo.myfuse.model.Storage;
 import com.focaplo.myfuse.model.StorageSection;
+import com.focaplo.myfuse.model.Storagible;
 
 public interface InventoryService extends UniversalService{
 
@@ -23,7 +24,7 @@ public interface InventoryService extends UniversalService{
 	public void updateStorageSection(Long id, String name, String type);
 	public void deleteStorageSection(Long id);
 	public void saveStorageSection(Long storageId, StorageSection section);
-	public ManagedItem saveManagedItemToStorageSection(ManagedItem item, Long storageSectionId);
+	
 	public List<ManagedItem> addOrderToInventory(Long orderId);
 	public void addOrderItemToInventory(Long orderItemId);
 	public ManagedItem addToInventory(OrderItem item);
@@ -34,4 +35,5 @@ public interface InventoryService extends UniversalService{
 	
 	//
 	public void updateAndCheckInventoryJob();
+	public List<Storagible> getAllStoragibles();
 }

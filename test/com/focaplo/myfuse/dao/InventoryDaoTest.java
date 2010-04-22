@@ -83,15 +83,8 @@ public class InventoryDaoTest extends BaseDaoTestCase {
 		
 		//storage
 		List<Storage> slist = this.inventoryDao.getAll(Storage.class);
-		int i=0;
-		while(i<slist.size() && slist.get(i).getSections().size()<=0){
-			i++;
-		}
-		if(i==slist.size()){
-			log.info("no storage has section...");
-		}else{
-			item.setStorageSection(slist.get(i).getSections().iterator().next());
-			log.info("storage section:" + item.getStorageSection().getStorage().getId() + "-" + item.getStorageSection().getId());
+		if(!slist.isEmpty()){
+			item.setStorigibleUniqueId(slist.get(0).getStorigibleUniqueId());
 		}
 		this.inventoryDao.save(item);
 		category.setTotalAmount(new Integer("100"));
@@ -100,70 +93,15 @@ public class InventoryDaoTest extends BaseDaoTestCase {
 	
 	@Test
 	public void testFindItemsOfStorageSection(){
-		List<Storage> slist = this.inventoryDao.getAll(Storage.class);
-		int i=0;
-		while(i<slist.size() && slist.get(i).getSections().size()<=0){
-			i++;
-		}
-		if(i==slist.size()){
-			log.info("no storage has section...");
-		}else{
-			StorageSection ss = slist.get(i).getSections().iterator().next();
-			Iterator<ManagedItem> ite = ss.getManagedItems().iterator();
-			while(ite.hasNext()){
-				log.info("found:" + ite.next().getId());
-			}
-		}
+		
 	}
 	
 	@Test
 	public void testFindItemsOfStorage(){
-		List<Storage> slist = this.inventoryDao.getAll(Storage.class);
-		int i=0;
-		while(i<slist.size() && slist.get(i).getSections().size()<=0){
-			i++;
-		}
-		if(i==slist.size()){
-			log.info("no storage has section...");
-		}else{
-			Iterator<StorageSection> its = slist.get(i).getSections().iterator();
-				while(its.hasNext()){
-				StorageSection ss = its.next();
-				Iterator<ManagedItem> ite = ss.getManagedItems().iterator();
-				while(ite.hasNext()){
-					log.info("found:" + ite.next().getId());
-				}
-			}
-		}
+		
 	}
 	
-	@Test
-	public void testMoveItemFromOneSectionToTheOther(){
-		ManagedItem item = (ManagedItem)this.inventoryDao.get(ManagedItem.class, new Long("13"));
-		item.setAmount(item.getAmount()-10);
-		log.info("item used to be at:" + item.getStorageSection().getId());
-		//find a storage section
-		List<Storage> slist = this.inventoryDao.getAll(Storage.class);
-		int i=0;
-		while(i<slist.size() && slist.get(i).getSections().size()<=0){
-			i++;
-		}
-		if(i==slist.size()){
-			log.info("no storage has section...");
-		}else{
-			
-			Iterator<StorageSection> its = slist.get(i).getSections().iterator();
-			while(its.hasNext()){
-				StorageSection ss = its.next();
-				if(ss.getId().longValue()!=item.getStorageSection().getId().longValue()){
-					log.info("move to " + ss.getStorage().getId() + "-" + ss.getId());
-					item.setStorageSection(ss);
-					break;
-				}
-			}
-		}
-		this.inventoryDao.save(item);
-	}
+	
 	
 	@Test
 	public void testAddNewEquipment(){

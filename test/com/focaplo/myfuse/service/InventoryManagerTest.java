@@ -24,10 +24,5 @@ public class InventoryManagerTest extends BaseManagerTestCase {
 //		this.setComplete();
 		log.info("saved " + r.getId());
 	}
-	@Test
-	public void testChangeItemSection(){
-		ManagedItem mi = (ManagedItem) this.inventoryManager.get(ManagedItem.class, new Long("13"));
-		this.inventoryManager.saveManagedItemToStorageSection(mi, new Long("14"));
-		
-	}
+
 }
