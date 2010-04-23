@@ -36,5 +36,7 @@ public interface LabService extends UniversalService {
 	
 	public void removeMeetingFile(Lab lab, MeetingFile meetingFile);
 
+	public List<LabMeeting> getMeetingsInviting(Long id);
+
 
 }

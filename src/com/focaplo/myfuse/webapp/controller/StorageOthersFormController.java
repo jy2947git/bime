@@ -16,6 +16,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.model.StorageOthers;
+import com.focaplo.myfuse.model.StorageSection;
 import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.service.UserService;
 import com.focaplo.myfuse.webapp.support.UserConverter;
@@ -61,9 +62,13 @@ public class StorageOthersFormController extends BaseFormController {
         } else {
         	Integer originalVersion = storageOthers.getVersion();
         	
-        	String alias = this.getText("storage.", locale)+ "" + storageOthers.getName() + " " + storageOthers.getType() + " " + storageOthers.getLocation();
+        	String alias = this.getText("storage", locale)+ "" + storageOthers.getName() + " " + storageOthers.getType() + " " + storageOthers.getLocation();
         	storageOthers.setAlias(alias.trim());
-        	
+        	if(!storageOthers.getSections().isEmpty()){
+        		for(StorageSection ss:storageOthers.getSections()){
+        			ss.setAlias(storageOthers.getAlias() + " " + this.getText("section", locale) + " " + ss.getName());
+        		}
+        	}
         	this.inventoryManager.saveStorage(storageOthers);
             saveMessage(request, getText("storageOthers.saved",storageOthers.getName(), locale));
             return new ModelAndView(getSuccessView());

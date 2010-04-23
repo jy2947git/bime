@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import com.focaplo.myfuse.model.Equipment;
 import com.focaplo.myfuse.model.InventoryAudit;
@@ -25,6 +26,14 @@ public class InventoryManager extends UniversalManager implements
 	}
 
 	public void deleteStorage(Long id) {
+		//this will delete the storage and its sections
+		//also this will set the items which were associated to the storage or section to be NULL
+		Storage s = (Storage)this.inventoryDao.get(Storage.class, id);
+		Set<StorageSection> allSections = s.getSections();
+		this.inventoryDao.removeItemsOutOfStoragible(s.getStorigibleUniqueId());
+		for(StorageSection ss:allSections){
+			this.inventoryDao.removeItemsOutOfStoragible(ss.getStorigibleUniqueId());
+		}
 		this.inventoryDao.deleteStorge(id);
 		return;
 	}
@@ -60,6 +69,12 @@ public class InventoryManager extends UniversalManager implements
 	}
 
 	public void deleteStorageSection(Long id) {
+		//this will delete the storage section, also, will find the items which were stored in ths section
+		// and set its storagible unique id to be NULL
+		StorageSection ss = (StorageSection)this.inventoryDao.get(StorageSection.class, id);
+		String storagibleId = ss.getStorigibleUniqueId();
+		//update the items
+		this.inventoryDao.removeItemsOutOfStoragible(storagibleId);
 		this.inventoryDao.deleteStorageSection(id);
 	}
 
@@ -77,6 +92,9 @@ public class InventoryManager extends UniversalManager implements
 			return;
 		}
 		section.setStorage((Storage) this.inventoryDao.get(Storage.class, storageId));
+		//TODO - how to get the locale from application resources just like the form controller?
+		//this method is called directly by DWR Ajax...
+		section.setAlias(section.getStorage().getAlias() + " " + "section" + " " + section.getName());
 		this.inventoryDao.save(section);
 	}
 

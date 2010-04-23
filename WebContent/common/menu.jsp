@@ -10,7 +10,7 @@
   
     <menu:displayMenu name="AdminMenu"/>
    <menu:displayMenu name="InventoryMenu"/>
-   <menu:displayMenu name="ReportMenu"/>
+   
 </ul>
 </menu:useMenuDisplayer>
 </div>

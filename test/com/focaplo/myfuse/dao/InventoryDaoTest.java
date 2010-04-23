@@ -106,9 +106,9 @@ public class InventoryDaoTest extends BaseDaoTestCase {
 	@Test
 	public void testAddNewEquipment(){
 		Equipment e = new Equipment();
-		e.setContactUserName("admin");
+		
 		e.setEquiptmentCondition("good");
-		e.setLastUserName("admin");
+	
 		e.setLocation("corner");
 		e.setName("bike2");
 		e.setType("sports");

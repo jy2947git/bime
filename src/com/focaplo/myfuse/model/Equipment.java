@@ -1,6 +1,8 @@
 package com.focaplo.myfuse.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,12 +17,22 @@ public class Equipment extends BaseObject implements Serializable {
 	private String type;
 	@Column(nullable=true,length=50)
 	private String equiptmentCondition;
-	@Column(nullable=true,length=50)
-	private String contactUserName;
+
 	@Column(nullable=true,length=50)
 	private String location;
-	@Column(nullable=true,length=50)
-	private String lastUserName;
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn
+	private User lastUser;
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn
+	private User contactPerson;
+	@Column
+	private Date lastMaintainenceDate;
+	@Column
+	private Date nextMaintanenceDate;
+	@Column(length=200)
+	private String maintainenceTools;
+	
 	public Long getId() {
 		return id;
 	}
@@ -55,13 +67,7 @@ public class Equipment extends BaseObject implements Serializable {
 		this.equiptmentCondition = equiptmentCondition;
 	}
 
-	public String getContactUserName() {
-		return contactUserName;
-	}
-
-	public void setContactUserName(String contactUserName) {
-		this.contactUserName = contactUserName;
-	}
+	
 
 	public String getLocation() {
 		return location;
@@ -71,14 +77,47 @@ public class Equipment extends BaseObject implements Serializable {
 		this.location = location;
 	}
 
-	public String getLastUserName() {
-		return lastUserName;
+	public User getLastUser() {
+		return lastUser;
 	}
 
-	public void setLastUserName(String lastUserName) {
-		this.lastUserName = lastUserName;
+	public void setLastUser(User lastUser) {
+		this.lastUser = lastUser;
 	}
-	
+
+	public User getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(User contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	public Date getLastMaintainenceDate() {
+		return lastMaintainenceDate;
+	}
+
+	public void setLastMaintainenceDate(Date lastMaintainenceDate) {
+		this.lastMaintainenceDate = lastMaintainenceDate;
+	}
+
+	public Date getNextMaintanenceDate() {
+		return nextMaintanenceDate;
+	}
+
+	public void setNextMaintanenceDate(Date nextMaintanenceDate) {
+		this.nextMaintanenceDate = nextMaintanenceDate;
+	}
+
+	public String getMaintainenceTools() {
+		return maintainenceTools;
+	}
+
+	public void setMaintainenceTools(String maintainenceTools) {
+		this.maintainenceTools = maintainenceTools;
+	}
+
+
 	
 	
 }

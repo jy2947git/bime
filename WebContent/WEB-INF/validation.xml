@@ -145,61 +145,8 @@
                   <arg0 key="note.notes"/>
               </field>
       </form>
-      <form name="workPlan">
-      		<field property="planType"
-                     depends="required">
-
-                  <arg0 key="workplan.planType"/>
-             </field>
-             <field property="planIdentity"
-                     depends="required">
-
-                  <arg0 key="workplan.planIdentity"/>
-             </field>
-             <field property="status"
-                     depends="required">
-
-                  <arg0 key="workplan.status"/>
-             </field>
-
-      </form>
-      <form name="workMonthlyPlan">
-      		<field property="planType"
-                     depends="required">
-
-                  <arg0 key="workplan.planType"/>
-             </field>
-             <field property="planIdentity"
-                     depends="required">
-
-                  <arg0 key="workplan.planIdentity"/>
-             </field>
-             <field property="status"
-                     depends="required">
-
-                  <arg0 key="workplan.status"/>
-             </field>
-
-      </form>
-      <form name="workWeeklyPlan">
-      		<field property="planType"
-                     depends="required">
-
-                  <arg0 key="workplan.planType"/>
-             </field>
-             <field property="planIdentity"
-                     depends="required">
-
-                  <arg0 key="workplan.planIdentity"/>
-             </field>
-             <field property="status"
-                     depends="required">
-
-                  <arg0 key="workplan.status"/>
-             </field>
-
-      </form>
-      <form name="toDo">
+      
+          <form name="toDo">
              <field property="message"
                      depends="required">
 
@@ -231,6 +178,13 @@
               </field>
       </form>
       <form name="storageOthers">
+              <field property="name"
+                     depends="required">
+
+                  <arg0 key="storage.name"/>
+              </field>
+      </form>
+      <form name="chemicalShelves">
               <field property="name"
                      depends="required">
 

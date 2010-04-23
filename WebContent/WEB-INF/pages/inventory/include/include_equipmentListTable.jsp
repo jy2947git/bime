@@ -6,7 +6,7 @@
     
     
     <display:column property="location" escapeXml="true" sortable="false" titleKey="equipment.location" style="width: 15%"/>
-    <display:column property="lastUserName" escapeXml="true" sortable="false" titleKey="equipment.last_user_name" style="width: 15%"/>
+    <display:column property="lastUser.fullName" escapeXml="true" sortable="false" titleKey="equipment.last_user_name" style="width: 15%"/>
     
     <display:column style="width: 16%; padding-left: 15px" media="html">
         <a href="<c:url value='/inventory/equipmentForm.html?from=list&id=${equipment.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="equipment.edit"/>"/></a>&nbsp;

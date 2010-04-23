@@ -3,6 +3,7 @@ package com.focaplo.myfuse.dao;
 import java.util.List;
 
 import com.focaplo.myfuse.model.Lab;
+import com.focaplo.myfuse.model.LabMeeting;
 import com.focaplo.myfuse.model.LabMeetingItem;
 import com.focaplo.myfuse.model.MeetingFile;
 import com.focaplo.myfuse.model.ResourceUserAuthorization;
@@ -21,4 +22,6 @@ public interface ILabDao extends IUniversalDao {
 
 	ResourceUserAuthorization getResourceUserAuthorizationByUserAndResource(
 			String resourceType, Long resourceId, String userName);
+
+	List<LabMeeting> getMeetingsParticipatedByUser(Long id);
 }

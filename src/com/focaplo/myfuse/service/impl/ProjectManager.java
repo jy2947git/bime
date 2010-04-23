@@ -51,7 +51,9 @@ public class ProjectManager extends UniversalManager implements
 	}
 
 	public List<ManagedProject> getProjectAccessibleTo(Long userId) {
-		return null;
+		List<ManagedProject> projects = this.projectDao.getProjectParticipatedBy(userId);
+		//sort
+		return projects;
 	}
 
 

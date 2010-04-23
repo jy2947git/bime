@@ -16,4 +16,5 @@ public interface IInventoryDao extends IUniversalDao{
 	public void updateStorageSectionAttributes(Long id, String name, String type);
 	public void deleteStorge(Long storageId);
 	public void deleteStorageSection(Long storeageSectionId);
+	public void removeItemsOutOfStoragible(String storagibleId);
 }

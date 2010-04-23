@@ -5,6 +5,7 @@ import java.util.List;
 import com.focaplo.myfuse.dao.IProjectDao;
 import com.focaplo.myfuse.model.ExperimentImage;
 import com.focaplo.myfuse.model.ExperimentNote;
+import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.ToDo;
 import com.focaplo.myfuse.model.WorkLog;
 
@@ -30,6 +31,11 @@ public class ProjectDao extends UniversalDao implements
 
 	public List<ExperimentImage> getExperimentImagesOfNote(Long noteId) {
 		return this.getSessionFactory().getCurrentSession().createQuery("from ExperimentImage where experimentNote.id=?").setLong(0, noteId).list();
+	}
+
+	public List<ManagedProject> getProjectParticipatedBy(Long userId) {
+		List<ManagedProject> results = this.getSessionFactory().getCurrentSession().createQuery("select mp from ManagedProject mp join mp.participants pp where pp=?").setLong(0, userId).list();
+		return results;
 	}
 
 }

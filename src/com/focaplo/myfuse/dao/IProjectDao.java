@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.focaplo.myfuse.model.ExperimentImage;
 import com.focaplo.myfuse.model.ExperimentNote;
+import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.ToDo;
 import com.focaplo.myfuse.model.WorkLog;
 
@@ -17,4 +18,6 @@ public interface IProjectDao extends IUniversalDao {
 	List<WorkLog> getWorkLogsOfToDo(Long toDoId);
 
 	List<ExperimentImage> getExperimentImagesOfNote(Long noteId);
+
+	List<ManagedProject> getProjectParticipatedBy(Long userId);
 }

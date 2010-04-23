@@ -11,6 +11,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -68,7 +69,11 @@ public class MailEngine {
         }
        log.debug("message:" + result);
         msg.setText(result);
-        send(msg);
+        try{
+        	send(msg);
+        }catch(MailSendException e){
+        	log.error("email", e);
+        }
     }
 
     /**
@@ -77,14 +82,11 @@ public class MailEngine {
      * @throws org.springframework.mail.MailException when SMTP server is down
      */
     public void send(SimpleMailMessage msg) {
-        try {
+     
 
-        		mailSender.send(msg);
+        mailSender.send(msg);
         	
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        
     }
 
     /**

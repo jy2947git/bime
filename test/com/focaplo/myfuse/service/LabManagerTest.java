@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -91,4 +93,31 @@ public class LabManagerTest extends BaseManagerTestCase {
         return bytes;
     }
  
+    @Test
+    public void testGetMyMeetings(){
+    	{
+	    	LabMeeting meeting = new LabMeeting();
+	    	meeting.setCreatedDate(new Date());
+	    	meeting.setStartDate(new Date());
+	    	meeting.setSubject("test" + System.currentTimeMillis());
+	    	meeting.setCoordinator(this.userManager.getUserByUsername("super"));
+	    	meeting.getParticipants().add(this.userManager.getUserByUsername("super"));
+	    	meeting.getParticipants().add(this.userManager.getUserByUsername("user"));
+	    	this.labManager.saveMeeting(meeting);
+    	}
+    	{
+	    	LabMeeting meeting = new LabMeeting();
+	    	meeting.setCreatedDate(new Date());
+	    	meeting.setStartDate(new Date());
+	    	meeting.setSubject("test" + System.currentTimeMillis());
+	    	meeting.setCoordinator(this.userManager.getUserByUsername("user"));
+	    	meeting.getParticipants().add(this.userManager.getUserByUsername("user"));
+	    	meeting.getParticipants().add(this.userManager.getUserByUsername("admin"));
+	    	this.labManager.saveMeeting(meeting);
+    	}
+    	List<LabMeeting> meetings = this.labManager.getMeetingsInviting(this.userManager.getUserByUsername("user").getId());
+    	for(LabMeeting meeting:meetings){
+    		System.out.println(meeting.getSubject());
+    	}
+    }
 }

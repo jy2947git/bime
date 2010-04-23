@@ -11,7 +11,8 @@
         	
         		<Item name="refrigerator" title="menu.inventory.storage.refrigerator" page="/inventory/refrigeratorList.html?">
  	          	</Item>
-             	<Item name="others" title="menu.inventory.storage" page="/inventory/othersList.html?"/>
+ 	          	<Item name="others" title="menu.inventory.storage.chemicalShelves" page="/inventory/chemicalShelvesList.html?"/>
+             	<Item name="others" title="menu.inventory.storage.others" page="/inventory/othersList.html?"/>
         	
         	<Item name="equipment" title="menu.inventory.equipment" page="/inventory/equipmentList.html?">
         	</Item>

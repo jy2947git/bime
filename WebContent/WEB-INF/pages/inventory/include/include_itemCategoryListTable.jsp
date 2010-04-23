@@ -10,7 +10,7 @@
          <a href="javascript:if(confirm('<fmt:message key="confirm.delete"><fmt:param value="category"/></fmt:message>')){deleteItemCategory('${itemCategory.id}')}"><img src="<c:url value='/images/cross.png'/>" alt='<fmt:message key="itemCategorydelete"/>'/></a>
     </display:column>
 
-    <display:setProperty name="paging.banner.item_name" value="itemCategory"/>
-    <display:setProperty name="paging.banner.items_name" value="itemCategorys"/>
+    <display:setProperty name="paging.banner.item_name" value="Experiment Material Category"/>
+    <display:setProperty name="paging.banner.items_name" value="Experiment Material Categories"/>
 
 </display:table>

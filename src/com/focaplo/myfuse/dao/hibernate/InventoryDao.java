@@ -41,15 +41,18 @@ public class InventoryDao extends UniversalDao implements IInventoryDao {
 	}
 
 	public void deleteStorageSection(Long storageSectionId) {
-		//update all the items to set NULL
-		this.getSessionFactory().getCurrentSession().createQuery("update ManagedItem set storageSection=null where storageSection=?").setLong(0, storageSectionId).executeUpdate();
 		this.remove(StorageSection.class, storageSectionId);
 	}
 
 	public void deleteStorge(Long storageId) {
+			this.remove(Storage.class, storageId);
+	}
+
+	public void removeItemsOutOfStoragible(String storigibleUniqueId) {
 		//update all the items to set NULL
-		this.getSessionFactory().getCurrentSession().createQuery("update ManagedItem set storageSection=null where storageSection in (from StorageSection where storage=?)").setLong(0, storageId).executeUpdate();
-		this.remove(Storage.class, storageId);
+		this.getSessionFactory().getCurrentSession().createQuery("update ManagedItem set storigibleUniqueId=null where storigibleUniqueId=?").setString(0, storigibleUniqueId).executeUpdate();
+
+		
 	}
 
 }

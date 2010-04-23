@@ -93,7 +93,7 @@ public class RefrigeratorFormController extends BaseFormController {
         } else {
         	Integer originalVersion = refrigerator.getVersion();
         	
-        	String alias = this.getText("storage", locale)+ " " + refrigerator.getName() + " " + refrigerator.getType() + " " + refrigerator.getLocation();
+        	String alias = this.getText("refrigerator", locale)+ " " + refrigerator.getName() + " " + refrigerator.getType() + " " + refrigerator.getLocation();
         	refrigerator.setAlias(alias.trim());
         	if(!refrigerator.getSections().isEmpty()){
         		for(StorageSection ss:refrigerator.getSections()){

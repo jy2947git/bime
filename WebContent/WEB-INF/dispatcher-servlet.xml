@@ -154,6 +154,17 @@
         <property name="cancelView" value="redirect:othersList.html"/>
 	</bean>
 	
+	<bean id="chemicalShelvesListController" class="com.focaplo.myfuse.webapp.controller.ChemicalShelvesListController">
+		<property name="includedListView" value="inventory/include/include_chemicalShelvesListTable"/>
+		<property name="listView" value="inventory/chemicalShelvesList"/>
+	</bean>
+	<bean id="chemicalShelvesFormController" class="com.focaplo.myfuse.webapp.controller.ChemicalShelvesFormController">
+		<property name="inventoryManager" ref="inventoryManager"/>
+		<property name="validator" ref="beanValidator"/>
+        <property name="formView" value="/inventory/chemicalShelvesForm"/>
+        <property name="successView" value="redirect:chemicalShelvesList.html"/>
+        <property name="cancelView" value="redirect:chemicalShelvesList.html"/>
+	</bean>
 	
 	<bean id="projectListController" class="com.focaplo.myfuse.webapp.controller.ProjectListController">
 		<property name="includedListView" value="project/include/include_projectListTable"/>
@@ -392,6 +403,10 @@
                 /inventory/othersList.html=storageOthersListController
                 /inventory/include/include_storageOthersListTable.html=storageOthersListController
                 /inventory/othersForm.html=storageOthersFormController
+                
+                 /inventory/chemicalShelvesList.html=chemicalShelvesListController
+                /inventory/include/include_chemicalShelvesListTable.html=chemicalShelvesListController
+                /inventory/chemicalShelvesForm.html=chemicalShelvesFormController
                 
                 /inventory/equipmentList.html=equipmentListController
                 /inventory/equipmentForm.html=equipmentFormController

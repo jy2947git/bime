@@ -114,4 +114,11 @@ public class LabManager extends UniversalManager implements LabService {
 		this.labDao.remove(Lab.class, lab.getId());
 
 	}
+
+	public List<LabMeeting> getMeetingsInviting(Long id) {
+		// get the meeting with the given id as parts
+		List<LabMeeting> meetings = this.labDao.getMeetingsParticipatedByUser(id);
+		//sort of date
+		return meetings;
+	}
 }
