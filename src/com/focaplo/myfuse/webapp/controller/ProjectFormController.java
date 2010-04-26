@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -32,8 +33,9 @@ import com.focaplo.myfuse.webapp.support.UserConverter;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class ProjectFormController extends BaseFormController {
-
+	@Autowired
 	private ProjectService projectManager;
+	@Autowired
 	private UserService userManager;
 	private UserConverter userConverter;
 	

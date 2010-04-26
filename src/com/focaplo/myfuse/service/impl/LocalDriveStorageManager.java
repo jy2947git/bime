@@ -11,6 +11,7 @@ import java.io.InputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.StoredFile;
@@ -18,9 +19,10 @@ import com.focaplo.myfuse.service.EncryptionService;
 import com.focaplo.myfuse.service.StorageService;
 
 /**
- * @author jy2947
+ * 
  *
  */
+@Service(value="localDriveStorageManager")
 public class LocalDriveStorageManager implements StorageService {
 	protected final Log log = LogFactory.getLog(getClass());
 	/**

@@ -2,6 +2,8 @@ package com.focaplo.myfuse.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.focaplo.myfuse.dao.IRoleDao;
 import com.focaplo.myfuse.model.Role;
 
@@ -12,20 +14,15 @@ import com.focaplo.myfuse.model.Role;
  *
  * @author <a href="mailto:bwnoll@gmail.com">Bryan Noll</a> 
  */
-public class RoleDao extends GenericDao<Role, Long> implements IRoleDao {
+@Repository(value="roleDao")
+public class RoleDao extends UniversalDao implements IRoleDao {
 
-    /**
-     * Constructor to create a Generics-based version using Role as the entity
-     */
-    public RoleDao() {
-        super(Role.class);
-    }
 
     /**
      * {@inheritDoc}
      */
     public Role getRoleByName(String rolename) {
-        List roles = getHibernateTemplate().find("from Role where id=?", rolename);
+        List<Role> roles = this.getSessionFactory().getCurrentSession().createQuery("from Role where id=?").setString(0, rolename).list();
         if (roles.isEmpty()) {
             return null;
         } else {
@@ -37,7 +34,15 @@ public class RoleDao extends GenericDao<Role, Long> implements IRoleDao {
      * {@inheritDoc}
      */
     public void removeRole(String rolename) {
-        Object role = getRoleByName(rolename);
-        getHibernateTemplate().delete(role);
+        this.remove(Role.class, rolename);
     }
+
+	public List<Role> getAllRoles() {
+		return this.getAll(Role.class);
+	}
+
+	public Role saveRole(Role role) {
+		this.getSessionFactory().getCurrentSession().saveOrUpdate(role);
+		return role;
+	}
 }

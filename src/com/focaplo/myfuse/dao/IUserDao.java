@@ -14,7 +14,7 @@ import com.focaplo.myfuse.model.User;
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
-public interface IUserDao extends IGenericDao<User, Long> {
+public interface IUserDao extends IUniversalDao {
 
     /**
      * Gets users information based on login name.

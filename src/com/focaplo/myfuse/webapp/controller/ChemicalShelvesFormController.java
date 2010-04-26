@@ -23,7 +23,7 @@ import com.focaplo.myfuse.service.UserService;
 import com.focaplo.myfuse.webapp.support.UserConverter;
 
 public class ChemicalShelvesFormController extends BaseFormController {
-
+	@Autowired
 	private InventoryService inventoryManager;
 	@Autowired
 	private UserService userManager;
@@ -63,7 +63,7 @@ public class ChemicalShelvesFormController extends BaseFormController {
         } else {
         	Integer originalVersion = chemicalShelves.getVersion();
         	
-        	String alias = this.getText("chemicalShelve", locale)+ "" + chemicalShelves.getName() + " " + chemicalShelves.getType() + " " + chemicalShelves.getLocation();
+        	String alias = this.getText("chemicalShelve", locale)+ " " + chemicalShelves.getName() + " " + chemicalShelves.getType() + " " + chemicalShelves.getLocation();
         	chemicalShelves.setAlias(alias.trim());
         	if(!chemicalShelves.getSections().isEmpty()){
         		for(StorageSection ss:chemicalShelves.getSections()){
@@ -72,7 +72,12 @@ public class ChemicalShelvesFormController extends BaseFormController {
         	}
         	this.inventoryManager.saveStorage(chemicalShelves);
             saveMessage(request, getText("chemicalShelves.saved",chemicalShelves.getName(), locale));
-            return new ModelAndView(getSuccessView());
+            if(originalVersion==null){
+            	//first time created, go back to form page to add section
+                return new ModelAndView("redirect:chemicalShelvesForm.html?from=list&id="+chemicalShelves.getId());
+            }else{
+            	return new ModelAndView(getSuccessView());
+            }
 
         }
 

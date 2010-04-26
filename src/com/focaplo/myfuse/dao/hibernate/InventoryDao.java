@@ -3,12 +3,14 @@ package com.focaplo.myfuse.dao.hibernate;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.focaplo.myfuse.dao.IInventoryDao;
 import com.focaplo.myfuse.model.ManagedItem;
 import com.focaplo.myfuse.model.Refrigerator;
 import com.focaplo.myfuse.model.Storage;
 import com.focaplo.myfuse.model.StorageSection;
-
+@Repository(value="inventoryDao")
 public class InventoryDao extends UniversalDao implements IInventoryDao {
 
 	public Long saveRefrigerator(Refrigerator r) {

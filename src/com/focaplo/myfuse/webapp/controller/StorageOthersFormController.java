@@ -22,7 +22,7 @@ import com.focaplo.myfuse.service.UserService;
 import com.focaplo.myfuse.webapp.support.UserConverter;
 
 public class StorageOthersFormController extends BaseFormController {
-
+	@Autowired
 	private InventoryService inventoryManager;
 	@Autowired
 	private UserService userManager;
@@ -62,7 +62,7 @@ public class StorageOthersFormController extends BaseFormController {
         } else {
         	Integer originalVersion = storageOthers.getVersion();
         	
-        	String alias = this.getText("storage", locale)+ "" + storageOthers.getName() + " " + storageOthers.getType() + " " + storageOthers.getLocation();
+        	String alias = this.getText("storage", locale)+ " " + storageOthers.getName() + " " + storageOthers.getType() + " " + storageOthers.getLocation();
         	storageOthers.setAlias(alias.trim());
         	if(!storageOthers.getSections().isEmpty()){
         		for(StorageSection ss:storageOthers.getSections()){
@@ -70,8 +70,13 @@ public class StorageOthersFormController extends BaseFormController {
         		}
         	}
         	this.inventoryManager.saveStorage(storageOthers);
-            saveMessage(request, getText("storageOthers.saved",storageOthers.getName(), locale));
-            return new ModelAndView(getSuccessView());
+        	saveMessage(request, getText("storageOthers.saved",storageOthers.getName(), locale));
+        	if(originalVersion==null){
+            	//first time created, go back to form page to add section
+                return new ModelAndView("redirect:othersForm.html?from=list&id="+storageOthers.getId());
+            }else{
+            	return new ModelAndView(getSuccessView());
+            }
 
         }
 

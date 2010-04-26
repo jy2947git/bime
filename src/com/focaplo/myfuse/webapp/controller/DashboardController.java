@@ -27,6 +27,17 @@ public class DashboardController implements Controller {
 	private LabService labManager;
 	@Autowired
 	private InventoryService inventoryManager;
+	@Autowired
+	private GrantService grantManager;
+	@Autowired
+	private ProjectService projectManager;
+	public void setGrantManager(GrantService grantManager) {
+		this.grantManager = grantManager;
+	}
+	
+	public void setProjectManager(ProjectService projectManager) {
+		this.projectManager = projectManager;
+	}
 	public void setOrderManager(OrderService orderManager) {
 		this.orderManager = orderManager;
 	}
@@ -41,14 +52,6 @@ public class DashboardController implements Controller {
 
 	public void setInventoryManager(InventoryService inventoryManager) {
 		this.inventoryManager = inventoryManager;
-	}
-	private GrantService grantManager;
-	public void setGrantManager(GrantService grantManager) {
-		this.grantManager = grantManager;
-	}
-	private ProjectService projectManager;
-	public void setProjectManager(ProjectService projectManager) {
-		this.projectManager = projectManager;
 	}
 	public ModelAndView handleRequest(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {

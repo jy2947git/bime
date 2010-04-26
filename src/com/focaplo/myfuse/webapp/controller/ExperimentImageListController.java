@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +26,8 @@ public class ExperimentImageListController extends BaseListController{
 	@Autowired
 	private LabService labManager;
 	@Autowired
-	private StorageService storageService;
+	@Qualifier("localDriveStorageManager")
+	private StorageService storageManager;
 	
 	public void setProjectManager(ProjectService projectManager) {
 		this.projectManager = projectManager;
@@ -35,9 +37,11 @@ public class ExperimentImageListController extends BaseListController{
 		this.labManager = labManager;
 	}
 
-	public void setStorageService(StorageService storageService) {
-		this.storageService = storageService;
+
+	public void setStorageManager(StorageService storageManager) {
+		this.storageManager = storageManager;
 	}
+
 	@Override
 	public Class getModelClass() {
 		return ExperimentImage.class;

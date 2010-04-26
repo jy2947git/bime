@@ -1,7 +1,9 @@
 package com.focaplo.myfuse.dao.hibernate;
 
-import com.focaplo.myfuse.dao.IGrantDao;
+import org.springframework.stereotype.Repository;
 
+import com.focaplo.myfuse.dao.IGrantDao;
+@Repository(value="grantDao")
 public class GrantDao extends UniversalDao implements
 		IGrantDao {
 

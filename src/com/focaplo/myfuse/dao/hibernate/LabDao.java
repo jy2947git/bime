@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Repository;
+
 import com.focaplo.myfuse.dao.ILabDao;
 import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.LabMeeting;
@@ -12,7 +14,7 @@ import com.focaplo.myfuse.model.LabMeetingItem;
 import com.focaplo.myfuse.model.MeetingFile;
 import com.focaplo.myfuse.model.ResourceUserAuthorization;
 import com.focaplo.myfuse.model.User;
-
+@Repository(value="labDao")
 public class LabDao extends UniversalDao implements ILabDao{
 
 	@SuppressWarnings("unchecked")

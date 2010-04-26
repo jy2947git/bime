@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import com.focaplo.myfuse.model.Equipment;
 import com.focaplo.myfuse.model.InventoryAudit;
 import com.focaplo.myfuse.model.ItemCategory;
@@ -17,6 +19,7 @@ import com.focaplo.myfuse.model.StorageSection;
 import com.focaplo.myfuse.model.Storagible;
 import com.focaplo.myfuse.service.InventoryService;
 
+@Service(value="inventoryManager")
 public class InventoryManager extends UniversalManager implements
 		InventoryService {
 

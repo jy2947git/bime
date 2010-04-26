@@ -1,5 +1,7 @@
 package com.focaplo.myfuse.dao;
 
+import java.util.List;
+
 import com.focaplo.myfuse.model.Role;
 
 /**
@@ -7,7 +9,7 @@ import com.focaplo.myfuse.model.Role;
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
-public interface IRoleDao extends IGenericDao<Role, Long> {
+public interface IRoleDao extends IUniversalDao {
     /**
      * Gets role information based on rolename
      * @param rolename the rolename
@@ -20,4 +22,8 @@ public interface IRoleDao extends IGenericDao<Role, Long> {
      * @param rolename the role's rolename
      */
     void removeRole(String rolename);
+
+	List<Role> getAllRoles();
+
+	Role saveRole(Role role);
 }

@@ -32,7 +32,18 @@
         <property name="toAddress" value="${bime.support.to.address}" />
         <property name="ccAddress" value="${bime.support.cc.address}" />
     </bean>
-
+    <bean id="projectConverter" class="com.focaplo.myfuse.webapp.support.ManagedProjectConverter">
+	       <property name="projectManager"><ref bean="projectManager"/></property>
+	</bean>
+	 
+	 <bean id="protocolConverter" class="com.focaplo.myfuse.webapp.support.ExperimentProtocolConverter">
+	       <property name="projectManager"><ref bean="projectManager"/></property>
+	 </bean>
+	    
+	 <bean id="userConverter" class="com.focaplo.myfuse.webapp.support.UserConverter">
+	       
+	 </bean> 
+	 
     <bean id="filenameController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController"/>
 
     <bean id="fileUploadController" class="com.focaplo.myfuse.webapp.controller.FileUploadController">
@@ -43,9 +54,7 @@
     </bean>
 
     <bean id="passwordHintController" class="com.focaplo.myfuse.webapp.controller.PasswordHintController">
-        <property name="userManager" ref="userManager"/>
         <property name="messageSource" ref="messageSource"/>
-        <property name="mailEngine" ref="mailEngine"/>
         <property name="message" ref="mailMessage"/>
     </bean>
 
@@ -55,15 +64,11 @@
         <property name="validator" ref="beanValidator"/>
         <property name="formView" value="signup"/>
         <property name="successView" value="redirect:mainMenu.html"/>
-        <property name="userManager" ref="userManager"/>
-        <property name="roleManager" ref="roleManager"/>
-        <property name="mailEngine" ref="mailEngine"/>
         <property name="message" ref="mailMessage"/>
         <property name="templateName" value="accountCreated.vm"/>
     </bean>
 
     <bean id="userController" class="com.focaplo.myfuse.webapp.controller.UserController">
-        <property name="userManager" ref="userManager"/>
     </bean>
 
     <bean id="userFormController" class="com.focaplo.myfuse.webapp.controller.UserFormController">
@@ -71,9 +76,6 @@
         <property name="formView" value="userForm"/>
         <property name="successView" value="redirect:users.html"/>
         <property name="cancelView" value="redirect:mainMenu.html"/>
-        <property name="userManager" ref="userManager"/>
-        <property name="roleManager" ref="roleManager"/>
-        <property name="mailEngine" ref="mailEngine"/>
         <property name="message" ref="mailMessage"/>
         <property name="templateName" value="accountCreated.vm"/>
     </bean>
@@ -84,7 +86,6 @@
 		<property name="listView" value="inventory/equipmentList"/>
 	</bean>
 	<bean id="equipmentFormController" class="com.focaplo.myfuse.webapp.controller.EquipmentFormController">
-		<property name="inventoryManager" ref="inventoryManager"/>
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/inventory/equipmentForm"/>
         <property name="successView" value="redirect:equipmentList.html"/>
@@ -96,7 +97,7 @@
 		<property name="listView" value="inventory/itemCategoryList"/>
 	</bean>
 	<bean id="itemCategoryFormController" class="com.focaplo.myfuse.webapp.controller.ItemCategoryFormController">
-		<property name="inventoryManager" ref="inventoryManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/inventory/itemCategoryForm"/>
         <property name="successView" value="redirect:itemCategoryList.html"/>
@@ -108,9 +109,9 @@
 		<property name="listView" value="inventory/orderList"/>
 	</bean>
 	<bean id="orderFormController" class="com.focaplo.myfuse.webapp.controller.OrderFormController">
-		<property name="orderManager" ref="orderManager"/>
-		<property name="userManager" ref="userManager"/>
-		<property name="inventoryManager" ref="inventoryManager"/>
+		
+		
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/inventory/orderForm"/>
         <property name="successView" value="redirect:orderList.html"/>
@@ -123,7 +124,7 @@
 		<property name="listView" value="inventory/itemList"/>
 	</bean>
 	<bean id="inventoryItemFormController" class="com.focaplo.myfuse.webapp.controller.InventoryItemFormController">
-		<property name="inventoryManager" ref="inventoryManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/inventory/itemForm"/>
         <property name="successView" value="redirect:itemList.html"/>
@@ -135,7 +136,7 @@
 		<property name="listView" value="inventory/refrigeratorList"/>
 	</bean>
 	<bean id="refrigeratorFormController" class="com.focaplo.myfuse.webapp.controller.RefrigeratorFormController">
-		<property name="inventoryManager" ref="inventoryManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/inventory/refrigeratorForm"/>
         <property name="successView" value="redirect:refrigeratorList.html"/>
@@ -147,7 +148,7 @@
 		<property name="listView" value="inventory/othersList"/>
 	</bean>
 	<bean id="storageOthersFormController" class="com.focaplo.myfuse.webapp.controller.StorageOthersFormController">
-		<property name="inventoryManager" ref="inventoryManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/inventory/othersForm"/>
         <property name="successView" value="redirect:othersList.html"/>
@@ -159,7 +160,7 @@
 		<property name="listView" value="inventory/chemicalShelvesList"/>
 	</bean>
 	<bean id="chemicalShelvesFormController" class="com.focaplo.myfuse.webapp.controller.ChemicalShelvesFormController">
-		<property name="inventoryManager" ref="inventoryManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/inventory/chemicalShelvesForm"/>
         <property name="successView" value="redirect:chemicalShelvesList.html"/>
@@ -171,8 +172,8 @@
 		<property name="listView" value="project/projectList"/>
 	</bean>
 	<bean id="projectFormController" class="com.focaplo.myfuse.webapp.controller.ProjectFormController">
-		<property name="projectManager" ref="projectManager"/>
-		<property name="userManager" ref="userManager"/>
+		
+		
 		<property name="userConverter" ref="userConverter"/>
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/project/projectForm"/>
@@ -182,8 +183,8 @@
         <property name="message" ref="mailMessage"/>
 	</bean>
 	<bean id="projectAccessFormController" class="com.focaplo.myfuse.webapp.controller.ProjectAccessFormController">
-		<property name="projectManager" ref="projectManager"/>
-		<property name="userManager" ref="userManager"/>
+		
+		
         <property name="formView" value="/project/projectAccessForm"/>
         <property name="successView" value="redirect:projectAccessForm.html"/>
         <property name="cancelView" value="redirect:projectForm.html"/>
@@ -193,7 +194,7 @@
 		<property name="listView" value="project/protocolList"/>
 	</bean>
 	<bean id="protocolFormController" class="com.focaplo.myfuse.webapp.controller.ProtocolFormController">
-		<property name="projectManager" ref="projectManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/project/protocolForm"/>
         <property name="successView" value="redirect:protocolList.html"/>
@@ -206,8 +207,8 @@
 		<property name="listView" value="project/noteList"/>
 	</bean>
 	<bean id="experimentNoteFormController" class="com.focaplo.myfuse.webapp.controller.ExperimentNoteFormController">
-		<property name="projectManager" ref="projectManager"/>
-		<property name="userManager" ref="userManager"/>
+		
+		
 		<property name="projectConverter" ref="projectConverter"/>
 		<property name="protocolConverter" ref="protocolConverter"/>
 		<property name="validator" ref="beanValidator"/>
@@ -218,24 +219,24 @@
         <property name="message" ref="mailMessage"/>
 	</bean>
 	<bean id="experimentImageUploadController" class="com.focaplo.myfuse.webapp.controller.ExperimentImageUploadController">
-		<property name="projectManager" ref="projectManager"/>
+		
         <property name="validator" ref="beanValidator"/>
         <property name="cancelView" value="redirect:noteList.html"/>
         <property name="formView" value="uploadForm"/>
         <property name="successView" value="redirect:noteList.html"/>
     </bean>
     <bean id="experimentImageDownloadController" class="com.focaplo.myfuse.webapp.controller.ExperimentNoteImpageDownloadController">
-   	 <property name="projectManager" ref="projectManager"/>
+   	 
     </bean>
     <bean id="experimentImageListController" class="com.focaplo.myfuse.webapp.controller.ExperimentImageListController">
     
     </bean>
     <!--  
     <bean id="workPlanListController" class="com.focaplo.myfuse.webapp.controller.WorkPlanListController">
-		<property name="projectManager" ref="projectManager"/>
+		
 	</bean>
 	<bean id="workPlanFormController" class="com.focaplo.myfuse.webapp.controller.WorkPlanFormController">
-		<property name="projectManager" ref="projectManager"/>
+		
 		<property name="projectConverter" ref="projectConverter"/>
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/project/workplanForm"/>
@@ -251,7 +252,7 @@
 		
 	</bean>
 	<bean id="workPlanItemFormController" class="com.focaplo.myfuse.webapp.controller.WorkPlanItemFormController">
-		<property name="projectManager" ref="projectManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/project/include/include_workPlanItemForm"/>
         <property name="successView" value="redirect:/project/include/include_workPlanItemForm.html"/>
@@ -278,7 +279,7 @@
 	</bean>
 	 
 	<bean id="workLogFormController" class="com.focaplo.myfuse.webapp.controller.WorkLogFormController">
-		<property name="projectManager" ref="projectManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/project/include/include_workLogForm"/>
         <property name="successView" value="redirect:/project/include/include_workLogForm.html"/>
@@ -287,7 +288,7 @@
 	
 	<!--
 	<bean id="workPlanItemListController" class="com.focaplo.myfuse.webapp.controller.WorkPlanItemListController">
-		<property name="projectManager" ref="projectManager"/>
+		
 	</bean>
 	 -->
 	<bean id="meetingListController" class="com.focaplo.myfuse.webapp.controller.MeetingListController">
@@ -295,8 +296,8 @@
 		<property name="listView" value="lab/meetingList"/>
 	</bean>
 	<bean id="meetingFormController" class="com.focaplo.myfuse.webapp.controller.MeetingFormController">
-		<property name="labManager" ref="labManager"/>
-		<property name="userManager" ref="userManager"/>
+		
+		
 		<property name="userConverter" ref="userConverter"/>
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/lab/meetingForm"/>
@@ -309,8 +310,8 @@
 		<property name="listView" value="lab/meetingItemList"/>
 	</bean>
 	<bean id="meetingItemFormController" class="com.focaplo.myfuse.webapp.controller.MeetingItemFormController">
-		<property name="labManager" ref="labManager"/>
-		<property name="userManager" ref="userManager"/>
+		
+		
 		<property name="userConverter" ref="userConverter"/>
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/lab/meetingItemForm"/>
@@ -318,16 +319,16 @@
         <property name="cancelView" value="redirect:meetingItemList.html"/>
 	</bean>
 	<bean id="meetingPrintController" class="com.focaplo.myfuse.webapp.controller.MeetingPrintController">
-		<property name="labManager" ref="labManager"/>
+		
 	</bean>
 	<bean id="meetingFileListController" class="com.focaplo.myfuse.webapp.controller.MeetingFileListController">
-		<property name="labManager" ref="labManager"/>
+		
 		<property name="listView" value="lab/meetingFileList"/>
 		<property name="includedListView" value="lab/include/include_meetingFileListTable"/>
 		
 	</bean>
 	<bean id="meetingFileUploadController" class="com.focaplo.myfuse.webapp.controller.MeetingFileUploadController">
-		<property name="labManager" ref="labManager"/>
+		
         <property name="validator" ref="beanValidator"/>
         <property name="cancelView" value="redirect:meetingFileist.html"/>
         <property name="formView" value="uploadForm"/>
@@ -335,14 +336,14 @@
     </bean>
     
     <bean id="meetingFileDownloadController" class="com.focaplo.myfuse.webapp.controller.MeetingFileDownloadController">
-		<property name="labManager" ref="labManager"/>
+		
     </bean>
     
 	<bean id="grantListController" class="com.focaplo.myfuse.webapp.controller.GrantListController">
-		<property name="grantManager" ref="grantManager"/>
+		
 	</bean>
 	<bean id="grantFormController" class="com.focaplo.myfuse.webapp.controller.GrantFormController">
-		<property name="grantManager" ref="grantManager"/>
+		
 		<property name="validator" ref="beanValidator"/>
         <property name="formView" value="/grant/grantForm"/>
         <property name="successView" value="redirect:grantList.html"/>
@@ -351,14 +352,14 @@
         <property name="message" ref="mailMessage"/>
 	</bean>
 	<bean id="dashboardController" class="com.focaplo.myfuse.webapp.controller.DashboardController">
-		<property name="grantManager" ref="grantManager"/>
-		<property name="projectManager" ref="projectManager"/>
-		<property name="inventoryManager" ref="inventoryManager"/>
-		<property name="orderManager" ref="orderManager"/>
-		<property name="userManager" ref="userManager"/>
+		
+		
+		
+		
+		
 	</bean>
 	<bean id="reportListController" class="com.focaplo.myfuse.webapp.controller.ReportListController">
-		<property name="userManager" ref="userManager"/>
+		
 	</bean>
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="5242880"/> <!-- 5M limit -->
@@ -486,16 +487,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     
-    <bean id="projectConverter" class="com.focaplo.myfuse.webapp.support.ManagedProjectConverter">
-	       <property name="projectManager"><ref bean="projectManager"/></property>
-	</bean>
-	 
-	 <bean id="protocolConverter" class="com.focaplo.myfuse.webapp.support.ExperimentProtocolConverter">
-	       <property name="projectManager"><ref bean="projectManager"/></property>
-	 </bean>
-	    
-	 <bean id="userConverter" class="com.focaplo.myfuse.webapp.support.UserConverter">
-	       <property name="userManager" ref="userManager"/>
-	 </bean>    		       		
+   		       		
    
 </beans>

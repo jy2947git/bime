@@ -3,10 +3,13 @@ package com.focaplo.myfuse.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.focaplo.myfuse.dao.IGrantDao;
 import com.focaplo.myfuse.model.ManagedGrant;
 import com.focaplo.myfuse.service.GrantService;
 
+@Service(value="grantManager")
 public class GrantManager extends UniversalManager implements
 		GrantService {
 	private IGrantDao grantDao;

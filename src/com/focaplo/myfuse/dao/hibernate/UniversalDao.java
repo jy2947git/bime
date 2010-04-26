@@ -11,8 +11,10 @@ import org.hibernate.SessionFactory;
 import com.focaplo.myfuse.dao.IUniversalDao;
 import com.focaplo.myfuse.model.BaseObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 /**
  * This class serves as the a class that can CRUD any object witout any
@@ -21,11 +23,13 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  *
  * @author Bryan Noll
  */
+@Repository(value="universalDao")
 public class UniversalDao implements IUniversalDao {
     /**
      * Log variable for all child classes. Uses LogFactory.getLog(getClass()) from Commons Logging
      */
     protected final Log log = LogFactory.getLog(getClass());
+    @Autowired
     SessionFactory sessionFactory;
     
     public SessionFactory getSessionFactory() {

@@ -29,7 +29,7 @@ import com.focaplo.myfuse.webapp.support.UserConverter;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class RefrigeratorFormController extends BaseFormController {
-
+	@Autowired
 	private InventoryService inventoryManager;
 	@Autowired
 	private UserService userManager;
@@ -58,21 +58,6 @@ public class RefrigeratorFormController extends BaseFormController {
 		
 	}
 
-	public ModelAndView processFormSubmission(HttpServletRequest request,
-            HttpServletResponse response,
-            Object command,
-            BindException errors)throws Exception {
-		if (request.getParameter("cancel") != null) {
-			if (!StringUtils.equals(request.getParameter("from"), "list")) {
-				return new ModelAndView(getCancelView());
-			} else {
-				return new ModelAndView(getSuccessView());
-			}
-		}
-		
-		return super.processFormSubmission(request, response, command, errors);
-	}
-	
 	public ModelAndView onSubmit(HttpServletRequest request,
             HttpServletResponse response, Object command,
             BindException errors)throws Exception {
@@ -80,12 +65,7 @@ public class RefrigeratorFormController extends BaseFormController {
 		Refrigerator refrigerator = (Refrigerator)command;
 		Locale locale = request.getLocale();
 
-        if (request.getParameter("delete") != null) {
-            this.inventoryManager.deleteStorage(refrigerator.getId());
-            saveMessage(request, getText("refrigerator.deleted", refrigerator.getName(), locale));
-
-            return new ModelAndView(getSuccessView());
-        } else if (request.getParameter("method") != null && request.getParameter("method").equalsIgnoreCase("deleteSection")) {
+		if (request.getParameter("method") != null && request.getParameter("method").equalsIgnoreCase("deleteSection")) {
             this.inventoryManager.deleteStorageSection(new Long(request.getParameter("id")));
             saveMessage(request, getText("refrigerator.section.deleted", refrigerator.getName(), locale));
 
@@ -101,63 +81,29 @@ public class RefrigeratorFormController extends BaseFormController {
         		}
         	}
         	this.inventoryManager.saveRefrigerator(refrigerator);
-        	 if (!StringUtils.equals(request.getParameter("from"), "list")) {
-                 saveMessage(request, getText("refrigerator.saved",refrigerator.getName(), locale));
-
-//                 // return to main Menu
-//                 return new ModelAndView("redirect:refrigeratorList.html");
-                 return new ModelAndView(getSuccessView());
-             } else {
-                 if (StringUtils.isBlank(request.getParameter("version"))) {
-                     saveMessage(request, getText("refrigerator.added", refrigerator.getName(), locale));
-
-                     // Send an account information e-mail
-//                     message.setSubject(getText("signup.email.subject", locale));
-//
-//                     try {
-//                         sendUserMessage(user, getText("newuser.email.message", user.getFullName(), locale),
-//                                         RequestUtil.getAppURL(request));
-//                     } catch (MailException me) {
-//                         saveError(request, me.getCause().getLocalizedMessage());
-//                     }
-                     return new ModelAndView("redirect:refrigeratorForm.html?from=list&id="+refrigerator.getId());
-//                     return new ModelAndView(getSuccessView());
-                 } else {
-                     saveMessage(request, getText("refrigerator.updated", refrigerator.getName(), locale));
-//                     return new ModelAndView("redirect:refrigeratorList.html");
-                     return new ModelAndView(getSuccessView());
-                 }
-             }
+        	saveMessage(request, getText("refrigerator.saved",refrigerator.getName(), locale));
+        	if(originalVersion==null){
+            	//first time created, go back to form page to add section
+                return new ModelAndView("redirect:refrigeratorForm.html?from=list&id="+refrigerator.getId());
+            }else{
+            	return new ModelAndView(getSuccessView());
+            }
         }
 //        return showForm(request, response, errors);
 	}
 	
 	protected Object formBackingObject(HttpServletRequest request)
     throws Exception {
-		if (!isFormSubmission(request)) {
-            String id = request.getParameter("id");
-            Refrigerator refrigerator;
-            if (id == null && !isAdd(request)) {
+		 Refrigerator refrigerator;
+		String id = request.getParameter("id");
+		if (!StringUtils.isBlank(id)) {
             	refrigerator = (Refrigerator) this.inventoryManager.get(Refrigerator.class, new Long(id));
-            } else if (!StringUtils.isBlank(id) && !"".equals(request.getParameter("version"))) {
-            	refrigerator = (Refrigerator) this.inventoryManager.get(Refrigerator.class, new Long(id));
-            } else {
+        } else {
                 refrigerator = new Refrigerator();
-//                user.addRole(new Role(Constants.USER_ROLE));
-            }
-            return refrigerator;
-		}else if (request.getParameter("id") != null && !"".equals(request.getParameter("id"))
-                && request.getParameter("cancel") == null) {
-            // populate user object from database, so all fields don't need to be hidden fields in form
-            return this.inventoryManager.get(Refrigerator.class, new Long(request.getParameter("id")));
         }
-		return super.formBackingObject(request);
+	 return refrigerator;
 	}
-	
-    protected boolean isAdd(HttpServletRequest request) {
-        String method = request.getParameter("method");
-        return (method != null && method.equalsIgnoreCase("add"));
-    }
+
     
 	@Override
 	protected Map referenceData(HttpServletRequest request, Object command,

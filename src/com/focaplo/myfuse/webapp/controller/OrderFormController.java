@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +33,11 @@ import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class OrderFormController extends BaseFormController {
 	Logger log = LogManager.getLogger(this.getClass());
+	@Autowired
 	private OrderService orderManager;
+	@Autowired
 	private InventoryService inventoryManager;
+	@Autowired
 	private UserService userManager;
 	
 	public void setOrderManager(OrderService orderManager) {

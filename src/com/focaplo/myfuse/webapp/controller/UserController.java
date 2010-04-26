@@ -25,19 +25,23 @@ import org.springframework.web.servlet.mvc.Controller;
  */
 public class UserController implements Controller {
     private transient final Log log = LogFactory.getLog(UserController.class);
-    protected UserService mgr = null;
+    protected UserService userManager = null;
+
+
 
     public void setUserManager(UserService userManager) {
-        this.mgr = userManager;
-    }
+		this.userManager = userManager;
+	}
 
-    public ModelAndView handleRequest(HttpServletRequest request,
+
+
+	public ModelAndView handleRequest(HttpServletRequest request,
                                       HttpServletResponse response)
     throws Exception {
         if (log.isDebugEnabled()) {
             log.debug("entering 'handleRequest' method...");
         }
 
-        return new ModelAndView("admin/userList", Constants.USER_LIST, mgr.getUsers(new User()));
+        return new ModelAndView("admin/userList", Constants.USER_LIST, this.userManager.getUsers(new User()));
     }
 }

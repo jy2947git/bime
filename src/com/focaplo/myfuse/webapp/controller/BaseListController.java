@@ -23,8 +23,8 @@ import com.focaplo.myfuse.service.UniversalService;
 
 public abstract class BaseListController implements Controller {
 	@Autowired
-	@Qualifier(value="manager")
-	UniversalService manager;
+	@Qualifier(value="universalManager")
+	UniversalService universalManager;
 	Logger log = LogManager.getLogger(this.getClass());
 	
 	@Autowired
@@ -53,13 +53,15 @@ public abstract class BaseListController implements Controller {
 		return simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1) + "List";
 		
 	}
-	public void setManager(UniversalService universalManager) {
-		this.manager = universalManager;
-	}
+
 	
+	public void setUniversalManager(UniversalService universalManager) {
+		this.universalManager = universalManager;
+	}
+
 	@SuppressWarnings("unchecked")
 	protected List getListOfModels(HttpServletRequest req){
-		List<BaseObject> objects = this.manager.getAll(this.getModelClass());
+		List<BaseObject> objects = this.universalManager.getAll(this.getModelClass());
 		return objects;
 	}
 
@@ -83,7 +85,7 @@ public abstract class BaseListController implements Controller {
 		if(toBeDeleted!=null && (!toBeDeleted.isEmpty())){
 			User loginUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			this.checkAccess(modelClass, toBeDeleted.get(0), Securable.delete);
-			this.manager.deleteEntities(modelClass, toBeDeleted);
+			this.universalManager.deleteEntities(modelClass, toBeDeleted);
 		}
 		
 	}

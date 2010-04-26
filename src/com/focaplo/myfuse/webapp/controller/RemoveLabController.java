@@ -15,6 +15,7 @@ import com.focaplo.myfuse.webapp.spring.DynDataSourceRegister;
 
 public class RemoveLabController implements Controller {
 	protected final transient Log log = LogFactory.getLog(getClass());
+	@Autowired
 	private DynDataSourceRegister dynDataSourceRegister;
 	@Autowired
 	private LabService labManager;

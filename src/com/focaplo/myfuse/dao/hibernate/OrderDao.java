@@ -3,11 +3,13 @@ package com.focaplo.myfuse.dao.hibernate;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.dao.IOrderDao;
 import com.focaplo.myfuse.model.ManagedOrder;
 import com.focaplo.myfuse.model.OrderItem;
-
+@Repository(value="orderDao")
 public class OrderDao extends UniversalDao implements
 		IOrderDao {
 

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tuckey.web.filters.urlrewrite.utils.StringUtils;
 
 import com.focaplo.myfuse.Constants;
@@ -14,9 +16,10 @@ import com.focaplo.myfuse.model.ManagedOrder;
 import com.focaplo.myfuse.model.OrderItem;
 import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.service.OrderService;
-
+@Service(value="orderManager")
 public class OrderManager extends UniversalManager implements
 		OrderService {
+	@Autowired
 	private InventoryService inventoryManager;
 
 	public void setInventoryManager(InventoryService inventoryManager) {

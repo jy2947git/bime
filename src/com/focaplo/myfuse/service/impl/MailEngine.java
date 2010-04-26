@@ -9,13 +9,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 
@@ -25,9 +26,12 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  * 
  * @author Matt Raible
  */
+@Service(value="mailEngine")
 public class MailEngine {
     private final Log log = LogFactory.getLog(MailEngine.class);
+    @Autowired
     private MailSender mailSender;
+    @Autowired
     private VelocityEngine velocityEngine;
     private String defaultFrom;
     private boolean sendToQueue=false;

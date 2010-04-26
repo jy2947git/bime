@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +22,7 @@ import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class GrantFormController extends BaseFormController {
-
+	@Autowired
 	private GrantService grantManager;
 
 

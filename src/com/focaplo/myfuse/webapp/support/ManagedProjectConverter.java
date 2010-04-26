@@ -2,10 +2,13 @@ package com.focaplo.myfuse.webapp.support;
 
 import java.beans.PropertyEditorSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.service.ProjectService;
 
 public class ManagedProjectConverter extends PropertyEditorSupport {
+	@Autowired
 	private ProjectService projectManager;
 	
 

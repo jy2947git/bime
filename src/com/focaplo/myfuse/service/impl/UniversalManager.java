@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.focaplo.myfuse.dao.IGrantDao;
 import com.focaplo.myfuse.dao.IInventoryDao;
@@ -23,6 +25,7 @@ import com.focaplo.myfuse.service.UniversalService;
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
+@Service(value="universalManager")
 public class UniversalManager implements UniversalService {
     /**
      * Log instance for all child classes. Uses LogFactory.getLog(getClass()) from Commons Logging
@@ -32,18 +35,26 @@ public class UniversalManager implements UniversalService {
     /**
      * UniversalDao instance, ready to charge forward and persist to the database
      */
-    protected IUniversalDao dao;
     @Autowired
+    @Qualifier("universalDao")
+    protected IUniversalDao universalDao;
+    @Autowired
+    @Qualifier("userDao")
     protected IUserDao userDao;
     @Autowired
+    @Qualifier("inventoryDao")
     protected IInventoryDao inventoryDao;
     @Autowired
+    @Qualifier("projectDao")
     protected IProjectDao projectDao;
     @Autowired
+    @Qualifier("grantDao")
     protected IGrantDao grantDao;
     @Autowired
+    @Qualifier("orderDao")
     protected IOrderDao orderDao;
     @Autowired
+    @Qualifier("labDao")
     protected ILabDao labDao;
     
     public void setOrderDao(IOrderDao orderDao) {
@@ -58,36 +69,27 @@ public class UniversalManager implements UniversalService {
 		this.grantDao = grantDao;
 	}
 
-	public void setDao(IUniversalDao dao) {
-        this.dao = dao;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Object get(Class clazz, Serializable id) {
-        return dao.get(clazz, id);
-    }
+	
 
     /**
      * {@inheritDoc}
      */
     public List getAll(Class clazz) {
-        return dao.getAll(clazz);
+        return universalDao.getAll(clazz);
     }
 
     /**
      * {@inheritDoc}
      */
     public void remove(Class clazz, Serializable id) {
-        dao.remove(clazz, id);
+        universalDao.remove(clazz, id);
     }
 
     /**
      * {@inheritDoc}
      */
     public Object save(BaseObject o) {
-        return dao.save(o);
+        return universalDao.save(o);
     }
 
 	public IUserDao getUserDao() {
@@ -106,18 +108,19 @@ public class UniversalManager implements UniversalService {
 		this.inventoryDao = inventoryDao;
 	}
 
-	public IUniversalDao getDao() {
-		return dao;
-	}
 
 	public void deleteEntities(Class clazz, List<Long> toBeDeleted) {
 		for(Long id:toBeDeleted){
-			this.dao.remove(clazz, id);
+			this.universalDao.remove(clazz, id);
 		}
 	}
 
 	public void setLabDao(ILabDao labDao) {
 		this.labDao = labDao;
+	}
+
+	public Object get(Class clazz, Serializable id) {
+		return universalDao.get(clazz, id);
 	}
     
     

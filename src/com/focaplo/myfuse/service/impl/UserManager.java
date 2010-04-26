@@ -6,10 +6,12 @@ import java.util.List;
 import javax.jws.WebService;
 import javax.persistence.EntityExistsException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.focaplo.myfuse.exception.UserExistsException;
 import com.focaplo.myfuse.model.LabelValue;
@@ -23,9 +25,10 @@ import com.focaplo.myfuse.service.UserWebService;
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
+@Service(value="userManager")
 @WebService(serviceName = "UserService", endpointInterface = "com.focaplo.myfuse.service.UserWebService")
 public class UserManager extends UniversalManager implements UserService, UserWebService {
-   
+   @Autowired
     private PasswordEncoder passwordEncoder;
   
 
@@ -33,7 +36,6 @@ public class UserManager extends UniversalManager implements UserService, UserWe
      * Set the PasswordEncoder used to encrypt passwords.
      * @param passwordEncoder the PasswordEncoder implementation
      */
-    @Required
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
@@ -42,7 +44,7 @@ public class UserManager extends UniversalManager implements UserService, UserWe
      * {@inheritDoc}
      */
     public User getUser(String userId) {
-        return userDao.get(new Long(userId));
+        return (User) userDao.get(User.class, new Long(userId));
     }
 
     /**
@@ -108,7 +110,7 @@ public class UserManager extends UniversalManager implements UserService, UserWe
      */
     public void removeUser(String userId) {
         log.debug("removing user: " + userId);
-        userDao.remove(new Long(userId));
+        userDao.remove(User.class,new Long(userId));
     }
 
     /**

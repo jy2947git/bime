@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -28,7 +29,7 @@ import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.webapp.wrapper.ManagedItemWrapper;
 
 public class InventoryItemFormController extends BaseFormController {
-
+	@Autowired
 	private InventoryService inventoryManager;
 
 

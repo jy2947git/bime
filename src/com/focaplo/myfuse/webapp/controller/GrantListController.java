@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -19,7 +20,7 @@ import com.focaplo.myfuse.service.GrantService;
 import com.focaplo.myfuse.service.InventoryService;
 
 public class GrantListController implements Controller {
-
+	@Autowired
 private GrantService grantManager;
 
 Logger log = LogManager.getLogger(this.getClass());

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +21,9 @@ import com.focaplo.myfuse.service.ProjectService;
 import com.focaplo.myfuse.service.UserService;
 
 public class ProjectAccessFormController extends BaseFormController {
+	@Autowired
 	private ProjectService projectManager;
+	@Autowired
 	private UserService userManager;
 	
 	public void setProjectManager(ProjectService projectManager) {

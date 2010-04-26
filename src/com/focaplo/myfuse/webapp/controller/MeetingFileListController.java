@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.model.Lab;
@@ -18,15 +19,20 @@ public class MeetingFileListController extends BaseListController {
 	@Autowired
 	private LabService labManager;
 	@Autowired
-	private StorageService storageService;
+	@Qualifier("localDriveStorageManager")
+	private StorageService storageManager;
 	
 	public void setLabManager(LabService labManager) {
 		this.labManager = labManager;
 	}
 
-	public void setStorageService(StorageService storageService) {
-		this.storageService = storageService;
+
+
+	public void setStorageManager(StorageService storageManager) {
+		this.storageManager = storageManager;
 	}
+
+
 
 	@Override
 	public Class getModelClass() {

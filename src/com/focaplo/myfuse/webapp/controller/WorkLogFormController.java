@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,6 +15,7 @@ import com.focaplo.myfuse.model.WorkLog;
 import com.focaplo.myfuse.service.ProjectService;
 
 public class WorkLogFormController extends BaseFormController {
+	@Autowired
 	protected ProjectService projectManager;
 
 	public void setProjectManager(ProjectService projectManager) {

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.focaplo.myfuse.dao.IProjectDao;
 import com.focaplo.myfuse.model.ExperimentImage;
@@ -23,11 +25,13 @@ import com.focaplo.myfuse.service.AuthorizationService;
 import com.focaplo.myfuse.service.ProjectService;
 import com.focaplo.myfuse.service.StorageService;
 
+@Service(value="projectManager")
 public class ProjectManager extends UniversalManager implements
 		ProjectService {
 	@Autowired
 	private IProjectDao projectDao;
 	@Autowired
+	@Qualifier("localDriveStorageManager")
 	private StorageService storageService;
 	@Autowired
 	private AuthorizationService authorizationManager;

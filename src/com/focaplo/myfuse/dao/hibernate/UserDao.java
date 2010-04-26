@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 
 import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.dao.IUserDao;
@@ -25,21 +26,16 @@ import com.focaplo.myfuse.model.User;
  *   Modified by <a href="mailto:bwnoll@gmail.com">Bryan Noll</a> to work with 
  *   the new BaseDaoHibernate implementation that uses generics.
 */
-public class UserDao extends GenericDao<User, Long> implements IUserDao, UserDetailsService {
+@Repository(value="userDao")
+public class UserDao extends UniversalDao implements IUserDao, UserDetailsService {
 
-    /**
-     * Constructor that sets the entity to User.class.
-     */
-    public UserDao() {
-        super(User.class);
-    }
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     public List<User> getUsers() {
-        return getHibernateTemplate().find("from User u order by upper(u.username)");
+        return this.getSessionFactory().getCurrentSession().createQuery("from User u order by upper(u.username)").list();
     }
 
     /**
@@ -61,16 +57,16 @@ public class UserDao extends GenericDao<User, Long> implements IUserDao, UserDet
      * @param user the user to save
      * @return the modified user (with a primary key set if they're new)
      */
-    @Override
     public User save(User user) {
-        return this.saveUser(user);
+        this.saveOrUpdate(user);
+        return user;
     }
 
     /** 
      * {@inheritDoc}
     */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List users = getHibernateTemplate().find("from User where username=?", username);
+        List<User> users = this.getSessionFactory().getCurrentSession().createQuery("from User where username=?").setString(0, username).list();
         if (users == null || users.isEmpty()) {
             throw new UsernameNotFoundException("user '" + username + "' not found...");
         } else {

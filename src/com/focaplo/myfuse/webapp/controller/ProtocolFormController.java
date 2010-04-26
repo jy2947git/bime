@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,7 @@ import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.service.ProjectService;
 
 public class ProtocolFormController extends BaseFormController {
-
+	@Autowired
 	private ProjectService projectManager;
 
 

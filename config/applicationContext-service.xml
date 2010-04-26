@@ -64,6 +64,8 @@
             </list>
         </property>
     </bean>
+    
+    
     <!-- =================================================================== -->
     <!-- Mail: Sender and Velocity configuration                             -->
     <!-- =================================================================== -->
@@ -111,84 +113,15 @@
     <!-- =================================================================== -->
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
 
-    <!-- =================================================================== -->
-    <!-- Managers: For accessing DAOs                                        -->
-    <!-- =================================================================== -->
-    <bean id="manager" class="com.focaplo.myfuse.service.impl.UniversalManager">
-        <property name="dao" ref="universalDao"/>
-        <property name="inventoryDao" ref="inventoryDao"/>
-        <property name="projectDao" ref="projectDao"/>
-        <property name="grantDao" ref="grantDao"/>
-        <property name="orderDao" ref="orderDao"/>
-        <property name="userDao" ref="userDao"/>
-        <property name="labDao" ref="labDao"/>
-    </bean>
-    
-    <bean id="lookupManager" class="com.focaplo.myfuse.service.impl.LookupManager">
-        <property name="lookupDao" ref="lookupDao"/>
-    </bean>
-
-    <bean id="userManager" class="com.focaplo.myfuse.service.impl.UserManager" parent="manager">
-        <property name="passwordEncoder" ref="passwordEncoder"/>
-    </bean>
-
-    <bean id="roleManager" class="com.focaplo.myfuse.service.impl.RoleManager">
-        <property name="roleDao" ref="roleDao"/>
-    </bean>
-
-    <!-- Add new Managers here -->
-    <bean id="inventoryManager" class="com.focaplo.myfuse.service.impl.InventoryManager" parent="manager">
-    </bean>
-    <bean id="projectManager" class="com.focaplo.myfuse.service.impl.ProjectManager" parent="manager">
-    </bean>
-    <bean id="grantManager" class="com.focaplo.myfuse.service.impl.GrantManager" parent="manager">
-    </bean>
-    <bean id="orderManager" class="com.focaplo.myfuse.service.impl.OrderManager" parent="manager">
-    	<property name="inventoryManager" ref="inventoryManager"/>
-    </bean>
-    <bean id="labManager" class="com.focaplo.myfuse.service.impl.LabManager" parent="manager">
-    </bean>
-    <!--
-    <bean id="storageService" class="com.focaplo.myfuse.service.impl.AmazonStorageManager">
-    	<property name="awsAccessKey" value="${awsAccessKey}"/>
-    	<property name="awsSecretKey" value="${awsSecretKey}"/>
-    	<property name="bucketNameUniqueSuffix" value="${bucketNameUniqueSuffix}"/>
-    </bean>
-      -->
-	<bean id="storageService" class="com.focaplo.myfuse.service.impl.LocalDriveStorageManager">
-    
-    </bean>
-    <bean id="authorizationManager" class="com.focaplo.myfuse.service.impl.AuthorizationManager" parent="manager">
-   	</bean>
     <bean id="encrypter" class="com.focaplo.myfuse.util.AESEncrypter">
     </bean>
-   
-   <!--  send heart beat pulse
-    <bean id="heartBeat" class="com.focaplo.myfuse.service.impl.HeartBeat"/>
-    
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
-     <property name="triggers">    
-     <ref bean="simpleTrigger"/>    
-     </property>    
-    </bean>
 
-    
-
-    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">    
-     <property name="jobDetail" ref="jobDetail"/>
-    
-     <property name="startDelay" value="10000"/>    
-     <property name="repeatInterval" value="1000000"/>
-    </bean>
-
-    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-     <property name="targetObject" ref="heartBeat"/>
-     <property name="targetMethod" value="sendHeartBeatMessage"/>
-     <property name="concurrent" value="false"/>
-    </bean>
-      -->
     
     <bean id="dynDataSourceRegister" class="com.focaplo.myfuse.webapp.spring.DynDataSourceRegister">
     	<property name="scanRootDirectory"><value>/usr/local/bime-home</value></property>
     </bean>
-</beans>
+    <context:component-scan base-package="com.focaplo.myfuse.service.impl"/>
+    <!--
+    
+    <bean id="lookupManager" class="com.focaplo.myfuse.service.impl.LookupManager"></bean>
+--></beans>

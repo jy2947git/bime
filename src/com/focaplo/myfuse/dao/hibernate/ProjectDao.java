@@ -2,13 +2,15 @@ package com.focaplo.myfuse.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.focaplo.myfuse.dao.IProjectDao;
 import com.focaplo.myfuse.model.ExperimentImage;
 import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.ToDo;
 import com.focaplo.myfuse.model.WorkLog;
-
+@Repository(value="projectDao")
 public class ProjectDao extends UniversalDao implements
 		IProjectDao {
 

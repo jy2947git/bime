@@ -27,7 +27,7 @@ import com.focaplo.myfuse.webapp.support.UserConverter;
 import com.focaplo.myfuse.webapp.util.RequestUtil;
 
 public class EquipmentFormController extends BaseFormController {
-
+	@Autowired
 	private InventoryService inventoryManager;
 
 	@Autowired

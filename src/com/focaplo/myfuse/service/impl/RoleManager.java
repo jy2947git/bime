@@ -2,6 +2,8 @@ package com.focaplo.myfuse.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.focaplo.myfuse.dao.IRoleDao;
 import com.focaplo.myfuse.model.Role;
 import com.focaplo.myfuse.service.RoleService;
@@ -11,6 +13,7 @@ import com.focaplo.myfuse.service.RoleService;
  * 
  * @author <a href="mailto:dan@getrolling.com">Dan Kibler</a>
  */
+@Service(value="roleManager")
 public class RoleManager extends UniversalManager implements RoleService {
     private IRoleDao dao;
 
@@ -22,7 +25,7 @@ public class RoleManager extends UniversalManager implements RoleService {
      * {@inheritDoc}
      */
     public List<Role> getRoles(Role role) {
-        return dao.getAll();
+        return dao.getAllRoles();
     }
 
     /**
@@ -36,7 +39,7 @@ public class RoleManager extends UniversalManager implements RoleService {
      * {@inheritDoc}
      */
     public Role saveRole(Role role) {
-        return dao.save(role);
+        return dao.saveRole(role);
     }
 
     /**

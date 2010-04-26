@@ -6,6 +6,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import com.focaplo.myfuse.webapp.util.RequestUtil;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 public class SignupController extends BaseFormController {
+	@Autowired
     private RoleService roleManager;
 
     public void setRoleManager(RoleService roleManager) {

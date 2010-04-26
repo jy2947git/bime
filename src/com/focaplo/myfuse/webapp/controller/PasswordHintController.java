@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.mail.MailException;
@@ -30,8 +31,10 @@ import com.focaplo.myfuse.webapp.util.RequestUtil;
  */
 public class PasswordHintController implements Controller {
     private final Log log = LogFactory.getLog(PasswordHintController.class);
+    @Autowired
     private UserService userManager = null;
     private MessageSource messageSource = null;
+    @Autowired
     protected MailEngine mailEngine = null;
     protected SimpleMailMessage message = null;
     

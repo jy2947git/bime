@@ -3,10 +3,10 @@
 <display:table name="labMeetingList" cellspacing="0" cellpadding="0" requestURI="" 
     defaultsort="1" id="meeting" pagesize="25" class="table" export="false">
 
-	<display:column property="startDate" escapeXml="false" sortable="false" titleKey="meeting.startDate"  format="{0,date,MM/dd/yyyy HH:mm}" style="width: 20%"/> 
-	<display:column property="endDate" escapeXml="false" sortable="false" titleKey="meeting.startDate"  format="{0,date,MM/dd/yyyy HH:mm}" style="width: 20%"/>
+	<display:column property="startDate" escapeXml="false" sortable="false" titleKey="meeting.startDate"  format="{0,date,MM/dd/yyyy HH:mm}" style="width: 30%"/> 
+	<display:column property="endDate" escapeXml="false" sortable="false" titleKey="meeting.endDate"  format="{0,date,MM/dd/yyyy HH:mm}" style="width: 30%"/>
 
-    <display:column property="subject" escapeXml="true" sortable="false" titleKey="meeting.subject" style="width: 60%"/>
+    <display:column property="subject" escapeXml="true" sortable="false" titleKey="meeting.subject" style="width: 40%"/>
     
 	<display:column style="width: 16%; padding-left: 15px" media="html">
         <a href="<c:url value='/lab/meetingForm.html?from=list&id=${meeting.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="meeting.edit"/>"/></a>&nbsp;

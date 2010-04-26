@@ -17,7 +17,9 @@ import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.StoredFile;
 import com.focaplo.myfuse.service.EncryptionService;
 import com.focaplo.myfuse.service.StorageService;
+import org.springframework.stereotype.Service;
 
+@Service(value="amazonStorageManager")
 public class AmazonStorageManager implements StorageService{
 	protected final Log log = LogFactory.getLog(getClass());
 	private String awsAccessKey;

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.focaplo.myfuse.dao.ILabDao;
 import com.focaplo.myfuse.model.Lab;
@@ -15,10 +17,12 @@ import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.service.LabService;
 import com.focaplo.myfuse.service.StorageService;
 
+@Service(value="labManager")
 public class LabManager extends UniversalManager implements LabService {
 	@Autowired
 	private ILabDao labDao;
 	@Autowired
+	@Qualifier("localDriveStorageManager")
 	private StorageService storageService;
 	
 	public void setStorageService(StorageService storageService) {
@@ -30,10 +34,10 @@ public class LabManager extends UniversalManager implements LabService {
 	}
 
 	public void saveMeeting(LabMeeting meeting) {
-		this.dao.saveOrUpdate(meeting);
+		this.universalDao.saveOrUpdate(meeting);
 		Set<LabMeetingItem> items = meeting.getMeetingItems();
 		for(LabMeetingItem item:items){
-			this.dao.saveOrUpdate(item);
+			this.universalDao.saveOrUpdate(item);
 		}
 	}
 

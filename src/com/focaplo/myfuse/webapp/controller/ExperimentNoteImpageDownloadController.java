@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.focaplo.myfuse.model.ExperimentImage;
@@ -24,12 +25,16 @@ public class ExperimentNoteImpageDownloadController extends BaseFormController {
 	@Autowired
 	private ProjectService projectManager;
 	@Autowired
-	private StorageService storageService;
+	@Qualifier("localDriveStorageManager")
+	private StorageService storageManager;
 	@Autowired
 	private LabService labManager;
 
-	public void setStorageService(StorageService storageService) {
-		this.storageService = storageService;
+
+
+
+	public void setStorageManager(StorageService storageManager) {
+		this.storageManager = storageManager;
 	}
 
 
@@ -76,7 +81,7 @@ public class ExperimentNoteImpageDownloadController extends BaseFormController {
 
 	    java.io.OutputStream os = response.getOutputStream();
 	    try{
-	    	is = this.storageService.downloadFile(lab, file);
+	    	is = this.storageManager.downloadFile(lab, file);
 	    	byte[] buffer = new byte[8024];
 	    	int read = is.read(buffer);
 	    	while (read >= 0) {
