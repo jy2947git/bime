@@ -1,0 +1,21 @@
+#
+# continuous integration
+#
+#wget http://hudson-ci.org/latest/hudson.war
+#
+# to run standand alone
+#
+#java jar hudson.war
+
+#
+# or install the Debian package, which will create new user hudson
+# and start hudson in boost
+#
+sudo apt-get install python-software-properties
+sudo add-apt-repository “deb http://hudson-labs.org/debian binary/”
+sudo apt-get update
+sudo apt-get install hudson
+#
+# the hudston url is http://master:8080
+#
+

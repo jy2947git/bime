@@ -6,8 +6,8 @@
     <meta name="menu" content="InventoryMenu"/>
     <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
     
-      <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+      <link href="<c:url value='/styles/jquery-ui-1.8.1.custom.css'/>" rel="stylesheet" type="text/css"/>
+      <script src="<c:url value='/scripts/jquery-ui.min.js'/>"></script>
 
   <script type="text/javascript">
   jQuery.noConflict(); 
@@ -31,7 +31,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="equipment" method="post" action="equipmentForm.html" onsubmit="return onFormSubmit(this)" id="equipmentForm">
+<form:form commandName="equipment" method="post"  onsubmit="return onFormSubmit(this)" id="equipmentForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -43,12 +43,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-        <c:if test="${param.from == 'list' and param.method != 'Add'}">
-            <input type="submit" class="button" name="delete" onclick="bCancel=true;return confirmDelete('equipment')"
-                value="<fmt:message key="button.delete"/>"/>
-        </c:if>
-
-            <input type="submit" class="button" name="cancel" onclick="bCancel=true" value="<fmt:message key="button.cancel"/>"/>
+           <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/equipments/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>

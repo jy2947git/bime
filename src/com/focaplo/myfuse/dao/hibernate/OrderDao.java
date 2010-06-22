@@ -29,7 +29,6 @@ public class OrderDao extends UniversalDao implements
 	public void updateOrderItem(Long id, Long itemCategoryId, String maker, BigDecimal unitPrice, Integer amount, BigDecimal totalCost, String supplier) {
 		this.getSessionFactory().getCurrentSession().createQuery("update OrderItem set itemCategory=?, maker=?, unitPrice=?, amount=?, totalCost=?, supplier=?  where id=?")
 		.setLong(0, itemCategoryId)
-		
 		.setString(1, maker)
 		.setBigDecimal(2, unitPrice)
 		.setInteger(3, amount)
@@ -39,6 +38,7 @@ public class OrderDao extends UniversalDao implements
 		.executeUpdate();
 	}
 
+	
 	public List<OrderItem> getOrderItemsOfOrder(Long orderId) {
 		return this.getSessionFactory().getCurrentSession().createQuery("from OrderItem where order.id=?").setLong(0, orderId).list();
 	}

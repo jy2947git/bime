@@ -8,6 +8,7 @@
         <!--intercept-url pattern="/images/*" filters="none"/>
         <intercept-url pattern="/styles/*" filters="none"/>
         <intercept-url pattern="/scripts/*" filters="none"/-->
+         <intercept-url pattern="/support/**" filters="none"/>
         <intercept-url pattern="/admin/*" access="ROLE_ADMIN"/>
         <intercept-url pattern="/inventory/*" access="ROLE_SUPER_USER,ROLE_USER"/>
         <intercept-url pattern="/project/*" access="ROLE_SUPER_USER,ROLE_USER"/>

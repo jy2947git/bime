@@ -47,14 +47,14 @@ public class ExperimentNote extends BaseObject implements Serializable, Securabl
 	private Date endDate;
 	@Column(length=500)
 	private String notes;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private User researcher;
 	
-	@OneToMany(mappedBy="experimentNote",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="experimentNote",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private Set<ExperimentImage> experimentImages=new HashSet<ExperimentImage>();
 	
-	@ManyToMany(targetEntity=User.class,fetch=FetchType.LAZY)
+	@ManyToMany(targetEntity=User.class,fetch=FetchType.EAGER)
 	@JoinTable(name="note_access",joinColumns=@JoinColumn(name="note_id"),inverseJoinColumns=@JoinColumn(name="user_id"))
 	private Set<User> accessedBy = new HashSet<User>();
 	@Transient

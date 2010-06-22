@@ -6,10 +6,43 @@
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
-                value="%p [%t] %c{1}.%M(%L) | %m%n"/>
+                value="%X{user} %p [%t] %c{1}.%M(%L) | %m%n"/>
         </layout>
     </appender>
-    
+	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+		
+		<param name="File" value="/tmp/event.log" />
+		<param name="Append" value="true" />
+		<param name="MaxFileSize" value="5000KB" />
+		<param name="MaxBackupIndex" value="1" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+                value="%X{user} %p [%t] %c{1}.%M(%L) | %m%n"/>
+		</layout>
+	</appender> 
+    <appender name="SCRIBE" class="com.focaplo.myfuse.logging.SimpleScribeAppender">
+    	<param name="scribe_host" value="192.168.8.128"/>
+    	<param name="scribe_port" value="1463"/>
+    	<param name="scribe_category" value="bime"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%X{user} %p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+        <appender name="Cassandra" class="com.focaplo.myfuse.logging.CassandraAppender">
+    	<param name="cassandraHost" value="192.168.179.129"/>
+    	<param name="cassandraPort" value="9160"/>
+    	<param name="key" value="user"/>
+    	<param name="columnFamily" value="Standard1"/>
+    	<param name="keySpace" value="Keyspace1"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%X{user} %p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+    <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="SCRIBE"/>
+    </appender>
     <logger name="net.sf.ehcache">
         <level value="ERROR"/>
     </logger>
@@ -33,7 +66,7 @@
     </logger>
 
     <logger name="org.hibernate">
-        <level value="WARN"/>
+        <level value="INFO"/>
     </logger>
   
     <!--logger name="org.hibernate.SQL">
@@ -41,7 +74,7 @@
     </logger-->
 
     <logger name="org.springframework">
-        <level value="WARN"/>
+        <level value="INFO"/>
     </logger>
    
     <logger name="com.focaplo.myfuse">
@@ -55,6 +88,10 @@
     <root>
         <level value="INFO"/>
         <appender-ref ref="CONSOLE"/>
+        <!--<appender-ref ref="SCRIBE"/>-->
+        <!-- <appender-ref ref="FILE"/> -->
+        <!-- <appender-ref ref="ASYNC"/>-->
+        <appender-ref ref="Cassandra"/>
     </root>
 
 </log4j:configuration>

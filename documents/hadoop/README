@@ -1,0 +1,147 @@
+#
+# Hadoop is used for processing larges sets of data, on the HDFS file system.
+#
+# install from the Claudera Distribution of Hadoop (CDH)
+# 
+# http://www.michael-noll.com/wiki/Running_Hadoop_On_Ubuntu_Linux_%28Single-Node_Cluster%29
+# Hadoop requires SUN JDK
+# refer to ../java/README
+#
+sudo vi /etc/hostname
+#change to master or slave or slave1,2...
+sudo vi /etc/hosts
+#
+127.0.0.1 localhost
+192.168.179.128 master master
+192.168.179.129 slave
+#
+#
+sudo vi /etc/apt/sources.list.d/cloudera.list
+#
+# enter - lucid is the Ubuntu release version can be found through 'lsb_release -c'
+# deb http://archive.cloudera.com/debian lucid-cdh2 contrib
+# deb-src http://archive.cloudera.com/debian lucid-cdh2 contrib
+# deb http://us.archive.ubuntu.com/ubuntu/ lucid multiverse
+# deb-src http://us.archive.ubuntu.com/ubuntu/ lucid multiverse
+# deb http://us.archive.ubuntu.com/ubuntu/ lucid-updates multiverse
+# deb-src http://us.archive.ubuntu.com/ubuntu/ lucid-updates multiverse
+#
+#
+sudo apt-get update
+apt-cache search hadoop
+sudo apt-get install hadoop
+echo hadoop is installed under user 'hadoop', in /var/run/hadoop-0.20, conf files are in /etc/hadoop
+#
+# a strange thing of the Cloudera Hadoop 0.20 is it creats the /var/run/hadoop-0.20 as
+# the home directory of user hadoop; however, this directory can be lost once the server
+# is rebooted. So, instead, we will create a home directory
+#
+sudo mkdir /home/hadoop
+sudo chown hadoop: /home/hadoop
+sudo vi /etc/passwd
+#and replace the /var/run/hadoop-0.20 with /home/hadoop
+#
+# change hadoop password
+#
+sudo passwd hadoop
+# enter the current user password
+# enter the hadoop new password
+
+#
+# SSHD needs to be installed on all the linux servers, if it is not, then do
+#
+sudo apt-get -y install ssh
+sudo apt-get install rsync 
+#
+# configure SSH
+#
+sudo su - hadoop
+#
+# generate the key of hadoop on MASTER
+#
+ssh-keygen -t rsa -P ""
+# 
+#
+# put the public key to authorized_keys file on Master node, so it can "ssh hadoop@localhost"
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+# put the public key to authorized_keys file on SLAVE nodes
+#mkdir $HOME/.ssh (ON SLAVE)
+#mkdir $HOME/.ssh/authorized (ON SLAVE)
+# on slave box, run same command
+ssh-keygen -r rsa -P ""
+#on MASTER, copy the master file to slave .ssh
+scp $HOME/.ssh/id_rsa.pub hadoop@slave:$HOME/.ssh/authorized/
+#on Slave, put the master file in authorized_keys
+cat $HOME/.ssh/authorized/id_rsa.pub >> $HOME/.ssh/authorized_keys
+#
+# from Master try to ssh to local and slaves to accpet the server keys
+#
+ssh hadoop@localhost
+ssh hadoop@master
+ssh hadoop@slave
+
+#
+# configure Hadoop
+#
+sudo su - hadoop
+cd /etc/hadoop/conf
+vi hadoop-env.sh
+# export JAVA_HOME=/usr/lib/jvm/java-6-sun
+
+vi masters (only on MASTER)
+#
+# enter 192.168.179.128 the master node ip
+#
+vi slaves (only on SLAVE)
+#
+# enter 
+# 192.168.179.128
+# 192.168.179.129
+#
+vi core-site.xml (on ALL)
+# 
+#<property>
+# <name>fs.default.name</name>
+#  <value>hdfs://master:54310</value>
+#</property>
+vi mapred-site.xml (on ALL)
+#<property>
+#  <name>mapred.job.tracker</name>
+#  <value>master:54311</value>
+#</property>
+vi hdfs-site.xml (on ALL)
+#<property>
+#  <name>dfs.replication</name>
+#  <value>2</value>
+#  <description>Default block replication.
+#  The actual number of replications can be specified when the file is created.
+#  The default is used if replication is not specified in create time.
+#  </description>
+#</property>
+
+#
+# format the name node only on the MASTER
+#
+#
+hadoop namenode -format
+
+#
+# start cluster on MASTER
+#
+sudo su - hadoop
+/usr/lib/hadoop/bin/start-dfs.sh
+/usr/lib/hadoop/bin/start-mapred.sh
+
+#
+# stop cluster
+#
+/usr/lib/hadoop/bin/stop-dfs.sh
+/usr/lib/hadoop/bin/stop-mapred.sh
+
+#
+# hadoop web sites
+#
+http://master-ip:50030/ - web UI for MapReduce job tracker(s)
+http://master-ip:50060/ - web UI for task tracker(s)
+http://master-ip:50070/ - web UI for HDFS name node(s) 
+

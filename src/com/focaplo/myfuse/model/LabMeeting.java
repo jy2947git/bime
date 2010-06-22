@@ -39,13 +39,13 @@ public class LabMeeting extends BaseObject implements Serializable {
 	@Column
 	private Calendar endCalendar = Calendar.getInstance();
 	
-	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn
 	private User coordinator;
 	@Column(length=50)
 	private String subject;
 	
-	@OneToMany(mappedBy="meeting",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="meeting", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<MeetingFile> meetingFiles=new HashSet<MeetingFile>();
 	
 	public String getSubject() {
@@ -58,9 +58,9 @@ public class LabMeeting extends BaseObject implements Serializable {
 
 	@Column(length=2000)
 	private String message;
-	@OneToMany(mappedBy="meeting", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="meeting", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<LabMeetingItem> meetingItems = new HashSet<LabMeetingItem>();
-	@ManyToMany(targetEntity=User.class,fetch=FetchType.LAZY)
+	@ManyToMany(targetEntity=User.class,fetch=FetchType.EAGER)
 	@JoinTable(name="meeting_participants",joinColumns=@JoinColumn(name="meeting_id"),inverseJoinColumns=@JoinColumn(name="user_id"))
 	private Set<User> participants = new HashSet<User>();
 	

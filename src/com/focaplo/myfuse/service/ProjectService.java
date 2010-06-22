@@ -59,4 +59,5 @@ public interface ProjectService extends UniversalService {
 
 
 	void saveProjectParticipants(ManagedProject project);
+
 }

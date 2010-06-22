@@ -28,11 +28,11 @@ public class Storage extends BaseObject implements Serializable, Storagible {
 	private String name;
 	@Column(nullable=false,length=50)
 	private String type;
-	@OneToMany(mappedBy="storage",cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="storage",cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<StorageSection> sections = new HashSet<StorageSection>();
 	@Column(nullable=true,length=50)
 	private String location;
-	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn
 	private User contactPerson;
 	@Column(nullable=false,length=100)

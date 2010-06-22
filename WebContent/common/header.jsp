@@ -7,7 +7,7 @@
 <c:if test="${pageContext.request.remoteUser != null}">
 <span class="right">
 
-			<a href="userForm.html"><fmt:message key="my.profile"/></a>
+			<a href="<c:url value='/lab/user/'/><security:authentication property="principal.id"/>/form.html"><fmt:message key="my.profile"/></a>
 			|
 			<a href="<c:url value="/logout.jsp"/>"> <fmt:message key="log.out"/></a>
 		

@@ -1,0 +1,32 @@
+#
+#HornetQ is the messaging server
+#
+#Below is the steps to install and configure hornetq
+cd ~/
+scp -i ~/id_rsa jy2947@focaplo.dnsdojo.com:/home/jy2947/bime-home/hornetq-controller-2.0.0.GA.tar.gz ~/hornetq-controller-2.0.0.GA.tar.gz
+sudo useradd --create-home -c "hornetq Account" hornetq
+cd /usr/local
+sudo mkdir hornetq
+sudo su - hornetq
+cd /usr/local/hornetq
+sudo cp /home/ubuntu/hornetq-controller-2.0.0.GA.tar.gz ./
+sudo tar zxvf hornetq-controller-2.0.0.GA.tar.gz
+sudo ln -s hornetq-2.0.0.GA/ current
+sudo chown -R hornetq: /usr/local/hornetq
+
+#the zip file already been set up to serve the Bime application as below
+#java home, JVM args in Catalina.sh
+#JAVA_HOME=/usr/lib/jvm/java-6-openjdk
+#export JAVA_HOME
+#config/stand-alone/non-clustered/hornetq-jms.xml
+#Now need to add the startup to bootup
+
+cd ~
+scp -i ~/id_rsa jy2947@focaplo.dnsdojo.com:/home/jy2947/bime-home/hornetq ~/hornetq
+sudo cp ~/hornetq /etc/init.d/hornetq
+sudo chmod \+x /etc/init.d/hornetq
+sudo update-rc.d hornetq defaults
+#
+# start up hornetq
+#
+sudo /etc/init.d/hornetq start

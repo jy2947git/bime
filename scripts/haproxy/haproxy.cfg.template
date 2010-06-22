@@ -1,0 +1,55 @@
+# Quite bloated example. Pick what you need.
+
+global
+	log 127.0.0.1	local0
+	log 127.0.0.1	local1 notice
+	#log loghost	local0 info
+	maxconn 4096
+	#debug
+	#quiet
+	user haproxy
+	group haproxy
+
+defaults
+	log	global
+	mode	http
+	option	httplog
+	option	dontlognull
+	option forwardfor #set the client ip in X-Forwarded-For
+	retries	3
+	redispatch
+	maxconn	2000
+	contimeout	5000
+	clitimeout	50000
+	srvtimeout	50000
+
+
+listen	host 0.0.0.0:80
+	option	httpchk
+	balance	roundrobin
+#	cookie	SERVERID insert indirect nocache
+#acl begins
+${aclplaceholder}
+${aclbackendplaceholder}
+#acl ends       
+        default_backend default_server
+	capture cookie vgnvisitor= len 32
+
+	option	httpclose		# disable keep-alive
+	rspidel ^Set-cookie:\ IP=	# do not let this cookie tell our internal IP address
+	
+
+listen	ssl 0.0.0.0:443
+	mode tcp
+	option	ssl-hello-chk
+	balance	source
+	server	inst1 127.0.0.1:6443 check inter 2000 fall 3
+#	server	inst2 192.168.110.57:443 check inter 2000 fall 3
+#	server	back1 192.168.120.58:443 backup
+#backend begins
+${backendplaceholder}
+#backend ends
+backend default_server
+        mode http
+        server server1 127.0.0.1:6080 cookie check
+

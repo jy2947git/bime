@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focaplo.myfuse.model.BaseObject;
 import com.focaplo.myfuse.model.ResourceUserAuthorization;
@@ -17,6 +18,7 @@ import com.focaplo.myfuse.model.Securable;
 import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.service.AuthorizationService;
 @Service(value="authorizationManager")
+@Transactional(readOnly=true)
 public class AuthorizationManager extends UniversalManager implements AuthorizationService{
 	protected final Log log = LogFactory.getLog(getClass());
 	/*

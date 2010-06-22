@@ -1,0 +1,22 @@
+#
+# bime application is installed under /usr/local/bime-home/bime
+# the labs are in /home/bime, for example, /home/bime/demo, /home/bime/lab3040
+# (assume /home/bime is the home directory of bime user)
+#
+# bime user will be used to own the tomcat servers so tomcat application can write to the lab directory (upload file)
+#
+#
+#
+# first create a user account "bime", no password, can not use it to log on the linux server
+#
+sudo useradd --create-home -c "bime" bime
+#
+# create the Bime application directory in /usr/local
+#
+sudo mkdir /usr/local/bime-home
+sudo mkdir /usr/local/bime-home/bime
+sudo mkdir /usr/local/bime-home/bime-controller
+#
+# make bime user the owner of /usr/local/bime-home
+#
+sudo chown -R bime: /usr/local/bime-home

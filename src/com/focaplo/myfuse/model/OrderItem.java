@@ -34,7 +34,7 @@ public class OrderItem extends BaseObject implements Serializable {
 	private BigDecimal totalCost=BigDecimal.ZERO;
 	@Column(nullable=true)
 	private String supplier;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="order_id")
 	private ManagedOrder order;
 	@OneToOne(mappedBy="orderItem", fetch=FetchType.LAZY)

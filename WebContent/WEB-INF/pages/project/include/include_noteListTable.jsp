@@ -10,7 +10,7 @@
 
 	<display:column style="width: 16%; padding-left: 15px" media="html">
 	    <c:if test="${note.canEdit}">
-    	 <a href="<c:url value='/project/noteForm.html?from=list&id=${note.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="note.edit"/>"/></a>
+    	 <a href="<c:url value='/project/${projectId}/note/${note.id}/form.html'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="note.edit"/>"/></a>
     	 </c:if>
     	&nbsp;
     	<c:if test="${note.canDelete}">

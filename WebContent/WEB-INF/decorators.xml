@@ -2,22 +2,13 @@
     <excludes>
         <pattern>/40*.jsp</pattern>
         <pattern>/*ajax=true*</pattern>
-        <pattern>/scripts/dojo-1.3.2/*</pattern>
-        <pattern>/struts/dojo/*</pattern> 
         <pattern>*themeTester*.*</pattern>
         <pattern>/resources/*</pattern>
-        <pattern>/dwr*</pattern>
+       
         <pattern>*loader_frame*</pattern> 
         
-        <pattern>/project/include/*</pattern>
-        <pattern>/admin/include/*</pattern>
-        <pattern>/lab/include/*</pattern>
-        <pattern>/inventory/include/*</pattern>
-        <pattern>/report/include/*</pattern>
-        <pattern>/dashboard/include/*</pattern>
-        <pattern>/grant/include/*</pattern>
-      	<pattern>*include_*</pattern>
-        
+        <pattern>/*decoration=false*</pattern>
+
     </excludes> 
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>

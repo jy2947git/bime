@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
+
+<!--
+	<bean name="localConnectionFactory" class="org.hornetq.jms.client.HornetQConnectionFactory" >
+		<constructor-arg>
+			<bean class="org.hornetq.api.core.TransportConfiguration">
+				<constructor-arg value="org.hornetq.integration.transports.netty.NettyConnectorFactory" />
+				<constructor-arg>
+					<map key-type="java.lang.String" value-type="java.lang.Object">
+						<entry key="port" value="5445"></entry>
+					</map>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+    <bean id="localCachingConnectionFactory"
+          class="org.springframework.jms.connection.CachingConnectionFactory"
+          destroy-method="destroy">
+
+        <property name="targetConnectionFactory" ref="localConnectionFactory"/>
+
+    </bean>
+
+	<jms:listener-container container-type="default"
+	destination-type="queue"
+	acknowledge="transacted"
+                            connection-factory="localCachingConnectionFactory"
+                            concurrency="10"
+                            >
+
+    	<jms:listener destination="queue.incoming.command" ref="incomingCommandsListener" method="exec"/>
+
+    	
+	</jms:listener-container>
+-->
+
+    
+
+</beans>

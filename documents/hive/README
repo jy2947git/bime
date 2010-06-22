@@ -1,0 +1,40 @@
+########################################
+#
+# Hive is a query framework on top of Hadoop
+#
+#######################################
+sudo apt-get -y install subversion
+sudo apt-get -y install ant
+cd ~
+svn checkout http://svn.apache.org/repos/asf/hadoop/hive/trunk hive
+cd hive
+ant package
+#
+# to run Hive
+#
+# optional export HIVE_HOME=$HOME/hive
+# make sure hadoop is in PATHexport HADOOP_HOME=/usr/lib/hadoop
+sudo -u hadoop hadoop fs -mkdir /tmp
+sudo -u hadoop hadoop fs -mkdir /user/hive
+sudo -u hadoop hadoop fs -mkdir /user/hive/warehouse
+sudo -u hadoop hadoop fs -chmod 777 /tmp
+sudo -u hadoop hadoop fs -chmod 777 /user/hive
+sudo -u hadoop hadoop fs -chmod 777 /user/hive/warehouse
+export HIVE_HOME=$HOME/hive/build/dist
+cd build/dist
+#
+# if you are running Hive on a machine with less than 4G memory, you need to edit
+# bin/ext/util/execHiveCmd.sh to change the "4096" to less
+#
+vi bin/ext/util/execHiveCmd.sh
+bin/hive
+#
+#try
+#
+create table poke(foo INT, bar STRING);
+show tables;
+select count(1) from poke;
+#
+# start web UI http://master:9999/hwi
+#
+bin/hive --service hwi

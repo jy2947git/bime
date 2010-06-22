@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.webapp.spring.ThreadBoundContext;
 
 public class ThreadBoundFilter extends OncePerRequestFilter {
@@ -28,7 +30,7 @@ public class ThreadBoundFilter extends OncePerRequestFilter {
 		}
 //		log.debug("lab name is " + labName);
 		ThreadBoundContext.setValue(labName);
-		
+
 		chain.doFilter(request, response);
 		
 	}

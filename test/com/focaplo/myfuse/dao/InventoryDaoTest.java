@@ -50,7 +50,7 @@ public class InventoryDaoTest extends BaseDaoTestCase {
 		ss2.setName("ss2");
 		r.getSections().add(ss);
 		r.getSections().add(ss2);
-		this.inventoryDao.saveStorage(r);
+		this.inventoryDao.save(r);
 		log.info("storage id" + r.getId());
 
 	}

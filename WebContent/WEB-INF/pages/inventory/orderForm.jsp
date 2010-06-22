@@ -5,12 +5,7 @@
     <title><fmt:message key="order.title"/></title>
     <meta name="heading" content="<fmt:message key='order.heading'/>"/>
     <meta name="menu" content="InventoryMenu"/>
-    <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
-    <script type='text/javascript' src='<c:url value='/dwr/engine.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/dwr/util.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/order.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/bime.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/order.js'/>'></script>
+ <script type='text/javascript' src='<c:url value='/scripts/order_items_jquery.js'/>'></script>
 </head>
 
 <spring:bind path="managedOrder.*">
@@ -27,7 +22,7 @@
 
 
 
-<form:form commandName="managedOrder" method="post" action="orderForm.html" onsubmit="return onFormSubmit(this)" id="managedOrderForm">
+<form:form commandName="managedOrder" method="post" onsubmit="return onFormSubmit(this)" id="managedOrderForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -43,7 +38,7 @@
 		</c:if>
 
 		<c:if test="${managedOrder!=null && managedOrder.status!=null && managedOrder.status<'7_order_paid'}">
-        <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/orderList.html"/>'" value="<fmt:message key="button.cancel"/>"/>
+        <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/orders/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:if>
         <c:if test="${managedOrder!=null && managedOrder.id!=null && managedOrder.status!=null && (managedOrder.status=='1_order_draft' || managedOrder.status=='4_order_rejected')}">
         <input type="submit" class="button" name="orderSubmit" onclick="bCancel=false" value="<fmt:message key="button.order.submit"/>"/>
@@ -128,7 +123,7 @@
 <jsp:include page="include/include_order_items.jsp"></jsp:include>
 <script type="text/javascript">
 	var orderId = <c:out value="${managedOrder.id}"/>;
-	init();
+	
 </script>
 </c:when>
 </c:choose>

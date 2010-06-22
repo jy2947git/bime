@@ -20,9 +20,8 @@
 
 
 	 
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
+<link href="<c:url value='/styles/jquery-ui-1.8.1.custom.css'/>" rel="stylesheet" type="text/css"/>
+      <script src="<c:url value='/scripts/jquery-ui.min.js'/>"></script>
   <script type="text/javascript">
   jQuery.noConflict(); 
   
@@ -47,7 +46,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="toDo" method="post" action="toDoForm.html" onsubmit="return onFormSubmit(this)" id="toDoForm">
+<form:form commandName="toDo" method="post"  onsubmit="return onFormSubmit(this)" id="toDoForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -58,7 +57,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-			<input type="button" class="button" name="cancel" onclick="parent.location='<c:url value='/project/toDoList.html'/>'" value="<fmt:message key="button.cancel"/>"/>
+			<input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/projects/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>
@@ -127,13 +126,13 @@ function onFormSubmit(theForm) {
 <c:if test="${toDo.id != null}">
 
 <div align="right">
-<a href="#" onclick="return GB_showCenter('comment','<c:url value='/project/include/include_workLogForm.html?from=list&toDoId=${toDo.id}'/>',500,500,displayWorkLogs)"><img src="<c:url value='/images/add.png'/>"/><fmt:message key="button.add_work_log"/></a>
+<a href="#" onclick="return GB_showCenter('comment','<c:url value='/project/${projectId}/todo/${toDo.id}/worklog/0/form.html'/>',500,500,displayWorkLogs)"><img src="<c:url value='/images/add.png'/>"/><fmt:message key="button.add_work_log"/></a>
 </div>
 <div id="myLogs"></div>
 <script type="text/javascript">
 	function displayWorkLogs(){
 		
-		new Ajax.Updater('myLogs','<c:url value='/project/include/include_workLogListTable.html'/>',{method:'get', parameters:{from:'list',toDoId:'<c:out value='${toDo.id}'/>'}});
+		new Ajax.Updater('myLogs','<c:url value='/project/${projectId}/todo/${toDo.id}/worklogs/list.html?ajax=true'/>',{method:'get'});
 	}
 	displayWorkLogs();
 </script>

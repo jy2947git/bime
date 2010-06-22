@@ -44,37 +44,41 @@ public class MyExceptionHandler extends SimpleMappingExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex) {
 		log.error("error",ex);
+		try{
 		this.sendNotification(request, ex);
+		}catch(Exception e){
+			log.error("Failed to send exception notification too!!!!");
+		}
 		return super.resolveException(request, response, handler, ex);
 	}
 
 	private void sendNotification(HttpServletRequest request, Exception ex) {
-		try{
-			//find login user
-			String user = "";
-			SecurityContext sc = SecurityContextHolder.getContext();
-			if(sc!=null){
-				Authentication au = sc.getAuthentication();
-				if(au!=null){
-					user = user + " " + au.getPrincipal();
-				}
-			}
-			
-			
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setSubject("Bime exception " + ex.getMessage());
-			message.setTo(this.toAddress);
-			message.setCc(this.ccAddress);
-			StringBuffer buf = new StringBuffer();
-			buf.append("\n" + user);
-			buf.append("\n" + new Date());
-			buf.append("\n" + request.getRequestURI() + " " + request.getQueryString());
-			buf.append("\n" + this.getCustomStackTrace(ex));
-			message.setText(buf.toString());
-			this.mailEngine.send(message);
-		}catch(Exception e){
-			log.error("failed to send notification",e);
-		}
+//		try{
+//			//find login user
+//			String user = "";
+//			SecurityContext sc = SecurityContextHolder.getContext();
+//			if(sc!=null){
+//				Authentication au = sc.getAuthentication();
+//				if(au!=null){
+//					user = user + " " + au.getPrincipal();
+//				}
+//			}
+//			
+//			
+//			SimpleMailMessage message = new SimpleMailMessage();
+//			message.setSubject("Bime exception " + ex.getMessage());
+//			message.setTo(this.toAddress);
+//			message.setCc(this.ccAddress);
+//			StringBuffer buf = new StringBuffer();
+//			buf.append("\n" + user);
+//			buf.append("\n" + new Date());
+//			buf.append("\n" + request.getRequestURI() + " " + request.getQueryString());
+//			buf.append("\n" + this.getCustomStackTrace(ex));
+//			message.setText(buf.toString());
+//			this.mailEngine.send(message);
+//		}catch(Exception e){
+//			log.error("failed to send notification");
+//		}
 	}
 	
 	public String getCustomStackTrace(Throwable aThrowable) {

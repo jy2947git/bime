@@ -1,0 +1,6 @@
+#
+#zookeeper is to coordinate distributed applications
+#
+cd ~/
+wget http://www.ecoficial.com/apachemirror/hadoop/zookeeper/zookeeper-3.3.1/zookeeper-3.3.1.tar.gz
+tar zxvf zookeeper-3.3.1.tar.gz

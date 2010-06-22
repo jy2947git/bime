@@ -1,0 +1,7 @@
+#
+#RabbitMQ is another Messaging server which is developed with Erlang.
+#To talk to RabbitMQ, protocol AMQP is used, the Python library is http://barryp.org/software/py-amqplib/
+#http://blogs.digitar.com/jjww/2009/01/rabbits-and-warrens/
+#
+#
+sudo -y apt-get install rabbitmq-server

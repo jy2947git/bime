@@ -13,6 +13,6 @@
 </div>
 <script type="text/javascript">
 function deleteExperimentImageFile(itemId){
-	new Ajax.Updater('myListDiv','<c:url value='/project/include/include_experimentImageListTable.html'/>',{method:'get', parameters:{from:'list',requestedMethod:'delete',selected:itemId,id:}});
+	new Ajax.Updater('myListDiv','<c:url value='/project/include/include_experimentImageListTable.html'/>',{method:'post', parameters:{from:'list',requestedMethod:'delete',selected:itemId,id:}});
 }
 </script>

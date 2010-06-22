@@ -29,19 +29,10 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:/applicationContext-*.xml
-            classpath*:/applicationContext.xml
             /WEB-INF/applicationContext*.xml
         </param-value>
     </context-param>
     
-    <filter>
-    	<filter-name>FindLabNameFilter</filter-name>
-    	<filter-class>com.focaplo.myfuse.webapp.filter.ThreadBoundFilter</filter-class>
-    </filter>
-    <filter-mapping>
-    	<filter-name>FindLabNameFilter</filter-name>
-    	<url-pattern>/*</url-pattern>
-    </filter-mapping>
 <filter>
         <filter-name>hibernateFilter</filter-name>               
         <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
@@ -57,11 +48,15 @@ ERROR [org.hibernate.LazyInitializationException] - <could not initialize proxy 
 </filter-mapping>
 
 
-
     <filter>
-        <filter-name>cacheFilter</filter-name>
-        <filter-class>com.opensymphony.oscache.web.filter.CacheFilter</filter-class>
+    	<filter-name>FindLabNameFilter</filter-name>
+    	<filter-class>com.focaplo.myfuse.webapp.filter.ThreadBoundFilter</filter-class>
     </filter>
+    <filter-mapping>
+    	<filter-name>FindLabNameFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -75,14 +70,7 @@ ERROR [org.hibernate.LazyInitializationException] - <could not initialize proxy 
             <param-value>true</param-value>
         </init-param>
     </filter>
-    <filter>
-        <filter-name>exportFilter</filter-name>
-        <filter-class>org.displaytag.filter.ResponseOverrideFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>gzipFilter</filter-name>
-        <filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>
-    </filter>
+  
     <!--<filter>
         <filter-name>lazyLoadingFilter</filter-name>
         <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
@@ -92,14 +80,7 @@ ERROR [org.hibernate.LazyInitializationException] - <could not initialize proxy 
         <filter-name>localeFilter</filter-name>
         <filter-class>com.focaplo.myfuse.webapp.filter.LocaleFilter</filter-class>
     </filter>
-    <filter>
-        <filter-name>rewriteFilter</filter-name>
-        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-        <init-param>
-            <param-name>logLevel</param-name>
-            <param-value>log4j</param-value>
-        </init-param>
-    </filter>
+
     <filter>
         <filter-name>securityFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -117,7 +98,7 @@ ERROR [org.hibernate.LazyInitializationException] - <could not initialize proxy 
         <filter-class>com.focaplo.myfuse.webapp.filter.StaticFilter</filter-class>
         <init-param>
             <param-name>includes</param-name>
-            <param-value>/scripts/dojo/*,/dwr/*</param-value>
+            <param-value>/scripts,/styles,/images</param-value>
         </init-param>
         <init-param>
             <param-name>servletName</param-name>
@@ -133,49 +114,15 @@ ERROR [org.hibernate.LazyInitializationException] - <could not initialize proxy 
         <filter-name>securityFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!-- Commented out for 2 reasons: 1) it's a pain when developing JSPs, and
-                                      2) it causes the Signup webtest to fail -->
-    <!--filter-mapping>
-        <filter-name>cacheFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
-    </filter-mapping-->
-    <!--<filter-mapping>
-        <filter-name>lazyLoadingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+
+
 
     <filter-mapping>
         <filter-name>localeFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!-- GZipFilter has issues with XFire's service-listing servlet. -->
-    <!-- http://issues.appfuse.org/browse/APF-863 -->
-    <filter-mapping>
-        <filter-name>gzipFilter</filter-name>
-        <url-pattern>*.css</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>gzipFilter</filter-name>
-        <url-pattern>*.html</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>gzipFilter</filter-name>
-        <url-pattern>*.js</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>gzipFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>exportFilter</filter-name>
-        <url-pattern>*.html</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>rewriteFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
+  
+
     <filter-mapping>
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
@@ -188,21 +135,23 @@ ERROR [org.hibernate.LazyInitializationException] - <could not initialize proxy 
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-
+ 	<filter-mapping>
+        <filter-name>staticFilter</filter-name>
+        <url-pattern>*.json</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-    </listener>
+    </listener>-->
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
     <listener>
         <listener-class>com.focaplo.myfuse.webapp.listener.StartupListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>com.focaplo.myfuse.webapp.listener.UserCounterListener</listener-class>
     </listener>
     <listener>
         <listener-class>net.sf.navigator.menu.MenuContextListener</listener-class>
@@ -214,25 +163,7 @@ ERROR [org.hibernate.LazyInitializationException] - <could not initialize proxy 
         <load-on-startup>2</load-on-startup>
     </servlet>
 
-    <servlet>
-        <servlet-name>dwr-invoker</servlet-name>
-        <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
-        <init-param>
-            <param-name>debug</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>crossDomainSessionSecurity</param-name>
-            <param-value>false</param-value>
-        </init-param>
-    </servlet>
-    
-
-    <servlet-mapping>
-        <servlet-name>dwr-invoker</servlet-name>
-        <url-pattern>/dwr/*</url-pattern>
-    </servlet-mapping>
-    
+  
     
     <!-- Dispatching handled by StaticFilter -->
     <!--<servlet-mapping>

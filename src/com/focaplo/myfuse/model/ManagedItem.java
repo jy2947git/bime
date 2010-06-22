@@ -48,7 +48,7 @@ public class ManagedItem extends BaseObject implements Serializable {
 	
 	@Column(length=50)
 	private String storageNotes;
-	@OneToMany(mappedBy="managedItem",cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="managedItem",cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<InventoryAudit> inventoryAudits=new HashSet<InventoryAudit>();
 	
 //	

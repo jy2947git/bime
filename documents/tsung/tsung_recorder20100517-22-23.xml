@@ -1,0 +1,138 @@
+<session name='rec20100517-22:25' probability='100'  type='ts_http'>
+<request><http url='http://bime.bimelab.com/' version='1.1' method='GET'></http></request>
+<request><http url='/mainMenu.html;jsessionid=19DFC9BAE05F516E173799152370B22E' version='1.1' method='GET'></http></request>
+<request><http url='/login.jsp' version='1.1' method='GET'></http></request>
+<request><http url='/styles/simplicity/theme.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/simplicity/print.css' version='1.1' method='GET'></http></request>
+<request><http url='http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js' version='1.1' method='GET'></http></request>
+<request><http url='http://bime.bimelab.com/images/favicon.ico' version='1.1' method='GET'></http></request>
+<request><http url='http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js' version='1.1' method='GET'></http></request>
+<request><http url='http://bime.bimelab.com/scripts/global.js' version='1.1' method='GET'></http></request>
+<request><http url='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js' version='1.1' method='GET'></http></request>
+<request><http url='http://bime.bimelab.com/styles/simplicity/layout-1col.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/simplicity/nav-horizontal.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/simplicity/tools.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/simplicity/typo.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/simplicity/layout-navtop-subright.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/simplicity/layout.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/displaytag.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/messages.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/forms.css' version='1.1' method='GET'></http></request>
+<request><http url='/styles/calendar-aqua/theme.css' version='1.1' method='GET'></http></request>
+<request><http url='http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/builder.js' version='1.1' method='GET'></http></request>
+<request><http url='/ajax/libs/scriptaculous/1.8.3/effects.js' version='1.1' method='GET'></http></request>
+<request><http url='/ajax/libs/scriptaculous/1.8.3/dragdrop.js' version='1.1' method='GET'></http></request>
+<request><http url='/ajax/libs/scriptaculous/1.8.3/controls.js' version='1.1' method='GET'></http></request>
+<request><http url='/ajax/libs/scriptaculous/1.8.3/slider.js' version='1.1' method='GET'></http></request>
+<request><http url='/ajax/libs/scriptaculous/1.8.3/sound.js' version='1.1' method='GET'></http></request>
+<request><http url='http://bime.bimelab.com/styles/simplicity/images/background.gif' version='1.1' method='GET'></http></request>
+<request><http url='/images/fieldbg.gif' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='6'/>
+
+<request><http url='/j_security_check' version='1.1'  contents='j_username=user&amp;j_password=test&amp;login=Login' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+<request><http url='/mainMenu.html' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='2'/>
+
+<request><http url='/dashboard/my.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='5'/>
+
+<request><http url='/lab/meetingList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+<request><http url='/images/add.png' version='1.1' method='GET'></http></request>
+<request><http url='/images/pencil.png' version='1.1' method='GET'></http></request>
+<request><http url='/images/cross.png' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='2'/>
+
+<request><http url='/project/protocolList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='1'/>
+
+<request><http url='/project/projectList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+<request><http url='/images/lock.png' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='6'/>
+
+<request><http url='/project/projectForm.html?from=list&amp;id=1' version='1.1' method='GET'></http></request>
+<request><http url='/scripts/selectbox.js' version='1.1' method='GET'></http></request>
+<request><http url='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' version='1.1' method='GET'></http></request>
+<request><http url='/ajax/libs/jqueryui/1.8/jquery-ui.min.js' version='1.1' method='GET'></http></request>
+<request><http url='http://bime.bimelab.com/scripts/validator.jsp' version='1.1' method='GET'></http></request>
+<request><http url='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/images/ui-bg_flat_75_ffffff_40x100.png' version='1.1' method='GET'></http></request>
+<request><http url='http://bime.bimelab.com/images/calendar_1.png' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='2'/>
+
+<request><http url='/project/projectAccessForm.html' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='1'/>
+
+<request><http url='/project/toDoList.html' version='1.1' method='GET'></http></request>
+<request><http url='/images/arrow_down.png' version='1.1' method='GET'></http></request>
+<request><http url='/project/noteList.html' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='3'/>
+
+<request><http url='/inventory/itemCategoryList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='3'/>
+
+<request><http url='/inventory/refrigeratorList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='2'/>
+
+<request><http url='/inventory/chemicalShelvesList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='2'/>
+
+<request><http url='/inventory/othersList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='9'/>
+
+<request><http url='/inventory/othersList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='72'/>
+
+<request><http url='/inventory/equipmentList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='3'/>
+
+<request><http url='/inventory/itemList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='2'/>
+
+<request><http url='/inventory/itemForm.html?from=list&amp;id=1' version='1.1' method='GET'></http></request>
+<request><http url='/scripts/validator.jsp' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='6'/>
+
+<request><http url='/inventory/orderList.html;jsessionid=AAAFDB6E69C20AF724168A7E09F38BE4' version='1.1' method='GET'></http></request>
+
+<thinktime random='true' value='2'/>
+
+<request><http url='/inventory/orderForm.html?from=list&amp;id=1' version='1.1' method='GET'></http></request>
+<request><http url='/dwr/engine.js' version='1.1' method='GET'></http></request>
+<request><http url='/dwr/util.js' version='1.1' method='GET'></http></request>
+<request><http url='/scripts/order.js' version='1.1' method='GET'></http></request>
+<request><http url='/scripts/bime.js' version='1.1' method='GET'></http></request>
+<request><http url='/dwr/interface/OrderManager.js' version='1.1' method='GET'></http></request>
+<request><http url='/scripts/validator.jsp' version='1.1' method='GET'></http></request>
+<request><http url='/dwr/engine.js' version='1.1' if_modified_since='Fri, 23 Apr 2010 22:38:13 GMT' method='GET'></http></request>
+<request><http url='/dwr/call/plaincall/OrderManager.getOrderItemsOfOrder.dwr' version='1.1'  contents='callCount=1
+page=/inventory/orderForm.html?from=list&amp;id=1
+httpSessionId=CAD0296D0FD362AA023E96E4A8B71C27
+scriptSessionId=09E135E9A1613967932C37F0B08C1877226
+c0-scriptName=OrderManager
+c0-methodName=getOrderItemsOfOrder
+c0-id=0
+c0-param0=number:1
+batchId=0
+' content_type='text/plain; charset=UTF-8' method='POST'></http></request>
+
+<thinktime random='true' value='3'/>
+
+<request><http url='/logout.jsp' version='1.1' method='GET'></http></request>
+<request><http url='/login.jsp' version='1.1' method='GET'></http></request>
+</session>

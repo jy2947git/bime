@@ -1,0 +1,35 @@
+#
+# cassandra is another NoSQL data store with huge potential.
+#
+# Cassandra requires Java, refer to the ../java/README
+# download Cassandra from Trunk
+svn checkout https://svn.apache.org/repos/asf/cassandra/trunk cassandra
+#
+# or wget the stable version
+#
+wget http://apache.ziply.com/cassandra/0.6.2/apache-cassandra-0.6.2-bin.tar.gz
+tar zxvf apache-cassandra-0.6.2-bin.tar.gz
+
+#
+#
+#
+cd cassandra
+ant
+sudo ./bin/cassandra -f
+#
+# generate Cassandra java thrift client, requires Thrift,
+# refer to the ../thrift/README
+# generated libthrift.jar in /home/jy2947/thrift/lib/java/libthrift.jar
+#
+echo 'install Thrift, and generate Thrift java library too'
+#
+#
+#
+cd ./interface
+thrift --gen java cassandra.thrift
+echo 'cassandra source code in ./interface/gen-java
+echo 'you can copy the source code to your project, or build a jar (requires some library, including thrift jar)'
+cd gen-java
+javac -classpath $HOME/thrift/lib/java/libthrift.jar:$HOME/apache-cassandra-0.6.2/lib/slf4j-log4j12-1.5.8.jar:$HOME/apache-cassandra-0.6.2/lib/slf4j-api-1.5.8.jar org/apache/cassandra/thrift/*.java
+jar cvf cassandra_thrift_client.jar ./
+echo 'cassandra_thrift-client.jar generated'

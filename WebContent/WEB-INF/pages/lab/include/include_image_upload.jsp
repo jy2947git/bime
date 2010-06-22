@@ -2,7 +2,7 @@
 
 
 
-<form:form commandName="fileUpload" method="post" action="meetingFileUpload.html" enctype="multipart/form-data"
+<form:form commandName="fileUpload" method="post" action="upload.html" enctype="multipart/form-data"
     onsubmit="return validateFileUpload(this)" id="uploadForm">
     <form:hidden path="id"/>
     

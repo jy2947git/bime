@@ -30,7 +30,7 @@ public class ExperimentProtocol extends BaseObject implements Serializable {
 	
 	@Column(nullable=true,length=2000)
 	private String experimentProcedure;
-	@OneToMany(mappedBy="experimentProtocol", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="experimentProtocol", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<ExperimentProtocolAudit> protocolAudits=new HashSet<ExperimentProtocolAudit>();
 	
 	@OneToMany(mappedBy="experimentProtocol", cascade=CascadeType.ALL)

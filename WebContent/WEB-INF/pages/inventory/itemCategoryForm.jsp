@@ -19,7 +19,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="itemCategory" method="post" action="itemCategoryForm.html" onsubmit="return onFormSubmit(this)" id="itemCategoryForm">
+<form:form commandName="itemCategory" method="post" onsubmit="return onFormSubmit(this)" id="itemCategoryForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 
@@ -31,7 +31,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-            <input type="submit" class="button" name="cancel" onclick="bCancel=true" value="<fmt:message key="button.cancel"/>"/>
+           <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/itemCategories/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>

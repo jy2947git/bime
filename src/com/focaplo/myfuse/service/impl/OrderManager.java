@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.tuckey.web.filters.urlrewrite.utils.StringUtils;
 
 import com.focaplo.myfuse.Constants;
@@ -17,6 +19,7 @@ import com.focaplo.myfuse.model.OrderItem;
 import com.focaplo.myfuse.service.InventoryService;
 import com.focaplo.myfuse.service.OrderService;
 @Service(value="orderManager")
+@Transactional(readOnly=true)
 public class OrderManager extends UniversalManager implements
 		OrderService {
 	@Autowired
@@ -33,22 +36,18 @@ public class OrderManager extends UniversalManager implements
 	public List<ManagedOrder> getOrdersSubmittedBy(Long userId) {
 		return this.orderDao.getOrdersSubmittedBy(userId);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteOrderItem(Long id) {
 		this.orderDao.deleteOrderItem(id);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void saveOrderItem(Long orderId, OrderItem orderItem) {
-		if(orderItem.getId()!=null){
-			log.warn("id should be null");
-			orderItem.setId(null);
-		}
-		if(orderItem==null){
-			log.error("storage can not be null and storage id can not be null " + orderItem.getOrder());
-			return;
-		}
-		if(orderItem.getInventoryItem()==null && orderItem.getItemCategoryId()!=null){
-			orderItem.setItemCategory((ItemCategory) this.get(ItemCategory.class, orderItem.getItemCategoryId()));
+		if(orderItem.getInventoryItem()==null){
+			if(orderItem.getItemCategoryId()!=null){
+				orderItem.setItemCategory((ItemCategory) this.get(ItemCategory.class, orderItem.getItemCategoryId()));
+			}else{
+				throw new IllegalArgumentException("Category is required for order item");
+			}
 		}
 		ManagedOrder order = (ManagedOrder) this.orderDao.get(ManagedOrder.class, orderId);
 		if(order!=null){
@@ -65,7 +64,7 @@ public class OrderManager extends UniversalManager implements
 		//
 		this.syncOrderTotalCost(order);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	private void syncOrderTotalCost(ManagedOrder order) {
 		BigDecimal total = new BigDecimal(0);
 		for(OrderItem item:order.getOrderItems()){
@@ -75,7 +74,7 @@ public class OrderManager extends UniversalManager implements
 			this.updateOrderTotalCost(order.getId(), total);
 		}
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	private void updateOrderTotalCost(Long id, BigDecimal total) {
 		this.orderDao.updateOrderTotalCost(id, total);
 	}
@@ -84,25 +83,25 @@ public class OrderManager extends UniversalManager implements
 		item.setTotalCost(item.getUnitPrice().multiply(new BigDecimal(item.getAmount())));
 	}
 
-	public void updateOrderItem(Long id, Long itemCategoryId, String maker, BigDecimal unitPrice, Integer amount, BigDecimal totalCost, String supplier) {
-		OrderItem orderItem = (OrderItem) this.orderDao.get(OrderItem.class, id);
-		if(orderItem.getOrder().getStatus().compareToIgnoreCase(Constants.order_inventoried)>0){
-			throw new RuntimeException(orderItem.getOrder().getStatus());
-		}
-
-		this.orderDao.updateOrderItem(id, itemCategoryId, maker, unitPrice, amount, totalCost, supplier);
-	}
+//	public void updateOrderItem(Long id, Long itemCategoryId, String maker, BigDecimal unitPrice, Integer amount, BigDecimal totalCost, String supplier) {
+//		OrderItem orderItem = (OrderItem) this.orderDao.get(OrderItem.class, id);
+//		if(orderItem.getOrder().getStatus().compareToIgnoreCase(Constants.order_inventoried)>0){
+//			throw new RuntimeException(orderItem.getOrder().getStatus());
+//		}
+//
+//		this.orderDao.updateOrderItem(id, itemCategoryId, maker, unitPrice, amount, totalCost, supplier);
+//	}
 
 	public List<OrderItem> getOrderItemsOfOrder(Long orderId) {
 		return this.orderDao.getOrderItemsOfOrder(orderId);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteOrder(List<Long> toBeDeleted) {
 		for(Long id:toBeDeleted){
 			this.deleteOrder(id);
 		}
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteOrder(Long id) {
 		ManagedOrder order = (ManagedOrder) this.orderDao.get(ManagedOrder.class, id);
 		if(order.getStatus().compareToIgnoreCase(Constants.order_inventoried)>0){
@@ -111,7 +110,7 @@ public class OrderManager extends UniversalManager implements
 		order.setStatus(Constants.order_cancelled);
 		this.saveOrder(order);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void saveOrder(ManagedOrder order) {
 		if(StringUtils.isBlank(order.getStatus())){
 			order.setStatus(Constants.order_draft);
@@ -122,7 +121,7 @@ public class OrderManager extends UniversalManager implements
 		
 		this.orderDao.save(order);
 	}
-	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void submitOrder(Long orderId, Long submitedBy, Long forApprovalBy){
 		ManagedOrder order = (ManagedOrder) this.orderDao.get(ManagedOrder.class, orderId);
 		order.setSubmitDate(new Date());
@@ -136,7 +135,7 @@ public class OrderManager extends UniversalManager implements
 	}
 
 
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void approveOrder(Long orderId, Long approveById){
 		ManagedOrder order = (ManagedOrder) this.orderDao.get(ManagedOrder.class, orderId);
 		order.setStatus(Constants.order_approved);
@@ -146,7 +145,7 @@ public class OrderManager extends UniversalManager implements
 		this.saveOrder(order);
 		this.sendOrderApprovedEmail(orderId);
 	}
-	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void rejectOrder(Long orderId, Long rejectedById){
 		ManagedOrder order = (ManagedOrder) this.orderDao.get(ManagedOrder.class, orderId);
 		order.setStatus(Constants.order_rejected);
@@ -155,7 +154,7 @@ public class OrderManager extends UniversalManager implements
 		this.saveOrder(order);
 		this.sendOrderRejectedEmail(orderId);
 	}
-	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public List<ManagedItem> inventorizeOrder(Long orderId){
 		//change order status
 		this.orderDao.changeOrderStatus(orderId, Constants.order_inventoried);
@@ -169,8 +168,9 @@ public class OrderManager extends UniversalManager implements
 	private void sendOrderApprovedEmail(Long orderId) {
 		log.debug("sending email to notice order approved");
 	}
-
-	public void copyExistingOrder(ManagedOrder order) {
+	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public Long copyExistingOrder(ManagedOrder order) {
 		ManagedOrder ord = new ManagedOrder();
 		ord.setAccountNumber(order.getAccountNumber());
 		ord.setApprovalDate(null);
@@ -188,10 +188,13 @@ public class OrderManager extends UniversalManager implements
 		//TODO:automatically calculate from item totals
 		ord.setTotalPrice(order.getTotalPrice());
 		this.saveOrder(ord);
-		Iterator<OrderItem> items = order.getOrderItems().iterator();
-		while(items.hasNext()){
+		log.debug("saved " + ord.getId());
+		//Can not do this way because in Spring MVC 3.0, this Order comes from Http Session Attribute and has the OLD hibernate session information
+//		Iterator<OrderItem> items = order.getOrderItems().iterator();
+		List<OrderItem> items = this.getOrderItemsOfOrder(order.getId());
+		for(OrderItem etm:items){
 			OrderItem item = new OrderItem();
-			OrderItem etm = items.next();
+			
 			item.setAmount(etm.getAmount());
 			item.setCreatedDate(new Date());
 			item.setItemCategory(etm.getItemCategory());
@@ -205,7 +208,16 @@ public class OrderManager extends UniversalManager implements
 			item.setAmount(etm.getAmount());
 			this.saveOrderItem(ord.getId(), item);
 		}
+		return ord.getId();
 	}
 
 
+//	public List<OrderItem> updateOrderItemAndThenList(Long orderId, Long orderItemId, Long itemCategoryId, String maker, BigDecimal unitPrice, Integer amount, BigDecimal totalCost, String supplier){
+//		if(orderItemId==null){
+//			throw new IllegalArgumentException("Order item id is required");
+//		}else{
+//			this.updateOrderItem(orderItemId, itemCategoryId, maker, unitPrice, amount, totalCost, supplier);
+//		}
+//		return this.getOrderItemsOfOrder(orderId);
+//	}
 }

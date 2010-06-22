@@ -71,7 +71,7 @@ public class MailEngine {
             e.printStackTrace();
             log.error(e.getMessage());
         }
-       log.debug("message:" + result);
+       log.debug("email message:" + result);
         msg.setText(result);
         try{
         	send(msg);

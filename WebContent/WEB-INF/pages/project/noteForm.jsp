@@ -19,7 +19,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="experimentNote" method="post" action="noteForm.html" onsubmit="return onFormSubmit(this)" id="experimentNoteForm">
+<form:form commandName="experimentNote" method="post" onsubmit="return onFormSubmit(this)" id="experimentNoteForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 
@@ -46,7 +46,7 @@
             
         	</form:select>
       	</div>
-      	<div class="right">
+      	<div>
 			<appfuse:label styleClass="desc" key="note.project"/>
 			<form:select path="managedProject">
 			<option value="">------please select-----</option>
@@ -56,38 +56,16 @@
       	</div>
     </li>
     <li>
-        <div class="left">
+        <div>
             <appfuse:label styleClass="desc" key="note.notes"/>
             <form:errors path="notes" cssClass="fieldError"/>
      
             <form:textarea path="notes" id="notes" cssClass="text large" cssErrorClass="text medium error" rows="5" cols="40"/>
         </div>
+        <div>
+        </div>
 	</li>
-    <li>
- 
-        <fieldset class="pickList">
-            <legend><fmt:message key="notes.accessList"/></legend>
-            <table class="pickList">
-                <tr>
-                    <th class="pickLabel">
-                        <appfuse:label key="user.users" colon="false" styleClass="required"/>
-                    </th>
-                    <td></td>
-                    <th class="pickLabel">
-                        <appfuse:label key="notes.accessList" colon="false" styleClass="required"/>
-                    </th>
-                </tr>
-                <c:set var="leftList" value="${userList}" scope="request"/>
-                <c:set var="rightList" value="${experimentNote.accessedUsers}" scope="request"/>
-
-                <c:import url="/WEB-INF/pages/pickList.jsp">
-                    <c:param name="listCount" value="1"/>
-                    <c:param name="leftId" value="userList"/>
-                    <c:param name="rightId" value="accessUserIds"/>
-                </c:import>
-            </table>
-        </fieldset>
-   </li>
+   
     
     <li class="buttonBar bottom">
         <c:out value="${buttons}" escapeXml="false"/>
@@ -98,14 +76,14 @@
 <c:if test="${experimentNote.id!=null}">
 
 <div id="myListDiv">
-<jsp:include page="include/include_experimentImageListTable.jsp"></jsp:include>
 </div>
 <div class="separator"></div>
 <jsp:include page="include/include_image_upload.jsp"></jsp:include>
 </c:if>
 <script type="text/javascript">
+new Ajax.Updater('myListDiv','<c:url value='/project/${projectId}/note/${noteId}'/>' + '/images/list.html?ajax=true',{method:'get'});
 
-<!-- This is here so we can exclude the selectAll call when roles is hidden -->
+
 function onFormSubmit(theForm) {
 
     selectAll('accessUserIds');
@@ -113,7 +91,7 @@ function onFormSubmit(theForm) {
     return validateExperimentNote(theForm);
 }
 function deleteExperimentImageFile(itemId){
-	new Ajax.Updater('myListDiv','<c:url value='/project/include/include_experimentImageListTable.html'/>',{method:'get', parameters:{from:'list',requestedMethod:'delete',selected:itemId,id:'<c:out value="${experimentNote.id}"/>'}});
+	new Ajax.Updater('myListDiv','<c:url value='/project/${projectId}/note/${noteId}'/>/image/' + itemId + '/delete.html?ajax=true',{method:'post'});
 }
 </script>
 

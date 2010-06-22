@@ -1,0 +1,242 @@
+
+						Frameworks used by Bime
+
+Spring 3.0 including Spring Core, Spring MVC (RESTful), Taglib, Spring Security
+Hibernate for ORM (JPA)
+JUnit 4 for unit testing
+Struts-Menu for Menu
+Velocity for decorating html code
+SiteMesh
+prototype for java-script
+jquery for java-script (date picker)
+note:jquery and prototype have conflict over the $ sign, the solution is always load jquery AFTER prototype and call
+jQuery.noConflict();, also use "jQuery(#"")" to replace "$("")" with jquery
+jQuery for AJAX
+GreyBox for pop-up dialog
+
+
+
+						Bime project structure
+
+Here is the tree stucture of bime project
+
+	bime
+		---Java Resources
+				--- src
+					---com.focaplo.myfuse.dao	(Data Access Objects)
+					---com.focaplo.myfuse.dao.hiberbate (complete Hibernate implementation of DAO)
+					---com.focaplo.myfuse.dao.jpa (experiment JPA implementation of DAO)
+					---com.focaplo.myfuse.dao.spring (experiment Spriong JDBC implementation of DAO)
+					---com.focaplo.myfuse.dao.cassandra (experiment Cassandra dao)
+					---com.focaplo.myfuse.exception (custom exception)
+					---com.focaplo.myfuse.loggin (Cassandra, and Scribe log appender)
+					---com.focaplo.myfuse.messaging (AMQP, JMS messaging utils)
+					---com.focaplo.myfuse.model (Model or Domain classes)
+						---BaseObject
+						---ChemicalShelves
+						---Equipment
+						---ExperimentAnimal
+						---ExperimentMaterial
+						---ExperimentMice
+						---ExperimentImage
+						---ExperimentNote
+						---ExperimentProtocol
+						---ExperimentProtocolAudit
+						---InventoryAudit
+						---ItemCategory
+						---Lab
+						---LabMeeting
+						---LabMeetingItem
+						---ManagedGrant
+						---ManagedItem
+						---ManagedOrder
+						---ManagedProject
+						---MeetingFile
+						---OrderItem
+						---OtherStorage
+						---Refrigerator
+						---Role
+						---Storage
+						---StorageOthers
+						---StorageSection
+						---StoredFile
+						---ToDo
+						---User
+						---WorkLog
+					---com.focaplo.myfuse.service (Business services)
+						---AuthorizationService
+						---CacheService
+						---CommandService
+						---ConfigurationService
+						---DataSourceService
+						---DynQueueFactoryRegister
+						---EncrptionService
+						---ExtendedSpringBeanRepository
+						---GrantService
+						---InventoryService
+						---LabService
+						---OrderService
+						---LookupService
+						---ProjectService
+						---RoleService
+						---StorageService
+						---UniversalService
+						---UserService
+					---com.focaplo.myfuse.service.impl (implementations of business services)
+						---AmazonStorageManager
+						---AuthorizationManager
+						---BimeConfiguration
+						---DynDataSourceRegister
+						---GrantManager
+						---IncommingCommandListener
+						---InventoryManager
+						---LabManager
+						---LocalDriveStorageManager
+						---LookupManager
+						---MailEngine
+						---MemcachedManager
+						---OrderManager
+						---ProjectManager
+						---RoleManager
+						---StorageManager
+						---UniversalManager
+						---UserManager
+					---com.focaplo.myfuse.webapp.controller (Web Controllers of Spring MVC 3.0)
+					---com.focaplo.myfuse.webapp.listener (web startup listener)
+					---com.focaplo.myfuse.webapp.filter (web filter)
+						---LocaleFilter
+						---LocaleRequestWrapper
+						---StaticFilter
+						---ThreadBoundFilter
+					---com.focaplo.myfuse.webapp.spring
+						---CustomSecurityFilter
+						---MyDispatchServlet
+						---MyExceptionHandler
+						---ThreadBoundContext
+						---UserRoutingDataSource
+						---UserSecurityAdvice
+						---ValidatorExtensionPostProcessor
+				--- resources
+					---applicationContext-xxx.xml (Spring context files)
+					---ApplicationResources.properties (Labels)
+					---hibernate.cfg.xml (Hibernate)
+					---jdbc.properties (Database)
+					---mail.properties (SMTP)
+					---xxx.vm (velocity tempaltes)
+			    --- config
+			    	--- amazon.properties
+			    	--- applicationContext_jmx.xml
+			    	--- applicationContext-dao.xml
+			    	--- applicationContext-datasource.xml
+			    	--- applicationContext-messaing-incoming.optional
+			    	--- applicationContext-messaging-outgoing.optional
+			    	--- applicationContext-service.xml
+			    	--- bime.properties
+			    	--- displaytag.properties
+			    	--- ecache.xml
+			    	--- hibernate.cfg.xml
+			    	--- jdbc.properties
+			    	--- jets3t.properties
+			    	--- log4j.xml
+			    	--- mail.properties
+			    	--- oscahe.properties
+			    	--- spy.properties
+			    	--- velocity.properties
+			    --- velocity-templates
+			    	--- accountCreated.vm
+			    	--- createDatabase.vm
+			    	--- cssHorizonalMenu.vm
+			    	--- cssHorizonalSubMenu.vm
+			    	--- cssVerticalMenu.vm
+			    	--- dropDatabase.vm
+			    	--- orderApproved.vm
+			    	--- orderRejected.vm
+			    	--- orderSubmitted.vm
+		---documents (tips, instructions of various topics)
+				--- amazon
+				--- apache
+				--- apache
+				--- bime
+				--- cassandra
+				--- exim4
+				--- fabric
+				--- hadoop
+				--- haproxy
+				--- hive
+				--- hornetq
+				--- hudson
+				--- java
+				--- jira
+				--- linux
+				--- memcached
+				--- mysql
+				--- nagios
+				--- python
+				--- RabbitMQ
+				--- scribe
+				--- subversion
+				--- thrift
+				--- tomcat
+				--- tsung
+				--- zookeeper
+		---scriots
+				---automation
+				---client-management
+				---haproxy
+				---mysql
+				---startup
+		---server-lib
+		---tools
+				---build_hibernate_tools.xml (Ant script to automatically generate DDL and create/refresh LOCAL mysql database)
+				---hibernate_tools.properties (Ant property files for the build_hibernate_tools.xml)
+				---hibernate.cfg.xml (hibernate configuration for the build_hibernate_tools.xml)
+				--- *.jar (ant jar files)
+		---WebContent
+			---admin
+			---common
+				---footer.jsp
+				---header.jsp
+				---menu.jsp (display menu)
+				---messages.jsp
+				---meta.jsp
+				---taglibs.jsp
+			---decorators
+				---default.jsp (the base html tempalte)
+			---images
+			---META-INF
+			---scripts
+				--- greybox
+				--- bime.js
+				--- global.js
+				--- jquery
+				--- order_items_jquery.js
+				--- storage_sections_jquery.js
+			---styles
+				--- simplicity
+			---WEB-INF
+				---lib
+				---pages
+					---admin (all pages under Admin tab)
+					---dashboard (all pages under Dashboard tab)
+					---grant (all pages under Grant tab)
+					---inventory (all pages under Inventory tab)
+						---include (the included jsp files on inventory pages, for example, all the table lists are in included jsp)
+					---lab (all pages under Lab tab)
+					---project (all pages under Project tab)
+						---include
+					---report (all pages under Report tab)
+				appfuse.tld
+				applicationContext-validation.xml
+				decorators.xml
+				dispatcher-servlet.xml (Spring MVC beans and url mappings)
+				menu-config.xml (menu definations)
+				applicationContext-security.xml
+				sitemesh.xml
+				validation.xml (form validations)
+				validator-rules.xml
+				validator-rules-consutom.xml
+				web.xml
+		bsh-2.0b1.jar
+		build.properties
+		build.xml (Ant build script)
+		readme.txt

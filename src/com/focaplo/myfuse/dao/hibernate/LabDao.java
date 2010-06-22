@@ -3,6 +3,7 @@ package com.focaplo.myfuse.dao.hibernate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Repository;
@@ -54,6 +55,12 @@ public class LabDao extends UniversalDao implements ILabDao{
 //		Set<LabMeeting> meetings = user.getMeetings();
 //		results.addAll(meetings);
 		return results;
+	}
+
+	public List<String> findAllTablesWithIdColumn() {
+		// native sql
+		List<String> tablesWithIdColumn = this.getSessionFactory().getCurrentSession().createSQLQuery("select table_name from information_schema.columns where table_schema = 'bime' and column_name='id'").list();
+		return tablesWithIdColumn;
 	}
 
 }

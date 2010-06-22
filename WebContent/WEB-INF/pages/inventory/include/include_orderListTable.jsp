@@ -11,7 +11,7 @@
 	<display:column escapeXml="true" sortable="false" titleKey="order.status" style="width: 20%"><fmt:message key="${order.status}"/></display:column> 
 	
 	<display:column style="width: 16%; padding-left: 15px" media="html">
-        <a href="<c:url value='/inventory/orderForm.html?from=list&id=${order.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="order.edit"/>"/></a>&nbsp;
+        <a href="<c:url value='/inventory/order/${order.id}/form.html'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="order.edit"/>"/></a>&nbsp;
          <a href="javascript:if(confirm('<fmt:message key="confirm.delete"><fmt:param value="order"/></fmt:message>')){deleteOrder('${order.id}')}"><img src="<c:url value='/images/cross.png'/>" alt='<fmt:message key="order.delete"/>'/></a>
     </display:column>
 

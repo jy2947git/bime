@@ -14,10 +14,10 @@ public class MyDispatchServlet extends DispatcherServlet {
 	protected void render(ModelAndView mv, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 //		System.out.println("view:" + mv.getViewName());
-		String viewName = mv.getViewName();
-		if(viewName.endsWith(".html")){
-			mv.setViewName(viewName+"?" + System.currentTimeMillis());
-		}
+//		String viewName = mv.getViewName();
+//		if(viewName.endsWith(".html")){
+//			mv.setViewName(viewName+"?" + System.currentTimeMillis());
+//		}
 //		log.debug("view changed to " + mv.getViewName() + " view:" + mv.getView());
 		super.render(mv, request, response);
 	}

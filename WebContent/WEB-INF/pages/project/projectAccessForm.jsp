@@ -21,7 +21,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="managedProject" method="post" action="projectAccessForm.html"  onsubmit="return onFormSubmit(this)" id="projectAccessForm">
+<form:form commandName="managedProject" method="post"  onsubmit="return onFormSubmit(this)" id="projectAccessForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -34,8 +34,7 @@
         <c:if test="${(managedProject!=null &&  managedProject.id==null) || (managedProject!=null &&  managedProject.id!=null && managedProject.canAuthorize)}">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 		</c:if>
-
-            <input type="submit" class="button" name="cancel" onclick="bCancel=true" value="<fmt:message key="button.cancel"/>"/>
+			 <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/projects/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>

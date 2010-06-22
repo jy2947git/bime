@@ -19,7 +19,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="experimentProtocol" method="post" action="protocolForm.html" onsubmit="return onFormSubmit(this)" id="experimentProtocolForm">
+<form:form commandName="experimentProtocol" method="post" onsubmit="return onFormSubmit(this)" id="experimentProtocolForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 
@@ -29,9 +29,10 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
             <c:if test="${experimentProtocol.id != null}">
-				<input type="submit" class="button" name="newVersion" onclick="bCancel=false" value="<fmt:message key="button.saveAsNewVersion"/>"/>
+            	<input type="hidden" name="newVersion" value="false"/>
+				<input type="submit" class="button" name="saveNewVersion" onclick="bCancel=false;newVersion.value=true" value="<fmt:message key="button.saveAsNewVersion"/>"/>
 			</c:if>
-            <input type="submit" class="button" name="cancel" onclick="bCancel=true" value="<fmt:message key="button.cancel"/>"/>
+             <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/project/protocols/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>

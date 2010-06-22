@@ -6,9 +6,8 @@
     <meta name="menu" content="LabMenu"/>
     <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
     
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
+<link href="<c:url value='/styles/jquery-ui-1.8.1.custom.css'/>" rel="stylesheet" type="text/css"/>
+      <script src="<c:url value='/scripts/jquery-ui.min.js'/>"></script>
   <script type="text/javascript">
   jQuery.noConflict(); 
   
@@ -32,12 +31,12 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="labMeeting" method="post" action="meetingForm.html" onsubmit="return onFormSubmit(this)" id="labMeetingForm">
+<form:form commandName="labMeeting" method="post" onsubmit="return onFormSubmit(this)" id="labMeetingForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
 <div align="right">
-<a href="#" onclick="window.open('<c:url value="/lab/include/include_meetingPrint.html"/>')"><img src="<c:url value='/images/printer.png'/>"/><fmt:message key="meeting.print"/></a>
+<a href="#" onclick="window.open('<c:url value="/lab/meeting/${labMeeting.id}/print.html"/>')"><img src="<c:url value='/images/printer.png'/>"/><fmt:message key="meeting.print"/></a>
 </div>
 
 <ul>

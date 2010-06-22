@@ -1,0 +1,20 @@
+#
+#Python is used to program server level utilities and services.
+#
+#One of the use case of Python application is, on every Bime EC2 instance, we want a small messaging client listening to the queue and execute incoming commands.
+#JMS is too big for this job and Java is not the best candidate when running System commands either. So, we choose Python for this purpose.
+#
+#Two protocols are available for Python coode to communicate to messsaging servers - STOMP and AMQP
+#STOMP(Simple Text Oriented Messaging Protocol and AMQP (Advanced Meesaging Queue Protocol)
+#
+#We are using AMQP in our system.
+#first download and install the AMQP Python Client Library
+wget http://py-amqplib.googlecode.com/files/amqplib-0.6.1.tgz
+tar zxvf amqplib-0.6.1.tgz
+cd amqplib-0.6.1
+sudo python setup.py install
+#
+# install vim the editor
+#
+sudo -y apt-get install vim-full
+

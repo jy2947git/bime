@@ -49,8 +49,13 @@ public class UniversalDao implements IUniversalDao {
     		o.setCreatedDate(new Date());
     	}
     	o.setLastUpdateDate(new Date());
-        this.getSessionFactory().getCurrentSession().saveOrUpdate(o);
-        return o;
+    	if(o.getId()==null){
+    		this.getSessionFactory().getCurrentSession().saveOrUpdate(o);
+    		return o;
+    	}else{
+    		 return this.getSessionFactory().getCurrentSession().merge(o);
+    	}
+    
     }
 
     public Object saveOrUpdate(BaseObject o){
@@ -59,9 +64,13 @@ public class UniversalDao implements IUniversalDao {
     		o.setCreatedDate(new Date());
     	}
     	o.setLastUpdateDate(new Date());
-    	this.getSessionFactory().getCurrentSession().saveOrUpdate(o);
-    	
-    	return o;
+    	if(o.getId()==null){
+    		this.getSessionFactory().getCurrentSession().saveOrUpdate(o);
+    		return o;
+    	}else{
+    		return this.getSessionFactory().getCurrentSession().merge(o);
+    	}
+
     }
     /**
      * {@inheritDoc}

@@ -3,7 +3,7 @@ package com.focaplo.myfuse.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jws.WebService;
+
 import javax.persistence.EntityExistsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focaplo.myfuse.exception.UserExistsException;
 import com.focaplo.myfuse.model.LabelValue;
 import com.focaplo.myfuse.model.User;
 import com.focaplo.myfuse.service.UserService;
-import com.focaplo.myfuse.service.UserWebService;
+
 
 
 /**
@@ -26,8 +28,8 @@ import com.focaplo.myfuse.service.UserWebService;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 @Service(value="userManager")
-@WebService(serviceName = "UserService", endpointInterface = "com.focaplo.myfuse.service.UserWebService")
-public class UserManager extends UniversalManager implements UserService, UserWebService {
+@Transactional(readOnly=true)
+public class UserManager extends UniversalManager implements UserService {
    @Autowired
     private PasswordEncoder passwordEncoder;
   
@@ -55,9 +57,7 @@ public class UserManager extends UniversalManager implements UserService, UserWe
     }
     
     
-    /**
-     * {@inheritDoc}
-     */
+    @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public User saveUser(User user) throws UserExistsException {
 
         if (user.getVersion() == null) {
@@ -85,6 +85,7 @@ public class UserManager extends UniversalManager implements UserService, UserWe
             }
 
             // If password was changed (or new user), encrypt it
+            log.debug("password changed?" + passwordChanged);
             if (passwordChanged) {
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword(), null));
             }
@@ -105,9 +106,7 @@ public class UserManager extends UniversalManager implements UserService, UserWe
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public void removeUser(String userId) {
         log.debug("removing user: " + userId);
         userDao.remove(User.class,new Long(userId));
@@ -127,14 +126,7 @@ public class UserManager extends UniversalManager implements UserService, UserWe
 		return this.userDao.getUsersWithRole(superUserRole);
 	}
 
-	public List<LabelValue> getLabelValueListOfUsers() {
-		List<User> allUsers = this.getAllLabUsers();
-		List<LabelValue> alllabels = new ArrayList<LabelValue>();
-		for(User user:allUsers){
-			alllabels.add(new LabelValue(user.getFullName(), user.getId().toString()));
-		}
-		return alllabels;
-	}
+
 
 	public List<User> getAllLabUsers() {
 		return this.userDao.getLabUsers();

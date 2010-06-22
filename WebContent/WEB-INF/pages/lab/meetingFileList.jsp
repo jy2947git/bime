@@ -13,6 +13,6 @@
 </div>
 <script type="text/javascript">
 	function deleteMeetingFile(itemId){
-		new Ajax.Updater('myListDiv','<c:url value='/lab/include/include_meetingFileListTable.html'/>',{method:'get', parameters:{from:'list',requestedMethod:'delete',selected:itemId}});
+		new Ajax.Updater('myListDiv','<c:url value='/lab/meeting/${meetingId}/document/'/>' + itemId + '/delete.html?ajax=true',{method:'delete'});
 	}
 </script>

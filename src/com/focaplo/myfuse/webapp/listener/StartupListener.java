@@ -20,17 +20,12 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.focaplo.myfuse.Constants;
 import com.focaplo.myfuse.service.AuthorizationService;
 import com.focaplo.myfuse.service.LookupService;
+import com.focaplo.myfuse.service.impl.MemcachedManager;
 
 /**
  * <p>StartupListener class used to initialize and database settings
  * and populate any application-wide drop-downs.
  * <p/>
- * <p>Keep in mind that this listener is executed outside of OpenSessionInViewFilter,
- * so if you're using Hibernate you'll have to explicitly initialize all loaded data at the
- * GenericDao or service level to avoid LazyInitializationException. Hibernate.initialize() works
- * well for doing this.
- *
- * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 public class StartupListener implements ServletContextListener {
     private static final Log log = LogFactory.getLog(StartupListener.class);
@@ -79,15 +74,6 @@ public class StartupListener implements ServletContextListener {
 
         context.setAttribute(Constants.CONFIG, config);
 
-        // output the retrieved values for the Init and Context Parameters
-        if (log.isDebugEnabled()) {
-            log.debug("Remember Me Enabled? " + config.get("rememberMeEnabled"));
-            if (passwordEncoder != null) {
-                log.debug("Password Encoder: " + passwordEncoder.getClass().getName());
-            }
-            log.debug("Populating drop-downs...");
-        }
-
         setupContext(context);
 
     }
@@ -98,12 +84,7 @@ public class StartupListener implements ServletContextListener {
      */
     public static void setupContext(ServletContext context) {
         ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
-        
-        LookupService mgr = (LookupService) ctx.getBean("lookupManager");
 
-        // get list of possible roles
-        context.setAttribute(Constants.AVAILABLE_ROLES, mgr.getAllRoles());
-        log.debug("Drop-down initialization complete [OK]");
         //initialize the authorization service to load the whole table
         AuthorizationService am = (AuthorizationService)ctx.getBean("authorizationManager");
         am.refresh();
@@ -114,10 +95,17 @@ public class StartupListener implements ServletContextListener {
      *
      * @param servletContextEvent The servlet context event
      */
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+    public void contextDestroyed(ServletContextEvent event) {
         //LogFactory.release(Thread.currentThread().getContextClassLoader());
         //Commented out the above call to avoid warning when SLF4J in classpath.
         //WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
         //WARN: Please see http://www.slf4j.org/codes.html for an explanation.
+    	 ServletContext context = event.getServletContext();
+    	 ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
+    	 log.info("trying to shutdown memcached clients...");
+    	 MemcachedManager cacheManager= ctx.getBean(MemcachedManager.class);
+    	 if(cacheManager!=null){
+    		 cacheManager.turnOff();
+    	 }
     }
 }

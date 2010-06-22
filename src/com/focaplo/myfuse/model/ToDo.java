@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class ToDo extends BaseObject {
 	private Date endDate;
 	@Column
 	private String status;
-	@OneToMany(mappedBy="toDo",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="toDo",cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<WorkLog> workLogs=new HashSet<WorkLog>();
 	@Column
 	private String subject;

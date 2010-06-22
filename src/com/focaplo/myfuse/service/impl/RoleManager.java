@@ -2,7 +2,10 @@ package com.focaplo.myfuse.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focaplo.myfuse.dao.IRoleDao;
 import com.focaplo.myfuse.model.Role;
@@ -14,38 +17,33 @@ import com.focaplo.myfuse.service.RoleService;
  * @author <a href="mailto:dan@getrolling.com">Dan Kibler</a>
  */
 @Service(value="roleManager")
+@Transactional(readOnly=true)
 public class RoleManager extends UniversalManager implements RoleService {
-    private IRoleDao dao;
+	@Autowired
+    private IRoleDao roleDao;
 
-    public void setRoleDao(IRoleDao dao) {
-        this.dao = dao;
-    }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    public void setRoleDao(IRoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
+
     public List<Role> getRoles(Role role) {
-        return dao.getAllRoles();
+        return roleDao.getAllRoles();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Role getRole(String rolename) {
-        return dao.getRoleByName(rolename);
+        return roleDao.getRoleByName(rolename);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public Role saveRole(Role role) {
-        return dao.saveRole(role);
+        return roleDao.saveRole(role);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public void removeRole(String rolename) {
-        dao.removeRole(rolename);
+        roleDao.removeRole(rolename);
     }
 }

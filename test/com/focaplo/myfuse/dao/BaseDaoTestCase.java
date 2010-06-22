@@ -44,6 +44,7 @@ public abstract class BaseDaoTestCase {
     IInventoryDao inventoryDao;
     IGrantDao grantDao;
     IProjectDao projectDao;
+    ILabDao labDao;
     @BeforeClass
     public static void beforeClass(){
 
@@ -62,6 +63,7 @@ public abstract class BaseDaoTestCase {
     	inventoryDao=(IInventoryDao) this.getApplicationContext().getBean("inventoryDao");
     	projectDao=(IProjectDao)this.applicationContext.getBean("projectDao");
     	grantDao=(IGrantDao)this.applicationContext.getBean("grantDao");
+    	labDao=(ILabDao)this.applicationContext.getBean("labDao");
     	log.info("setting transaction...");
 //		super.setUp();
 		sessionFactory = (SessionFactory) this.applicationContext.getBean("sessionFactory");

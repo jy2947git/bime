@@ -13,20 +13,6 @@ import com.focaplo.myfuse.model.StorageSection;
 @Repository(value="inventoryDao")
 public class InventoryDao extends UniversalDao implements IInventoryDao {
 
-	public Long saveRefrigerator(Refrigerator r) {
-		return this.saveStorage(r);
-	}
-
-	public Long saveStorage(Storage r) {
-		this.save(r);
-		Iterator<StorageSection> ite = r.getSections().iterator();
-		while(ite.hasNext()){
-			StorageSection ss = ite.next();
-			ss.setStorage(r);
-			this.save(ss);
-		}
-		return r.getId();
-	}
 
 	public Long saveNewInventoryItem(ManagedItem item) {
 		this.save(item);

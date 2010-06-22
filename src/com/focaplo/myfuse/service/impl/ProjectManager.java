@@ -9,6 +9,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focaplo.myfuse.dao.IProjectDao;
 import com.focaplo.myfuse.model.ExperimentImage;
@@ -26,12 +28,13 @@ import com.focaplo.myfuse.service.ProjectService;
 import com.focaplo.myfuse.service.StorageService;
 
 @Service(value="projectManager")
+@Transactional(readOnly=true)
 public class ProjectManager extends UniversalManager implements
 		ProjectService {
 	@Autowired
 	private IProjectDao projectDao;
 	@Autowired
-	@Qualifier("localDriveStorageManager")
+	@Qualifier("storageManager")
 	private StorageService storageService;
 	@Autowired
 	private AuthorizationService authorizationManager;
@@ -44,10 +47,14 @@ public class ProjectManager extends UniversalManager implements
 		this.projectDao = projectDao;
 	}
 
+	public StorageService getStorageService() {
+		return storageService;
+	}
+
 	public void setStorageService(StorageService storageService) {
 		this.storageService = storageService;
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteProjects(List<Long> toBeDeleted) {
 		for(Long id:toBeDeleted){
 			this.projectDao.remove(ManagedProject.class, id);
@@ -60,7 +67,7 @@ public class ProjectManager extends UniversalManager implements
 		return projects;
 	}
 
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void saveExperimentNote(ExperimentNote note) {
 		log.info("find " + note.getAccessedBy().size());
 		note.getAccessedBy().add(note.getResearcher());
@@ -78,7 +85,7 @@ public class ProjectManager extends UniversalManager implements
 //			this.projectDao.saveOrUpdate(image);
 //		}
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void saveProtocol(ExperimentProtocol protocol, boolean realDirty, String dirtyUser) {
 		if(protocol.getId()!=null && realDirty){
 			//create a new protocol object
@@ -103,17 +110,18 @@ public class ProjectManager extends UniversalManager implements
 			for(ExperimentNote note:notes){
 				this.saveExperimentNote(note);
 			}
+			
 		}
 		
 		
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteProtocols(List<Long> toBeDeleted) {
 		for(Long id:toBeDeleted){
 			this.projectDao.remove(ExperimentProtocol.class, id);
 		}
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteNotes(List<Long> toBeDeleted) {
 		for(Long id:toBeDeleted){
 			this.projectDao.remove(ExperimentNote.class, id);
@@ -125,7 +133,7 @@ public class ProjectManager extends UniversalManager implements
 	public List<ExperimentNote> getNotesOfProject(Long projectId) {
 		return this.projectDao.getNotesOfProject(projectId);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteToDos(List<Long> toBeDeleted) {
 		for(Long id:toBeDeleted){
 			this.projectDao.remove(ToDo.class, id);
@@ -139,7 +147,7 @@ public class ProjectManager extends UniversalManager implements
 	public List<WorkLog> getWorkLogsOfToDo(Long toDoId) {
 		return this.projectDao.getWorkLogsOfToDo(toDoId);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void uploadExperimentImageFile(Lab lab, ExperimentImage imageFile,
 			ByteArrayInputStream stream) {
 		//first save the meeting file
@@ -153,7 +161,7 @@ public class ProjectManager extends UniversalManager implements
 		log.info("after storing file, the storage identifier is " + imageFile.getUniqueStorageIdentifier());
 		this.projectDao.saveOrUpdate(imageFile);
 	}
-	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void removeExperimentImageFile(Lab lab, ExperimentImage imageFile){
 		if(imageFile.getId()==null){
 			throw new RuntimeException("imageFile file has to be existing object for deleting");
@@ -167,7 +175,7 @@ public class ProjectManager extends UniversalManager implements
 	public List<ExperimentImage> getExperimentImagesOfNote(Long noteId) {
 		return this.projectDao.getExperimentImagesOfNote(noteId);
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void saveProject(ManagedProject project) {
 		
 		boolean newProject=false;
@@ -185,7 +193,7 @@ public class ProjectManager extends UniversalManager implements
 		//refresh participants
 		
 	}
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void saveProjectParticipants(ManagedProject project) {
 		//save to participants table
 		this.save(project);

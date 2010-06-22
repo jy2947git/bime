@@ -9,8 +9,7 @@ import com.focaplo.myfuse.model.StorageSection;
 
 public interface IInventoryDao extends IUniversalDao{
 
-	public Long saveStorage(Storage s);
-	public Long saveRefrigerator(Refrigerator r);
+
 	public Long saveNewInventoryItem(ManagedItem item);
 	public List<StorageSection> getSectionsOfStorage(Long id);
 	public void updateStorageSectionAttributes(Long id, String name, String type);

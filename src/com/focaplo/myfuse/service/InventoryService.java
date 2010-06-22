@@ -23,7 +23,7 @@ public interface InventoryService extends UniversalService{
 	public List<StorageSection> getSectionsOfStorage(Long id);
 	public void updateStorageSection(Long id, String name, String type);
 	public void deleteStorageSection(Long id);
-	public void saveStorageSection(Long storageId, StorageSection section);
+	public void saveNewStorageSection(Long storageId, StorageSection section);
 	
 	public List<ManagedItem> addOrderToInventory(Long orderId);
 	public void addOrderItemToInventory(Long orderItemId);

@@ -8,6 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focaplo.myfuse.dao.IGrantDao;
 import com.focaplo.myfuse.dao.IInventoryDao;
@@ -26,6 +28,7 @@ import com.focaplo.myfuse.service.UniversalService;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 @Service(value="universalManager")
+@Transactional(readOnly=true)
 public class UniversalManager implements UniversalService {
     /**
      * Log instance for all child classes. Uses LogFactory.getLog(getClass()) from Commons Logging
@@ -71,23 +74,16 @@ public class UniversalManager implements UniversalService {
 
 	
 
-    /**
-     * {@inheritDoc}
-     */
     public List getAll(Class clazz) {
         return universalDao.getAll(clazz);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public void remove(Class clazz, Serializable id) {
         universalDao.remove(clazz, id);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public Object save(BaseObject o) {
         return universalDao.save(o);
     }
@@ -108,7 +104,7 @@ public class UniversalManager implements UniversalService {
 		this.inventoryDao = inventoryDao;
 	}
 
-
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void deleteEntities(Class clazz, List<Long> toBeDeleted) {
 		for(Long id:toBeDeleted){
 			this.universalDao.remove(clazz, id);

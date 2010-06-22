@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.focaplo.myfuse.model.Lab;
@@ -119,5 +120,18 @@ public class LabManagerTest extends BaseManagerTestCase {
     	for(LabMeeting meeting:meetings){
     		System.out.println(meeting.getSubject());
     	}
+    }
+    
+    
+    @Test
+    public void testCreateNewLabClient() throws NumberFormatException, Exception{
+    	labManager.createNewLab(new Long("123"), "tttt", "my stuff", "ttt admin", "ttt@my.com", "12345");
+    }
+    
+    @Test
+    @Transactional
+    public void testDeleteMeetingFile(){
+    
+    	this.universalManager.remove(MeetingFile.class, new Long("12"));
     }
 }

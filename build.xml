@@ -39,7 +39,7 @@
         <mkdir dir="${build.dir}" />
     	<mkdir dir="${build.dir}/classes" />
     	<mkdir dir="${dist.dir}"/>
-    	<mkdir dir="${deploy.dir}" />
+    	
 
     	
     </target>
@@ -64,11 +64,6 @@
    
 	
 	<target name="copyNonSourceFiles" description="copy shell files and sql files">
-		<copy todir="${deploy.dir}" overwrite="true">
-				                <fileset dir="${basedir}/deploy">
-				                        <include name="**/*" />
-				                </fileset>
-		</copy>
 		<copy todir="${build.dir}" overwrite="true">
 						                <fileset dir="${webcontent.dir}/WEB-INF">
 						                        <include name="web.xml" />
@@ -123,12 +118,18 @@
 		<echo>creating final package</echo>
 		<zip destfile="${dist.dir}/${customer.id}.zip">
 			<zipfileset dir="${build.dir}" includes="*.war" prefix="www"/>
-			<zipfileset dir="${deploy.dir}" includes="**/*" prefix="deploy"/>
+			<zipfileset dir="${scripts.dir}" includes="**/*" prefix="scripts"/>
 			
 		</zip>
 		<delete dir="${build.dir}"/>
+		<echo>To deploy to the loca server</echo>
 		<echo>cp ${dist.dir}/bime.zip /usr/local/bime-home/bime</echo>
+		<echo>cp ${basedir}/scripts/automation/build.sh /usr/local/bime-home/bime</echo>
+		<echo>cp ${basedir}/scripts/automation/deploy.sh /usr/local/bime-home/bime</echo>
+		<echo>To deploy to the amazon server</echo>
 		<echo> scp -i ~/.ec2/focaplo-ec2.pem ${dist.dir}/bime.zip ubuntu@www.bimelab.com:/usr/local/bime-home/bime</echo>
+		<echo> scp -i ~/.ec2/focaplo-ec2.pem ${basedir}/scripts/automation/build.shubuntu@www.bimelab.com:/usr/local/bime-home/bime</echo>
+		<echo> scp -i ~/.ec2/focaplo-ec2.pem ${basedir}/scripts/automation/deploy.sh ubuntu@www.bimelab.com:/usr/local/bime-home/bime</echo>
 	</target>
 	<!-- scp -i ~/.ec2/focaplo-ec2.pem ${dist.dir}/bime.zip ubuntu@www.bimelab.com:/usr/local/bime-home/bime -->
 	<target name="upload" depends="packageDist">

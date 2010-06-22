@@ -34,7 +34,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="workLog" method="post" action="include_workLogForm.html" onsubmit="return onFormSubmit(this)" id="workLogForm">
+<form:form commandName="workLog" method="post" onsubmit="return onFormSubmit(this)" id="workLogForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -88,7 +88,7 @@
 function onFormSubmit(theForm) {
 
 
-    return validateWorkLog(theForm);
+   // return validateWorkLog(theForm);
 }
 
 

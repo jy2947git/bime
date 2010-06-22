@@ -63,7 +63,7 @@ public class User extends BaseObject implements Serializable, org.springframewor
     @ManyToMany(mappedBy="participants", targetEntity=LabMeeting.class)
     private Set<LabMeeting> meetings = new HashSet<LabMeeting>();
     
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
             name="user_role",
             joinColumns = { @JoinColumn( name="user_id") },
@@ -427,7 +427,7 @@ public class User extends BaseObject implements Serializable, org.springframewor
 //		this.lab = lab;
 //	}
 
-	public boolean getIsSuperUser(){
+	public boolean isSuperUser(){
     	Set<Role>roles = this.getRoles();
     	Iterator<Role> ite = roles.iterator();
     	while(ite.hasNext()){

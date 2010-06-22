@@ -1,0 +1,7 @@
+
+set storage_engine = InnoDB;
+create database ${contextRoot};
+use ${contextRoot};
+grant ALL PRIVILEGES ON ${contextRoot}.* to ${contextRoot}@'localhost' IDENTIFIED by '${adminPass}';
+flush privileges;
+

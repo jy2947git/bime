@@ -67,7 +67,5 @@ public interface UserService extends UniversalService {
 
 	List<User> getUsersWithRole(String superUserRole);
 
-	List<LabelValue> getLabelValueListOfUsers();
-
 	List<User> getAllLabUsers();
 }

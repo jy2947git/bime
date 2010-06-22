@@ -10,12 +10,16 @@
         <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/styles/${appConfig["csstheme"]}/theme.css'/>" />
         <link rel="stylesheet" type="text/css" media="print" href="<c:url value='/styles/${appConfig["csstheme"]}/print.css'/>" />
 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js"></script>
- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js"></script>
+  <script type="text/javascript" src="<c:url value='/scripts/prototype.js'/>"></script>
+  <script type="text/javascript" src="<c:url value='/scripts/scriptaculous.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/global.js'/>"></script>
-         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+         <script type="text/javascript" src="<c:url value='/scripts/jquery.min.js'/>"></script>
         <decorator:head/>
+
          <script type="text/javascript">
+         var contextRoot='${pageContext.request.contextPath}';
+         var imagePath=contextRoot+'/images/';
+         var scriptPath=contextRoot+'/scripts/';
   jQuery.noConflict(); 
   </script>
     </head>
@@ -41,7 +45,7 @@
                 </menu:useMenuDisplayer>
             </div>
             </c:if>
-			<c:if test="${currentMenu == 'ProjectMenu' && sessionScope['projectId']!=null}">
+			<c:if test="${currentMenu == 'ProjectMenu' && requestScope['projectId']!=null}">
             <div id="sub">
                 <menu:useMenuDisplayer name="Velocity" config="cssVerticalMenu.vm" permissions="rolesAdapter">
                     <menu:displayMenu name="ProjectSubMenu"/>
@@ -49,7 +53,7 @@
             </div>
             </c:if>
             
-            <c:if test="${currentMenu == 'LabMenu' && sessionScope['meetingId']!=null}">
+            <c:if test="${currentMenu == 'LabMenu' && requestScope['meetingId']!=null}">
             <div id="sub">
                 <menu:useMenuDisplayer name="Velocity" config="cssVerticalMenu.vm" permissions="rolesAdapter">
                     <menu:displayMenu name="MeetingSubMenu"/>

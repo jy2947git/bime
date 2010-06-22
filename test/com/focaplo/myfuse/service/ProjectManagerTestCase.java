@@ -1,5 +1,7 @@
 package com.focaplo.myfuse.service;
 
+import static org.junit.Assert.*;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -15,6 +17,7 @@ import com.focaplo.myfuse.model.ExperimentNote;
 import com.focaplo.myfuse.model.ExperimentProtocol;
 import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.model.User;
+import com.focaplo.myfuse.service.impl.ProjectManager;
 
 @Transactional
 @TransactionConfiguration(defaultRollback=false)

@@ -1,0 +1,4 @@
+#
+# Fabric is a Python library to stream line the SSH exection
+#
+sudo apt-get -y install fabric

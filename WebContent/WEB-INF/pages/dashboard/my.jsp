@@ -10,7 +10,7 @@
     defaultsort="1" id="meeting" pagesize="25" class="table" export="false">
 
     <display:column property="startDate" escapeXml="false" sortable="false" titleKey="meeting.startDate" format="{0,date,MM/dd/yyyy}" style="width: 20%"
-        url="/lab/meetingForm.html?from=list" paramId="id" paramProperty="id"/>
+        url="/lab/meeting/${meeting.id}/form.html"/>
         <display:column property="startHourAndMinute" escapeXml="false" sortable="true" titleKey="meeting.startTime" style="width: 20%"/>
      <display:column property="subject" escapeXml="true" sortable="true" titleKey="meeting.subject" style="width: 60%"/>
      
@@ -22,7 +22,7 @@
     defaultsort="1" id="project" pagesize="25" class="table" export="false">
 
     <display:column property="name" escapeXml="true" sortable="false" titleKey="project.name" style="width: 60%"
-        url="/project/projectForm.html?from=list" paramId="id" paramProperty="id"/>
+        url="/project/${project.id}/form.html"/>
      <display:column escapeXml="true" sortable="true" titleKey="project.status" style="width: 20%"><fmt:message key="${project.status}"/></display:column>
 </display:table>
 
@@ -31,7 +31,7 @@
 <display:table name="mySubmittedOrderList" cellspacing="0" cellpadding="0" requestURI="" 
     defaultsort="1" id="order" pagesize="25" class="table" export="false">
     <display:column property="accountNumber" escapeXml="true" sortable="false" titleKey="order.accountName" style="width: 20%"
-        url="/inventory/orderForm.html?from=list" paramId="id" paramProperty="id"/>
+        url="/inventory/order/${order.id}/form.html"/>
     <display:column property="createdDate" escapeXml="false" sortable="false" titleKey="order.createdDate" format="{0,date,MM/dd/yyyy}" style="width: 20%"/> 
 	<display:column property="totalPrice" escapeXml="true" sortable="false" titleKey="order.totalPrice" style="width: 20%"/> 
 	<display:column property="fundName" escapeXml="true" sortable="false" titleKey="order.fundName" style="width: 20%"/> 
@@ -45,7 +45,7 @@
 <display:table name="myForApprovalOrderList" cellspacing="0" cellpadding="0" requestURI="" 
     defaultsort="1" id="order" pagesize="25" class="table" export="false">
     <display:column property="accountNumber" escapeXml="true" sortable="false" titleKey="order.accountName" style="width: 20%"
-        url="/inventory/orderForm.html?from=list" paramId="id" paramProperty="id"/>
+        url="/inventory/order/${orderId}/form.html"/>
     <display:column property="createdDate" escapeXml="false" sortable="false" titleKey="order.createdDate" format="{0,date,MM/dd/yyyy}" style="width: 20%"/> 
 	<display:column property="totalPrice" escapeXml="true" sortable="false" titleKey="order.totalPrice" style="width: 20%"/> 
 	<display:column property="fundName" escapeXml="true" sortable="false" titleKey="order.fundName" style="width: 20%"/> 

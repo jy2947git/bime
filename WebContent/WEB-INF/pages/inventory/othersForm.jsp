@@ -4,12 +4,7 @@
     <title><fmt:message key="storage.title"/></title>
     <meta name="heading" content="<fmt:message key='storage.heading'/>"/>
     <meta name="menu" content="InventoryMenu"/>
-    <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
-    <script type='text/javascript' src='<c:url value='/dwr/engine.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/dwr/util.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/order.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/dwr/interface/InventoryManager.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/storage.js'/>'></script>
+<script type='text/javascript' src='<c:url value='/scripts/storage_section_jquery.js'/>'></script>
 </head>
 
 <spring:bind path="storageOthers.*">
@@ -24,7 +19,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="storageOthers" method="post" action="othersForm.html" onsubmit="return onFormSubmit(this)" id="storageOthersForm">
+<form:form commandName="storageOthers" method="post" onsubmit="return onFormSubmit(this)" id="storageOthersForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -36,7 +31,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-            <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/othersList.html"/>'" value="<fmt:message key="button.cancel"/>"/>
+            <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/storageOthers/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>
@@ -80,10 +75,10 @@
 </form:form>
 <c:choose>
 <c:when test="${storageOthers.id!=null}">
-<jsp:include page="include/include_storage_sections.jsp"></jsp:include>
+<jsp:include page="include/include_storage_sections_2.jsp"></jsp:include>
 <script type="text/javascript">
 	var storageId = <c:out value="${storageOthers.id}"/>;
-	init();
+	getSections(storageId);
 </script>
 </c:when>
 </c:choose>

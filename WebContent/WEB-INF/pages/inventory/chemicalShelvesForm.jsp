@@ -4,12 +4,8 @@
     <title><fmt:message key="chemicalShelves.title"/></title>
     <meta name="heading" content="<fmt:message key='chemicalShelves.heading'/>"/>
     <meta name="menu" content="InventoryMenu"/>
-    <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
-    <script type='text/javascript' src='<c:url value='/dwr/engine.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/dwr/util.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/order.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/dwr/interface/InventoryManager.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/storage.js'/>'></script>
+
+    <script type='text/javascript' src='<c:url value='/scripts/storage_section_jquery.js'/>'></script>
 </head>
 
 <spring:bind path="chemicalShelves.*">
@@ -24,7 +20,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="chemicalShelves" method="post" action="chemicalShelvesForm.html" onsubmit="return onFormSubmit(this)" id="chemicalShelvesForm">
+<form:form commandName="chemicalShelves" method="post" onsubmit="return onFormSubmit(this)" id="chemicalShelvesForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -36,7 +32,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-            <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/chemicalShelvesList.html"/>'" value="<fmt:message key="button.cancel"/>"/>
+            <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/chemicalShelves/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>
@@ -80,10 +76,10 @@
 </form:form>
 <c:choose>
 <c:when test="${chemicalShelves.id!=null}">
-<jsp:include page="include/include_storage_sections.jsp"></jsp:include>
+<jsp:include page="include/include_storage_sections_2.jsp"></jsp:include>
 <script type="text/javascript">
 	var storageId = <c:out value="${chemicalShelves.id}"/>;
-	init();
+	getSections(storageId);
 </script>
 </c:when>
 </c:choose>

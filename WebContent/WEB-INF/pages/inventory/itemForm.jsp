@@ -19,7 +19,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="managedItemWrapper" method="post" action="itemForm.html" onsubmit="return onFormSubmit(this)" id="managedItemWrapperForm">
+<form:form commandName="managedItemWrapper" method="post"  onsubmit="return onFormSubmit(this)" id="managedItemWrapperForm">
 <form:hidden path="managedItem.id"/>
 <form:hidden path="managedItem.version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -31,7 +31,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-            <input type="submit" class="button" name="cancel" onclick="bCancel=true" value="<fmt:message key="button.cancel"/>"/>
+            <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/items/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>
@@ -84,7 +84,7 @@
 </ul>
 </form:form>
 <h2><fmt:message key="item.history.records"/></h2>
-<display:table name="inventoryAudits" cellspacing="0" cellpadding="0" requestURI="" 
+<display:table name="managedItemWrapper.managedItem.inventoryAudits" cellspacing="0" cellpadding="0" requestURI="" 
     defaultsort="1" id="record" pagesize="25" class="table" export="false">
     <display:column property="createdDate" escapeXml="false" sortable="false" titleKey="item.history.date" format="{0,date,MM/dd/yyyy}" style="width: 20%"/>
     <display:column property="message" escapeXml="true" sortable="false" titleKey="item.history.notes" style="width: 80%"/>

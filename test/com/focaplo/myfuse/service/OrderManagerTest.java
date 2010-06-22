@@ -24,4 +24,10 @@ public class OrderManagerTest extends BaseManagerTestCase {
 		
 		orderManager.submitOrder(new Long("3"), new Long("2"), new Long("2"));
 	}
+	
+	@Test
+	public void testCopyOrder(){
+		Long newOrderId = orderManager.copyExistingOrder((ManagedOrder) orderManager.get(ManagedOrder.class, new Long("2")));
+		log.info("new order:" + newOrderId);
+	}
 }

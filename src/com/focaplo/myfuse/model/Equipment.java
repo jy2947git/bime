@@ -20,10 +20,10 @@ public class Equipment extends BaseObject implements Serializable {
 
 	@Column(nullable=true,length=50)
 	private String location;
-	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn
 	private User lastUser;
-	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn
 	private User contactPerson;
 	@Column

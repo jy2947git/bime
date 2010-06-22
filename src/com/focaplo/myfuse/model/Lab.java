@@ -22,7 +22,8 @@ public class Lab extends BaseObject implements Serializable {
 	private String name;
 
 	@Basic
-	private String storageIdentity;
+	private String storageIdentity; //to identify the lab's storage root, for example, in S3, it will be
+	//the bucket name like "lab123.bimelab.com", in local mode, it is the lab name like "lab123"
 	@Basic
 	private String password;
 	

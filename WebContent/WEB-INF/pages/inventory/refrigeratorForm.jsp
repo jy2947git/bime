@@ -4,12 +4,7 @@
     <title><fmt:message key="refrigerator.title"/></title>
     <meta name="heading" content="<fmt:message key='refrigerator.heading'/>"/>
     <meta name="menu" content="InventoryMenu"/>
-    <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
-    <script type='text/javascript' src='<c:url value='/dwr/engine.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/dwr/util.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/order.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/dwr/interface/InventoryManager.js'/>'></script>
-    <script type='text/javascript' src='<c:url value='/scripts/storage.js'/>'></script>
+<script type='text/javascript' src='<c:url value='/scripts/storage_section_jquery.js'/>'></script>
 </head>
 
 <spring:bind path="refrigerator.*">
@@ -26,7 +21,7 @@
 
 
 
-<form:form commandName="refrigerator" method="post" action="refrigeratorForm.html" onsubmit="return onFormSubmit(this)" id="refrigeratorForm">
+<form:form commandName="refrigerator" method="post"  onsubmit="return onFormSubmit(this)" id="refrigeratorForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 
@@ -37,7 +32,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-            <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/refrigeratorList.html"/>'" value="<fmt:message key="button.cancel"/>"/>
+            <input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/inventory/refrigerators/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>
@@ -80,10 +75,10 @@
 
 <c:choose>
 <c:when test="${refrigerator.id!=null}">
-<jsp:include page="include/include_storage_sections.jsp"></jsp:include>
+<jsp:include page="include/include_storage_sections_2.jsp"></jsp:include>
 <script type="text/javascript">
 	var storageId = <c:out value="${refrigerator.id}"/>;
-	init();
+	getSections(storageId);
 </script>
 </c:when>
 </c:choose>

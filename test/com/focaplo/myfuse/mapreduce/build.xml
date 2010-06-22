@@ -1,0 +1,67 @@
+<project name="mapreduce" default="dist" basedir="c:/projects/jy/my_workspace/bime">
+	<property name="src.java.dir" value="${basedir}/test"></property>
+	<property name="webcontent.dir" value="${basedir}/WebContent"></property>
+	<property name="build.dir" value="${basedir}/build"></property>
+	<property name="dist.dir" value="${basedir}/build"></property>
+	
+    <path id="webinfo.lib">
+        <fileset dir="${webcontent.dir}/WEB-INF/lib">
+                      <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <path id="class.path">
+        <path refid="webinfo.lib"/>
+    </path>
+   
+    <target name="init" description="create directory">
+    	<echo>${basedir}</echo>
+        <!-- Create the time stamp -->
+        <tstamp />
+    	<delete dir="${buid.dir}"></delete>
+        <mkdir dir="${build.dir}" />
+    	<mkdir dir="${build.dir}/classes" />
+    	<mkdir dir="${dist.dir}"/>
+    </target>
+   
+   
+    <target name="compile" depends="" description="compile the java source ">
+        <echo>
+             +-----------------------------------------------------------+
+             +                                                           +
+             +                 Compile the Source Code  of ${customer.id}   +
+             +                                                           +
+             +-----------------------------------------------------------+
+        </echo>
+
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src.java.dir}"
+        	includes="com/focaplo/myfuse/mapreduce/**"
+        	destdir="${build.dir}/classes" target="1.6" failonerror="true" listfiles="false" debug="on">
+            <classpath>
+                <path refid="class.path" />
+            </classpath>
+           
+        </javac>
+
+    </target>
+   
+    <target name="dist" depends="init,compile" description="generate the distribution">
+        <echo>
+             +-----------------------------------------------------------+
+             +                                                           +
+             +             Create Project Distribution                   +
+             +                                                           +
+             +-----------------------------------------------------------+
+        </echo>       
+   
+
+        <jar destfile="${dist.dir}/focaplo-map-red.jar" basedir="${build.dir}/classes">
+        </jar>
+
+    </target>
+
+	<target name="scp">
+		<scp file="${dist.dir}/focaplo-map-red.jar" todir="hadoop:hadoop@192.168.179.128:$HOME"></scp>
+	</target>
+	
+</project>

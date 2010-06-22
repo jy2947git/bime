@@ -12,7 +12,7 @@
     <display:column property="lastUpdateDate" escapeXml="false" sortable="false" titleKey="note.last_update_date"  format="{0,date,MM/dd/yyyy}" style="width: 20%"/> 
 	<display:column style="width: 16%; padding-left: 15px" media="html">
 	    
-    	<a href="<c:url value='/project/noteImageDownload.html?id=${image.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="meeting.view"/>"/></a>
+    	<a href="<c:url value='/project/${projectId}/note/${noteId}/image/${image.id}/noteImageDownload.html'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="meeting.view"/>"/></a>
     
     	&nbsp;
     	

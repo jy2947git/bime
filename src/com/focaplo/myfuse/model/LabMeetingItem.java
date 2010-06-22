@@ -21,7 +21,7 @@ public class LabMeetingItem extends BaseObject implements Serializable {
 	private Long id;
 	@Column
 	private int itemOrder;
-	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn
 	private User speaker;
 	@Column

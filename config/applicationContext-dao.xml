@@ -31,10 +31,6 @@
         </property>
     </bean>
 
-    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
     
     <context:component-scan base-package="com.focaplo.myfuse.dao.hibernate"/>
     
@@ -42,64 +38,6 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
-<!--  
-    <bean id="masterDao" class="com.focaplo.myfuse.dao.MasterDao">
-    	<property name="dataSource"><ref bean="masterDataSource"/></property>
-    	<property name="userDao"><ref bean="userDao"/></property>
-    </bean>
-    -->
-    <!-- UniversalDao - can be used when doing standard CRUD - made available 
-        for those who don't mind casting.  If you don't want to cast, look at 
-        'fooDao' below. -->
-    <!-- -
-    <bean id="universalDao" class="com.focaplo.myfuse.dao.hibernate.UniversalDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
 
-    <bean id="lookupDao" class="com.focaplo.myfuse.dao.hibernate.LookupDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean id="userDao" class="com.focaplo.myfuse.dao.hibernate.UserDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean id="roleDao" class="com.focaplo.myfuse.dao.hibernate.RoleDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    
-    <bean id="inventoryDao" class="com.focaplo.myfuse.dao.hibernate.InventoryDao" parent="universalDao">
-        
-    </bean>
-     <bean id="projectDao" class="com.focaplo.myfuse.dao.hibernate.ProjectDao" parent="universalDao">
-        
-    </bean>
-     <bean id="grantDao" class="com.focaplo.myfuse.dao.hibernate.GrantDao" parent="universalDao">
-        
-    </bean>
-    <bean id="orderDao" class="com.focaplo.myfuse.dao.hibernate.OrderDao" parent="universalDao">
-        
-    </bean>
-    <bean id="labDao" class="com.focaplo.myfuse.dao.hibernate.LabDao" parent="universalDao">
-        
-    </bean>
-     -->
-    <!-- If you want to be able to do simple CRUD for new domain objects without 
-        having to cast, you don't have create a Dao interface and implementation 
-        for that domain object, you simply have to do the following.  
-        
-        eg... 'fooDao'
-    
-    <bean id="fooDao" class="com.focaplo.myfuse.dao.hibernate.GenericDao">
-        <constructor-arg value="com.focaplo.myfuse.model.Foo"/>
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    
-    You will need to create a Dao interface and implementation for that 
-        domain object if you need more than simple CRUD to occur.  
-        (finders, bulk update/delete, etc.)
-    -->
-
-    <!-- Add new DAOs here -->
 
 </beans>

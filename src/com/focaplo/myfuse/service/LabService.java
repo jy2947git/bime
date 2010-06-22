@@ -1,6 +1,7 @@
 package com.focaplo.myfuse.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import com.focaplo.myfuse.model.ExperimentImage;
@@ -38,5 +39,7 @@ public interface LabService extends UniversalService {
 
 	public List<LabMeeting> getMeetingsInviting(Long id);
 
+
+	public String createNewLab(Long labId, String uniqueContextRoot, String labName,String adminName, String adminEmail, String adminPassword) throws Exception;
 
 }

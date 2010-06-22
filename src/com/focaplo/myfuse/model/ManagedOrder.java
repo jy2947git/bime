@@ -58,7 +58,7 @@ public class ManagedOrder extends BaseObject implements Serializable {
 	@Column(nullable=true)
 	private String salesEmail;
 	@Column(nullable=true)
-	@OneToMany(mappedBy="order",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="order",cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
 	public Long getId() {

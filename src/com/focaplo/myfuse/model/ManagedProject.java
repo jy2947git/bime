@@ -34,13 +34,13 @@ public class ManagedProject extends BaseObject  implements Serializable, Securab
 	private Long id;
 	@Column(nullable=false)
 	private String name;
-	@ManyToMany(targetEntity=com.focaplo.myfuse.model.User.class, fetch=FetchType.LAZY)
+	@ManyToMany(targetEntity=com.focaplo.myfuse.model.User.class, fetch=FetchType.EAGER)
 	@JoinTable(name="project_owner",joinColumns=@JoinColumn(name="project_id"),inverseJoinColumns=@JoinColumn(name="user_id"))
 	private Set<User> owners = new HashSet<User>();
-	@ManyToMany(targetEntity=com.focaplo.myfuse.model.User.class, fetch=FetchType.LAZY)
+	@ManyToMany(targetEntity=com.focaplo.myfuse.model.User.class, fetch=FetchType.EAGER)
 	@JoinTable(name="project_participants",joinColumns=@JoinColumn(name="project_id"),inverseJoinColumns=@JoinColumn(name="user_id"))
 	private Set<User> participants = new HashSet<User>();
-	@OneToMany(mappedBy="managedProject",cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="managedProject",cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<ExperimentProtocol> experimentProtocols=new HashSet<ExperimentProtocol>();
 	
 //	@OneToMany(mappedBy="managedProject",cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)

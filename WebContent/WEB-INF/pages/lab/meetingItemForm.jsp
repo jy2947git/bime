@@ -21,7 +21,7 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="labMeetingItem" method="post" action="meetingItemForm.html" onsubmit="return onFormSubmit(this)" id="labMeetingItemForm">
+<form:form commandName="labMeetingItem" method="post"  onsubmit="return onFormSubmit(this)" id="labMeetingItemForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
 <input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
@@ -33,7 +33,7 @@
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
 
-            <input type="button" class="button" name="cancel" onclick="top.location='<c:url value="/lab/meetingItemList.html"/>'" value="<fmt:message key="button.cancel"/>"/>
+            <input type="button" class="button" name="cancel" onclick="top.location='<c:url value="/lab/meeting/${meetingId}/items/list.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
        
     </li>

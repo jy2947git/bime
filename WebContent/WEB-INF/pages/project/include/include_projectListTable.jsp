@@ -12,7 +12,7 @@
 	 
     <display:column style="width: 16%; padding-left: 15px" media="html">
     <c:if test="${project.canEdit}">
-    	<a href="<c:url value='/project/projectForm.html?from=list&id=${project.id}'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="project.edit"/>"/></a>&nbsp;
+    	<a href="<c:url value='/project/${project.id}/form.html'/>"><img src="<c:url value='/images/pencil.png'/>" alt="<fmt:message key="project.edit"/>"/></a>&nbsp;
     </c:if>
     &nbsp;
     <c:if test="${project.canDelete}">

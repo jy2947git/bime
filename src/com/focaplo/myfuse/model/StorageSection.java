@@ -32,10 +32,10 @@ public class StorageSection extends BaseObject implements Serializable, Storagib
 	@Column(nullable=false,length=100)
 	private String alias;
 	
-	@Transient
-	public String getFullName(){
-		return this.getStorage().getName() + "-" + this.getName();
-	}
+//	@Transient
+//	public String getFullName(){
+//		return this.getStorage().getName() + "-" + this.getName();
+//	}
 
 	public Storage getStorage() {
 		return storage;

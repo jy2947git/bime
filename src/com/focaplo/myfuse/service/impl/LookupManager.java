@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focaplo.myfuse.dao.ILookupDao;
 import com.focaplo.myfuse.model.LabelValue;
@@ -18,6 +19,7 @@ import com.focaplo.myfuse.service.LookupService;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 @Service(value="lookupManager")
+@Transactional(readOnly=true)
 public class LookupManager extends UniversalManager implements LookupService {
 	@Autowired
     private ILookupDao lookupDao;

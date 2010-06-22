@@ -1,0 +1,6 @@
+deb http://archive.cloudera.com/debian lucid-cdh2 contrib
+deb-src http://archive.cloudera.com/debian lucid-cdh2 contrib
+deb http://us.archive.ubuntu.com/ubuntu/ lucid multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ lucid multiverse
+deb http://us.archive.ubuntu.com/ubuntu/ lucid-updates multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ lucid-updates multiverse

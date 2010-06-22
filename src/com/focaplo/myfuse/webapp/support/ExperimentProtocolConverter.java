@@ -3,11 +3,12 @@ package com.focaplo.myfuse.webapp.support;
 import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.focaplo.myfuse.model.ExperimentProtocol;
-import com.focaplo.myfuse.model.ManagedProject;
 import com.focaplo.myfuse.service.ProjectService;
 
+@Component(value="protocolConverter")
 public class ExperimentProtocolConverter extends PropertyEditorSupport {
 	@Autowired
 private ProjectService projectManager;

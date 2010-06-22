@@ -1,6 +1,7 @@
 package com.focaplo.myfuse.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.focaplo.myfuse.model.Lab;
 import com.focaplo.myfuse.model.LabMeeting;
@@ -24,4 +25,6 @@ public interface ILabDao extends IUniversalDao {
 			String resourceType, Long resourceId, String userName);
 
 	List<LabMeeting> getMeetingsParticipatedByUser(Long id);
+
+	List<String> findAllTablesWithIdColumn();
 }

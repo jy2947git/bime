@@ -6,9 +6,8 @@
     <meta name="menu" content="UserMenu"/>
     <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
     
-      <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
+<link href="<c:url value='/styles/jquery-ui-1.8.1.custom.css'/>" rel="stylesheet" type="text/css"/>
+      <script src="<c:url value='/scripts/jquery-ui.min.js'/>"></script>
   <script type="text/javascript">
   jQuery.noConflict(); 
   
@@ -31,10 +30,9 @@
     </c:if>
 </spring:bind>
 
-<form:form commandName="user" method="post" action="userform.html" onsubmit="return onFormSubmit(this)" id="userForm">
+<form:form commandName="user" method="post"  onsubmit="return onFormSubmit(this)" id="userForm">
 <form:hidden path="id"/>
 <form:hidden path="version"/>
-<input type="hidden" name="from" value="<c:out value="${param.from}"/>"/>
 
 <c:if test="${cookieLogin == 'true'}">
     <form:hidden path="password"/>
@@ -50,13 +48,7 @@
         <%-- So the buttons can be used at the bottom of the form --%>
         <c:set var="buttons">
             <input type="submit" class="button" name="save" onclick="bCancel=false" value="<fmt:message key="button.save"/>"/>
-
-        <c:if test="${param.from == 'list' and param.method != 'Add'}">
-            <input type="submit" class="button" name="delete" onclick="bCancel=true;return confirmDelete('user')"
-                value="<fmt:message key="button.delete"/>"/>
-        </c:if>
-
-            <input type="submit" class="button" name="cancel" onclick="bCancel=true" value="<fmt:message key="button.cancel"/>"/>
+		<input type="button" class="button" name="cancel" onclick="parent.location='<c:url value="/mainMenu.html"/>'" value="<fmt:message key="button.cancel"/>"/>
         </c:set>
         <c:out value="${buttons}" escapeXml="false"/>
     </li>
@@ -204,7 +196,7 @@
     </li>
     --%>
 <c:choose>
-    <c:when test="${param.from == 'list' or param.method == 'Add'}">
+    <c:when test="${requestScope['admin']}">
     <li>
         <fieldset>
             <legend><fmt:message key="userProfile.accountSettings"/></legend>
@@ -284,7 +276,7 @@
 
 <!-- This is here so we can exclude the selectAll call when roles is hidden -->
 function onFormSubmit(theForm) {
-<c:if test="${param.from == 'list'}">
+<c:if test="${requestScope['admin']}">
     selectAll('userRoles');
 </c:if>
     return validateUser(theForm);

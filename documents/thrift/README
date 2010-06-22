@@ -1,0 +1,27 @@
+#
+# thrift is a framework for cross-language service
+# It is used by Scribe and Cassandra
+# refer to ../scribe for information of installing thrift, and generate java client
+#
+sudo apt-get -y install g++ make build-essential flex bison libtool mono-gmcs libevent-dev
+sudo apt-get -y install libboost*1.42*
+
+######################################
+# Thrift
+######################################
+sudo apt-get -y install git-core
+sudo apt-get -y install subversion
+svn co http://svn.apache.org/repos/asf/incubator/thrift/trunk thrift
+sudo apt-get -y install automake
+cd ~/thrift
+./bootstrap.sh
+./configure
+make
+sudo make install
+#####################################
+# build Thrift java library
+# rely on ant "sudo apt-get install ant" and jdk "sudo apt-get install openjdk-6-jdk"
+#####################################
+cd ~/thrift/lib/java
+ant
+echo /home/jy2947/thrift/lib/java/libthrift.jar

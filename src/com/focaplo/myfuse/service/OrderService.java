@@ -13,7 +13,7 @@ public interface OrderService extends UniversalService {
 	List<ManagedOrder> getOrdersSubmittedBy(Long userId);
 
 	List<ManagedOrder>  getOrdersForApproval(Long userId);
-	public void updateOrderItem(Long id, Long itemCategoryId, String maker, BigDecimal unitPrice, Integer amount, BigDecimal totalCost, String supplier);
+//	public void updateOrderItem(Long id, Long itemCategoryId, String maker, BigDecimal unitPrice, Integer amount, BigDecimal totalCost, String supplier);
 	public void deleteOrderItem(Long id);
 	public void saveOrderItem(Long orderId, OrderItem orderItem);
 	public List<OrderItem> getOrderItemsOfOrder(Long orderId);
@@ -27,5 +27,8 @@ public interface OrderService extends UniversalService {
 	public void rejectOrder(Long orderId, Long rejectedById);
 	public List<ManagedItem> inventorizeOrder(Long orderId);
 
-	public void copyExistingOrder(ManagedOrder order);
+	public Long copyExistingOrder(ManagedOrder order);
+	
+//	public List<OrderItem> updateOrderItemAndThenList(Long orderId, Long orderItemId, Long itemCategoryId, String maker, BigDecimal unitPrice, Integer amount, BigDecimal totalCost, String supplier);
+
 }
