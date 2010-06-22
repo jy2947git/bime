@@ -1,0 +1,38 @@
+#
+# To use Dyndns, ddclient and GoDaddy
+#
+#
+cd ~
+wget http://cdn.dyndns.com/ddclient.tar.gz
+tar -zxvf ddclient.tar.gz 
+cd ddclient-X.Y 
+sudo cp ddclient /usr/sbin/
+sudo mkdir /etc/ddclient 
+nano -w /etc/ddclient/ddclient.conf 
+#####################################
+# Basic configuration file for ddclient
+#
+# /etc/ddclient.conf
+daemon=600
+pid=/var/run/ddclient.pid
+use=web, web=checkip.dyndns.com/, web-skip='IP Address'
+login=dyndns-user-name
+password=dyndns-password
+protocol=dyndns2
+server=members.dyndns.org
+wildcard=YES
+bimelab.dnsdojo.com
+custom=yes, bimelab.com
+####################################
+
+sudo cp sample-etc_rc.d_init.d_ddclient.ubuntu /etc/init.d/ddclient
+sudo chmod +x /etc/init.d/ddclient
+sudo update-rc.d ddclient defaults
+sudo /etc/init.d/ddclient start
+
+#####################################
+# update godaddy to add CName with alias being jira, svn, www and remote being
+# bimelab.dnsdojo.com
+# no need to change Haproxy as the passed host name is still jira.bimelab.com
+# and svn.bimelab.com
+#####################################
