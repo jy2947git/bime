@@ -32,16 +32,9 @@ Start another window, enter into the mysql/bin directory, enter command "mysqlad
 install the Subclipse plug-in,which is used to the Subversion server. In Eclipse, click "help" then "software updates...", then choose the "Available Software" tab, click "Add Site", then enter url "http://subclipse.tigris.org/update_1.6.x", click "OK".
 Next, you can check the Subclipse plug-in and click "Install". Accepet term, and click NEXT to install. Eclipse will auto-restart to make the new plug-in effective.
 
-6, Download Latest Code 
-After Eclipse restarted, click "window" then "Open Perspective" then "Other...", then choose the "SVN Repository Exploring" (if you don't see it in the perspective list, that means the Subclipse plug-in was not installed correctly). Click "OK"
-Once you are in the SVN perspecitve, at left side window, in the "SVN repositories" tab, right click mouse, choose "New" -> "Repository Location...", and enter below URL
-"http://svn.bimelab.com/svn/svn-repository", click "Finish". Now Subclipse will try to connect to SVN server and list the svn repository.
-You'd see the "http://focaplo...." in the left side window. Select it, right click mouse, and choose "refresh"
-Now you will see the projects in this SVN repository, for example, "bime".
-Choose "bime", and right-click mouse, choose "check out...", and on the check-out page, click "Finish". Now Subclipse will try to download the "bime" project source code into your local Eclipse workspace.
-Normally you'd see the "console" window displaying the check-out progress.
-After the downloading is finished, click "window->open perspective->other" and choose the "Java EE" perspective. (maybe Eclipse will ask you to change to Java EE perspective after the downloading)
-You will be able to see a new project "bime" is now in the left-side "Project Explorer" window. (or you can click "window" -> "show view" and choose "Project Explorer" view)
+5, GIT
+
+6, Download Latest Code from GIT
 
 7, Create database for Bime
 In the "Project Explorer" window, explan the "bime" project, expand "tools", select file "build_hibernate_tools.xml", right click and choose "Run As", then choose the 3rd option "3 Ant Build...". On the next "Build Target" screen, uncheck the "recreateDatabase", and check the "initiateDatabase", and click "Run"
