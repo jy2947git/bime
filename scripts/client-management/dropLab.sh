@@ -5,7 +5,13 @@
 # should have been created when the client is created.
 # this script will first run the dropDatabase.sql and then rename the client-directory to client-cancelled
 #
+# This script is meant to be executed by the Cloud-Management Python module on
+# the Bime instance. The CM module listens to RabbitMQ and run this script to drop the MySql database 
+# of the new client (lab)
 #
+# It assumes to be executed within the client directory
+#
+
 if [ $# -eq 0 ]
 then
 echo "usage:dropLab.sh client-home-directory"

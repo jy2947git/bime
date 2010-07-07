@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# script to backup current haproxy.cfg, and hot-configure the Haproxy with new
+# configure file
+#
 
 # save previous state
 sudo  mv /etc/haproxy/haproxy.config /etc/haproxy/haproxy.config.old

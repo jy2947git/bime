@@ -6,6 +6,12 @@
 # existing in the lab directory
 # jdbc.properties must be existing in lab directory too.
 #
+# This script is meant to be executed by the Cloud-Management Python module on
+# the Bime instance. The CM module listens to RabbitMQ and creates the sql scrpts
+# and runs this script to create the MySql database for the new client (lab)
+#
+# It assumes to be executed within the client directory
+#
 if [ $# -eq 0 ]
 then
 echo "usage:addLab.sh client-home-directory"
