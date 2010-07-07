@@ -1,6 +1,0 @@
-drop database if exists ${contextRoot};
-grant usage on *.* to ${contextRoot}@'localhost';
-drop user ${contextRoot}@'localhost';
-flush privileges;
-
-

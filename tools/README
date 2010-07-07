@@ -1,0 +1,3 @@
+This directory contains the Hibernate reverse-engineering script to generate DDL from the model classes.
+Running ant script "build_hibernate_tools.xml" will compile the Model classes, generatel DDL (mysql/schema.sql)
+and also update/refresh the local Bime mysql database (yes, all existing data will be lost)

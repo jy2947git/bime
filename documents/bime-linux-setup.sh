@@ -8,7 +8,7 @@
 ##############################
 # set up private key to access storage server from new instance
 ##############################
-scp jy2947@focaplo.dnsdojo.com:/home/jy2947/.ssh/id_rsa ./
+
 
 ##################################
 # user account "bime" which will be the account to execupte the application
