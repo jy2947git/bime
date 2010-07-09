@@ -281,7 +281,6 @@ public class DynDataSourceRegister implements BeanFactoryPostProcessor, Applicat
 
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
-		log.info("Received event:" + event);
 		if(event instanceof ContextClosedEvent){
 			//close the datasource-file-monitor by shutting down the file-service
 			log.info("shutting down the datasource file monitor...");

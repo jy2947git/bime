@@ -1,0 +1,3 @@
+#!/bin/bash
+echo starting haproxy listener...
+sudo python /usr/local/bime-home/python/focaplo-1.0/focaplo/messaging/haproxy_listener.py 192.168.8.130 5672 guest guest

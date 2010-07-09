@@ -1,0 +1,28 @@
+<VirtualHost *:6080>
+ServerName tsung.bimelab.com
+ServerAdmin support@bimelab.com
+
+DirectoryIndex index.html index.php
+DocumentRoot /home/ubuntu/.tsung/log
+<Directory /home/ubuntu/.tsung/log/>
+Options Indexes FollowSymLinks MultiViews
+# pcw AllowOverride None
+AllowOverride All
+Order allow,deny
+allow from all
+# This directive allows us to have apache2.s default start page
+# in /apache2-default/, but still have / go to the right place
+# Commented out for Ubuntu
+#RedirectMatch ^/$ /apache2-default/
+</Directory>
+
+ErrorLog /var/log/apache2/error.log
+
+# Possible values include: debug, info, notice, warn, error, crit,
+# alert, emerg.
+LogLevel warn
+
+CustomLog /var/log/apache2/access.log combined
+#ServerSignature On
+
+</VirtualHost>

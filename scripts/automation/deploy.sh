@@ -20,7 +20,7 @@ cd www
 jar xvf bime.war
 rm -f bime.war
 echo pre-compiling jsp files...
-/usr/local/apache-ant-1.7.1/bin/ant -Dtomcat.home=/usr/local/tomcat6-1 -Dwebapp.path=./ -f precompile_jsp.xml
+ant -Dtomcat.home=/usr/local/tomcat6-1 -Dwebapp.path=./ -f precompile_jsp.xml
 cd ../scripts
 find . -type f -name '*.sh' -exec chmod +x {} \;
 if [ $1 -gt 0 ] ; then

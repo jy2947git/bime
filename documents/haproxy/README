@@ -1,0 +1,34 @@
+####################################
+# install load-balancer haproxy, and configure only on the load balancer
+# the initial haproxy.cfg only has default rule, www.bimelab.com -> localhost:6080
+# the other rules are dynamically managed by the Python scripts with help of RabbitMq
+# so, make sure to install the Python scripts and RabbitMq server too
+# the RabbitMq server can be installed anywhere, its IP address is passed to the
+# Python scripts (on the Load-balancer) through the User-Data field when creating image
+# from AMI. The AMI image has a start-up shellscript to read the User-Data, and call
+# the haproxy-listener python script with the RabbitMq IP address.
+# This means, the RabbitMq server (if not on the same box with Load-balancer) must be
+# started BEFORE the load-balance server.
+# The haproxy-listener python script needs to be run by the 'sudo' to write files
+# to /etc/haproxy directory and hot-reconfigure haproxy
+# sudo python /usr/local/bime-home/python/focaplo/messaging/haproxy-listener.py 192.168.8.128 5672 guest guest
+# 
+####################################
+sudo apt-get -y install haproxy
+mkdir ~/haproxy
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/haproxy/haproxy.cfg ~/haproxy/
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/haproxy/haproxy ~/haproxy/
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/haproxy/*.template ~/haproxy/
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/haproxy/reconfigure.sh ~/haproxy/
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/haproxy/start_haproxy_listener.sh ~/haproxy/
+sudo cp ~/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg
+sudo cp ~/haproxy/*.template /etc/haproxy/
+sudo cp ~/haproxy/haproxy /etc/default/haproxy
+sudo cp ~/haproxy/reconfigure.sh /etc/haproxy/reconfigure.sh
+sudo chmod +x /etc/haproxy/*.sh
+sudo /etc/init.d/haproxy restart
+#
+#
+#
+echo to start haproxy hot-configuration listener
+echo sudo ~/haproxy/start_haproxy_listener.sh to start the haproxy configuration listener >> ~/haproxy_listener.log &

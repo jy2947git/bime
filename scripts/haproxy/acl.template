@@ -1,2 +1,0 @@
-	acl acl_${subdomain} hdr_dom(host) -i ${subdomain}.bimelab.com
-	

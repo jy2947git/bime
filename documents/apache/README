@@ -1,0 +1,33 @@
+##################################################
+# apache and configure, on contorller server, and SVN server (required)
+# Usually controller server needs Apache, and Bime doesnt need so.
+# note the ports are 6080 and 6443 because we are assigning 80 and 443 to
+# the load balancer Haproxy
+#################################################
+sudo apt-get -y install apache2 libapache2-mod-jk
+sudo a2enmod jk proxy proxy_http ssl
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/apache/ports.conf ~/
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/apache/sites-available/default ~/
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/apache/sites-available/default-ssl ~/
+#only on the SVN server
+#scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/apache/sites-available/svn ~/
+#scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/apache/sites-available/tsung ~/
+sudo cp ~/ports.conf /etc/apache2/ports.conf
+sudo cp ~/default /etc/apache2/sites-available/default
+sudo cp ~/default-ssl /etc/apache2/sites-available/default-ssl
+#only on the SVN server
+#sudo cp ~/svn /etc/apache2/sites-available/svn
+#sudo cp ~/tsung /etc/apache2/sites-available/tsung
+sudo a2ensite default
+# not now sudo a2ensite default-ssl
+#sudo a2ensite svn
+#sudo a2ensite tsung
+sudo /etc/init.d/apache2 restart
+
+#openssl genrsa -des3 -out server.key 1024
+#openssl req -new -key server.key -out server.csr
+#openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+#sudo cp server.crt /etc/ssl/certs
+#sudo cp server.key /etc/ssl/private
+#sudo a2enmod ssl
+#sudo a2ensite default-ssl

@@ -1,0 +1,36 @@
+#
+#
+#Exim4 is used to send email through Gmail accout.
+#
+#To install Exim4, follow:
+#http://www.manu-j.com/blog/wordpress-exim4-ubuntu-gmail-smtp/75/
+cd ~/
+sudo apt-get -y install exim4
+sudo dpkg-reconfigure exim4-config
+#click OK
+#Choose mail sent by smarthost; received via SMTP or fetchmail
+#Type System Mail Name: focaplo.com, Tab to OK, enter
+#OK enter
+#enter 127.0.0.1, Tab to OK, enter
+#empty other destination, Tab to OK, enter
+#empty marches to replay mail for, Tab to OK, enter
+#enter outgoing smartest "smtp.gmail.com::587", tab to OK, enter
+#choose no, enter
+#OK, enter
+#choose No for "keep number of DNS minimal", enter
+#choose "box format…", Tab to OK, enter
+#choose No to "Split signature" enter
+#OK enter
+#empty post-master, Tab to OK, enter
+scp jy2947@distribution.bimelab.com:~/distribution/bime-controller/exim4/exim4.conf.template ~/
+sudo cp ~/exim4.conf.template /etc/exim4/
+sudo update-exim4.conf
+sudo /etc/init.d/exim4 restart
+#
+# test
+#   Run mail user@example.com
+#   Give a subject and press enter
+#    Type something and press enter
+#    Type a single . (dot) and press enter
+#    Press enter for a blank CC:
+#

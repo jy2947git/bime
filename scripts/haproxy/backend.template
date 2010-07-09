@@ -1,3 +1,0 @@
-backend ${subdomain}_server
-	mode http
-	server server1 ${host}:${port}

@@ -91,7 +91,7 @@
         <!--<appender-ref ref="SCRIBE"/>-->
         <!-- <appender-ref ref="FILE"/> -->
         <!-- <appender-ref ref="ASYNC"/>-->
-        <appender-ref ref="Cassandra"/>
+        <!-- <appender-ref ref="Cassandra"/>-->
     </root>
 
 </log4j:configuration>

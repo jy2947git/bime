@@ -29,7 +29,8 @@ listen	host 0.0.0.0:80
 	balance	roundrobin
 #	cookie	SERVERID insert indirect nocache
 #acl begins
-        acl-placeholder
+${aclplaceholder}
+${aclbackendplaceholder}
 #acl ends       
         default_backend default_server
 	capture cookie vgnvisitor= len 32
@@ -46,7 +47,7 @@ listen	ssl 0.0.0.0:443
 #	server	inst2 192.168.110.57:443 check inter 2000 fall 3
 #	server	back1 192.168.120.58:443 backup
 #backend begins
-backend-placeholder
+${backendplaceholder}
 #backend ends
 backend default_server
         mode http
